@@ -22,7 +22,7 @@
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/rounded"
+        android:background="@drawable/rounded_white"
         android:gravity="center_vertical"
         android:layout_marginVertical="10dp"
         android:layout_below="@+id/txt_cafe_app">
@@ -43,7 +43,7 @@
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/rounded"
+        android:background="@drawable/rounded_white"
         android:gravity="center_vertical"
         android:layout_below="@+id/ll_username">
         <ImageView
@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_above="@+id/btn_register"
-        android:background="@drawable/rounded"
+        android:background="@drawable/rounded_white"
         android:text="Đăng nhập"
         android:layout_marginHorizontal="20dp"/>
     <Button
@@ -70,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_above="@+id/txt_forgot_password"
-        android:background="@drawable/rounded"
+        android:background="@drawable/rounded_white"
         android:text="Tạo tài khoản mới"
         android:layout_marginVertical="20dp"
         android:layout_marginHorizontal="20dp"/>
