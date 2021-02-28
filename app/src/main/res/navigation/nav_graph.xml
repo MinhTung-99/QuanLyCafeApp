@@ -40,5 +40,21 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.quanlyquancafeapp.fragment.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_tableFragment"
+            app:destination="@id/tableFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tableFragment"
+        android:name="com.quanlyquancafeapp.fragment.TableFragment"
+        android:label="TableFragment" >
+        <action
+            android:id="@+id/action_tableFragment_to_productFragment"
+            app:destination="@id/productFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="com.quanlyquancafeapp.fragment.ProductFragment"
+        android:label="ProductFragment" />
 </navigation>
