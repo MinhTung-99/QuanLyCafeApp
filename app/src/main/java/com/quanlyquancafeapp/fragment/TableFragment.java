@@ -58,6 +58,7 @@ public class TableFragment extends Fragment implements IRecyclerViewOnItemClick 
     }
     @Override
     public void onClick(Object model) {
+        //
         Bundle bundle = new Bundle();
         bundle.putSerializable("table", (Table) model);
         Navigation.findNavController(getView()).navigate(R.id.productFragment, bundle);
