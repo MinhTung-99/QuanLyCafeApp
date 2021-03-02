@@ -33,6 +33,7 @@ public class LoginFragment extends Fragment implements ILoginView {
         super.onViewCreated(view, savedInstanceState);
 
         initView();
+        setBackgroundButton();
         btnRegister.setOnClickListener(v -> loginPresenter.register());
         txtForgotPassword.setOnClickListener(v -> loginPresenter.forgotPassword());
         btnLogin.setOnClickListener(v -> loginPresenter.logIn());
@@ -42,6 +43,10 @@ public class LoginFragment extends Fragment implements ILoginView {
         btnRegister = getView().findViewById(R.id.btn_register);
         txtForgotPassword = getView().findViewById(R.id.txt_forgot_password);
         btnLogin = getView().findViewById(R.id.btn_login);
+    }
+    private void setBackgroundButton() {
+        btnLogin.setBackgroundResource(R.drawable.rounded_white);
+        btnRegister.setBackgroundResource(R.drawable.rounded_white);
     }
     @Override
     public void navigateToRegisterFragment() {

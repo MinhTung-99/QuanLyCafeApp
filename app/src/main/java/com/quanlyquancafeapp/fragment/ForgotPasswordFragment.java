@@ -32,6 +32,7 @@ public class ForgotPasswordFragment extends Fragment implements IForgotPasswordV
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+        btnGetPassword.setBackgroundResource(R.drawable.rounded_white);
         btnGetPassword.setOnClickListener(v->forgotPasswordPresenter.getPassword());
         imgBack.setOnClickListener(v->forgotPasswordPresenter.back());
     }

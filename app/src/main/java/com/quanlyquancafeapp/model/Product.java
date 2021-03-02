@@ -9,6 +9,7 @@ public class Product {
     private String sale;
     private int availableQuantity;
     private String species;
+    private int count;
 
     public Product(String name, int image, float price,String species) {
         this.name = name;
@@ -64,5 +65,11 @@ public class Product {
     }
     public void setSpecies(String species) {
         this.species = species;
+    }
+    public int getCount() {
+        return count;
+    }
+    public void setCount(int count) {
+        this.count = count;
     }
 }

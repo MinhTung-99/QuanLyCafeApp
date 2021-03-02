@@ -31,6 +31,7 @@ public class RegisterFragment extends Fragment implements IRegisterView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+        btnRegister.setBackgroundResource(R.drawable.rounded_white);
         btnRegister.setOnClickListener(v->registerPresenter.register());
         imgBack.setOnClickListener(v->registerPresenter.register());
     }
