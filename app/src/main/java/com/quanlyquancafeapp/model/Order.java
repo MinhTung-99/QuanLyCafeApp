@@ -1,17 +1,17 @@
 package com.quanlyquancafeapp.model;
 
 public class Order {
-    private String idProduct;
+    private Long idProduct;
     private Long idTable;
     private String idAccount;
     private int count;
     private float totalMoney;
     private float intoMoney;
 
-    public String getIdProduct() {
+    public Long getIdProduct() {
         return idProduct;
     }
-    public void setIdProduct(String idProduct) {
+    public void setIdProduct(Long idProduct) {
         this.idProduct = idProduct;
     }
     public Long getIdTable() {

@@ -26,6 +26,7 @@ import com.quanlyquancafeapp.model.Order;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.utils.Constance;
+import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 
 import java.util.ArrayList;
@@ -48,7 +49,6 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Table table = (Table) getArguments().getSerializable("table");
-        Toast.makeText(getContext(), table.getId()+" ==",Toast.LENGTH_SHORT).show();
 
         initView();
         setBackgroundButton();
@@ -66,8 +66,26 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
             isCafe = false;
         });
         btnStore.setOnClickListener(v->{
-            TableFragment.order = new Order();
-            TableFragment.order.setIdTable(table.getId());
+            DataFake.order.setIdTable(table.getId());
+
+            for(int i = 0; i < productsCafe.size(); i++){
+                if(productsCafe.get(i).getCount() > 0){
+                    Order order = new Order();
+                    order.setIdProduct(productsCafe.get(i).getId());
+                    order.setCount(productsCafe.get(i).getCount());
+                    order.setIdTable(table.getId());
+                    DataFake.orders.add(order);
+                }
+            }
+            for(int i = 0; i < productsDrink.size(); i++){
+                if(productsDrink.get(i).getCount() > 0){
+                    Order order = new Order();
+                    order.setIdProduct(productsDrink.get(i).getId());
+                    order.setCount(productsDrink.get(i).getCount());
+                    order.setIdTable(table.getId());
+                    DataFake.orders.add(order);
+                }
+            }
             Navigation.findNavController(getView()).popBackStack();
         });
     }
@@ -77,10 +95,8 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
         btnStore.setBackgroundColor(getResources().getColor(R.color.blue));
     }
     private void setAdapter() {
-        products.add(new Product("cafe đen đá",R.drawable.ic_cafe_den_da,37000,"CAFE"));
-        products.add(new Product("cafe sữa",R.drawable.ic_cafe_milk,27000,"CAFE"));
-        products.add(new Product("7 up", R.drawable.ic_7up, 15000,"DRINK"));
-        products.add(new Product("coca", R.drawable.ic_coca, 15000,"DRINK"));
+        products = DataFake.productFake();
+
         for(Product product: products){
             if(product.getSpecies().equals("CAFE")){
                 productsCafe.add(product);

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.fragment.TableFragment;
 import com.quanlyquancafeapp.model.Table;
+import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 import java.util.ArrayList;
 
@@ -38,8 +39,8 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
     public void onBindViewHolder(@NonNull TableViewHolder holder, int position) {
         holder.txtTableName.setText(tables.get(position).getTableId());
         holder.itemView.setOnClickListener(v -> holder.recyclerViewOnClick.onClick(tables.get(position)));
-        if(TableFragment.order.getIdTable() != null){
-            if(TableFragment.order.getIdTable().equals(tables.get(position).getId())){
+        if(DataFake.order.getIdTable() != null){
+            if(DataFake.order.getIdTable().equals(tables.get(position).getId())){
                 holder.rlTop.setVisibility(View.VISIBLE);
                 holder.rlBottom.setVisibility(View.GONE);
                 holder.imgEmployee.setVisibility(View.VISIBLE);

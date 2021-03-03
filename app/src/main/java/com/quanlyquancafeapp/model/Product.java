@@ -11,11 +11,13 @@ public class Product {
     private String species;
     private int count;
 
-    public Product(String name, int image, float price,String species) {
+    public Product(Long id,String name, int image, int price,String species, String sale) {
+        this.id = id;
         this.name = name;
         this.image = image;
         this.price = price;
         this.species = species;
+        this.sale = sale;
     }
 
     public Long getId() {

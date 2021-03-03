@@ -29,11 +29,17 @@
         android:id="@+id/txt_name"
         android:layout_below="@+id/img_product"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/txt_price"
         android:layout_below="@+id/img_product"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/txt_name"/>
+        android:layout_toRightOf="@+id/txt_name"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
 </RelativeLayout>

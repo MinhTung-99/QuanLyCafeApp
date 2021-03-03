@@ -19,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.TableAdapter;
 import com.quanlyquancafeapp.model.Order;
+import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.utils.Constance;
+import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 
 import java.util.ArrayList;
@@ -29,8 +31,7 @@ public class TableFragment extends Fragment implements IRecyclerViewOnItemClick 
     private TableAdapter adapter;
     private ArrayList<Table> tables;
     private RecyclerView rvTable;
-    //demo
-    public static Order order = new Order();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,17 +40,14 @@ public class TableFragment extends Fragment implements IRecyclerViewOnItemClick 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initView();
         setAdapter();
-        Log.d("KMFG","oooo");
     }
     private void setAdapter() {
         tables.add(new Table(1L,"001","ban 1 tang 1"));
         tables.add(new Table(2L,"002","ban 2 tang 1"));
         rvTable.setLayoutManager(new GridLayoutManager(getContext(), 2));
         adapter = new TableAdapter(tables, this);
-        adapter.updateTable(tables);
         rvTable.setAdapter(adapter);
     }
     private void initView() {
@@ -58,10 +56,16 @@ public class TableFragment extends Fragment implements IRecyclerViewOnItemClick 
     }
     @Override
     public void onClick(Object model) {
-        //
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("table", (Table) model);
-        Navigation.findNavController(getView()).navigate(R.id.productFragment, bundle);
+        Table table = (Table) model;
+        if(DataFake.order.getIdTable() == table.getId()){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("table", (Table) model);
+            Navigation.findNavController(getView()).navigate(R.id.intoMoneyFragment, bundle);
+        }else{
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("table", (Table) model);
+            Navigation.findNavController(getView()).navigate(R.id.productFragment, bundle);
+        }
     }
     @Override
     public void reductionBtn(int position) { }

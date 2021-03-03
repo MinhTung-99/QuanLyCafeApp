@@ -52,9 +52,24 @@
         <action
             android:id="@+id/action_tableFragment_to_productFragment"
             app:destination="@id/productFragment" />
+        <action
+            android:id="@+id/action_tableFragment_to_intoMoneyFragment"
+            app:destination="@id/intoMoneyFragment" />
     </fragment>
     <fragment
         android:id="@+id/productFragment"
         android:name="com.quanlyquancafeapp.fragment.ProductFragment"
         android:label="ProductFragment" />
+    <fragment
+        android:id="@+id/intoMoneyFragment"
+        android:name="com.quanlyquancafeapp.fragment.totalMoneyFragment"
+        android:label="IntoMoneyFragment" >
+        <action
+            android:id="@+id/action_intoMoneyFragment_to_payFragment"
+            app:destination="@id/payFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/payFragment"
+        android:name="com.quanlyquancafeapp.fragment.PayFragment"
+        android:label="PayFragment" />
 </navigation>

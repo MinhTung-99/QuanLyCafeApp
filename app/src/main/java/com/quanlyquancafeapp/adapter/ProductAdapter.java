@@ -1,5 +1,6 @@
 package com.quanlyquancafeapp.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
+import com.quanlyquancafeapp.fragment.TableFragment;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
+import com.quanlyquancafeapp.utils.PriceUtil;
 
 import java.util.ArrayList;
 
@@ -39,8 +42,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         holder.imgProduct.setImageResource(products.get(position).getImage());
         holder.txtName.setText(products.get(position).getName() + " - ");
-        holder.txtPrice.setText(products.get(position).getPrice()+"");
-        holder.txtCount.setText(products.get(position).getCount()+"");
+        String setupPrice = PriceUtil.setupPrice(String.valueOf(products.get(position).getPrice()));
+        String setupPriceByComma = PriceUtil.getPriceByComma(setupPrice);
+        holder.txtPrice.setText(setupPriceByComma+"k");
+        holder.txtCount.setText(String.valueOf(products.get(position).getCount()));
         holder.itemView.setOnClickListener(v->holder.recyclerViewOnItemClick.onClick(position));
         holder.btnReduction.setOnClickListener(v->holder.recyclerViewOnItemClick.reductionBtn(position));
         if(products.get(position).getCount() == 0){
