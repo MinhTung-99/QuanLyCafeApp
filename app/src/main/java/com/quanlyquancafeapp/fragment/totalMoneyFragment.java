@@ -10,6 +10,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -71,6 +72,12 @@ public class totalMoneyFragment extends Fragment {
         Log.d("KMFG","OKSALE=="+totalMoney);
         String setupMoney = PriceUtil.setupPrice(String.valueOf(totalMoney));
         btnTotalMoney.setText(setupMoney);
+        final float finalTotalMoney = totalMoney;
+        btnTotalMoney.setOnClickListener(v->{
+            Bundle bundle = new Bundle();
+            bundle.putFloat("totalMoney", finalTotalMoney);
+            Navigation.findNavController(getView()).navigate(R.id.payFragment, bundle);
+        });
 
         setAdapter();
     }
