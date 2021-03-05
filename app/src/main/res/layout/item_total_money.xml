@@ -14,12 +14,14 @@
         android:layout_toRightOf="@id/txt_count"
         android:layout_marginLeft="30dp"
         android:textSize="17sp"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/txt_sale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_toRightOf="@+id/txt_product"
         android:layout_marginLeft="20dp"
         android:textSize="17sp"/>
@@ -31,4 +33,9 @@
         android:textSize="17sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>
