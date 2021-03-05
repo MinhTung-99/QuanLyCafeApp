@@ -61,7 +61,6 @@ public class PayFragment extends Fragment {
             for(int i = 0; i < 2; i++){
                 Navigation.findNavController(v).popBackStack();
                 //DELETE TABLE ORDER
-
             }
         });
     }
