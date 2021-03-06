@@ -7,7 +7,7 @@ public class LoginPresenter {
     public LoginPresenter(ILoginView signInView) {
         this.loginView = signInView;
     }
-    public void logIn(){
+    public void logInToHome(){
         loginView.navigateToHomeFragment();
     }
     public void register(){
@@ -16,4 +16,5 @@ public class LoginPresenter {
     public void forgotPassword(){
         loginView.navigateToForgotPasswordFragment();
     }
+    public void logInToAdmin(){loginView.navigateToAdminFragment();}
 }

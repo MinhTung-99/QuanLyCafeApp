@@ -1,93 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity"
-    android:background="@drawable/ic_background">
-    <TextView
-        android:id="@+id/txt_cafe_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cafe App"
-        android:textStyle="bold"
-        android:textSize="40sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:textColor="#ffffff"/>
-    <LinearLayout
-        android:id="@+id/ll_username"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="20dp"
-        android:background="@drawable/rounded_white"
-        android:gravity="center_vertical"
-        android:layout_marginVertical="10dp"
-        android:layout_below="@+id/txt_cafe_app">
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginHorizontal="10dp"
-            android:src="@drawable/ic_username"/>
-        <EditText
-            android:background="@null"
-            android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".MainActivity"
+        android:background="@drawable/ic_background">
+        <TextView
+            android:id="@+id/txt_cafe_app"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Tài khoản"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_password"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="20dp"
-        android:background="@drawable/rounded_white"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/ll_username">
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginHorizontal="10dp"
-            android:src="@drawable/ic_password"/>
-        <EditText
-            android:background="@null"
+            android:text="Cafe App"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textColor="#ffffff"/>
+        <LinearLayout
+            android:id="@+id/ll_username"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="mật khẩu"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/rounded_white"
+            android:gravity="center_vertical"
+            android:layout_marginVertical="10dp"
+            android:layout_below="@+id/txt_cafe_app">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="10dp"
+                android:src="@drawable/ic_username"/>
+            <EditText
+                android:background="@null"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tài khoản"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_password"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/rounded_white"
+            android:gravity="center_vertical"
+            android:layout_below="@+id/ll_username">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="10dp"
+                android:src="@drawable/ic_password"/>
+            <EditText
+                android:background="@null"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="mật khẩu"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_above="@+id/btn_register"
+            app:backgroundTint="@null"
             android:textColor="@color/black"
-            android:textColorHint="@color/black"/>
-    </LinearLayout>
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_above="@+id/btn_register"
-        app:backgroundTint="@null"
-        android:textColor="@color/black"
-        android:text="Đăng nhập"
-        android:layout_marginHorizontal="20dp"/>
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_above="@+id/txt_forgot_password"
-        android:text="Tạo tài khoản mới"
-        app:backgroundTint="@null"
-        android:textColor="@color/black"
-        android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="20dp"/>
-    <TextView
-        android:id="@+id/txt_forgot_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quên mật khẩu"
-        android:textColor="@color/black"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp"
-        android:layout_marginBottom="10dp"/>
-</RelativeLayout>
+            android:text="Đăng nhập"
+            android:layout_marginHorizontal="20dp"/>
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_above="@+id/txt_forgot_password"
+            android:text="Tạo tài khoản mới"
+            app:backgroundTint="@null"
+            android:textColor="@color/black"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="20dp"/>
+        <TextView
+            android:id="@+id/txt_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quên mật khẩu"
+            android:textColor="@color/black"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"/>
+    </RelativeLayout>
+</layout>
