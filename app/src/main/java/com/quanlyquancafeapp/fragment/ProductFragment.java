@@ -66,14 +66,13 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
             isCafe = false;
         });
         btnStore.setOnClickListener(v->{
-            DataFake.order.setIdTable(table.getId());
-
             for(int i = 0; i < productsCafe.size(); i++){
                 if(productsCafe.get(i).getCount() > 0){
                     Order order = new Order();
                     order.setIdProduct(productsCafe.get(i).getId());
                     order.setCount(productsCafe.get(i).getCount());
-                    order.setIdTable(table.getId());
+                    if(table != null)
+                        order.setIdTable(table.getId());
                     DataFake.orders.add(order);
                 }
             }
@@ -82,11 +81,20 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
                     Order order = new Order();
                     order.setIdProduct(productsDrink.get(i).getId());
                     order.setCount(productsDrink.get(i).getCount());
-                    order.setIdTable(table.getId());
+                    if(table != null)
+                        order.setIdTable(table.getId());
                     DataFake.orders.add(order);
                 }
             }
-            Navigation.findNavController(getView()).popBackStack();
+            if(table != null){
+                DataFake.order.setIdTable(table.getId());
+                Navigation.findNavController(v).popBackStack();
+            }else {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("table", null);
+                Navigation.findNavController(v).navigate(R.id.totalMoneyFragment, bundle);
+            }
+
         });
     }
     private void setBackgroundButton() {

@@ -1,7 +1,6 @@
 package com.quanlyquancafeapp.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +8,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.TableAdapter;
-import com.quanlyquancafeapp.model.Order;
-import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
-import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 
@@ -60,7 +53,7 @@ public class TableFragment extends Fragment implements IRecyclerViewOnItemClick 
         if(DataFake.order.getIdTable() == table.getId()){
             Bundle bundle = new Bundle();
             bundle.putSerializable("table", (Table) model);
-            Navigation.findNavController(getView()).navigate(R.id.intoMoneyFragment, bundle);
+            Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
         }else{
             Bundle bundle = new Bundle();
             bundle.putSerializable("table", (Table) model);

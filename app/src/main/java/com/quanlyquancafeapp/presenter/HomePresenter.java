@@ -10,4 +10,5 @@ public class HomePresenter {
     public void sell(){
         homeView.navigateToTableFragment();
     }
+    public void payment(){homeView.navigateToProductFragment();}
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,27 +46,52 @@ public class totalMoneyFragment extends Fragment {
         for(int i = 0; i < DataFake.orders.size(); i++){
             for (int j = 0; j < products.size(); j++){
                 float intoMoney = 0;
-                if(DataFake.orders.get(i).getIdProduct() == products.get(j).getId() &&
-                        DataFake.orders.get(i).getIdTable() == table.getId()){
-                    if(products.get(j).getSale().equals("")){//check sale
-                        float sum = products.get(j).getPrice() * DataFake.orders.get(i).getCount();
-                        intoMoney += sum;
-                        totalMoney += sum;
-                    }else {
-                        String saleStr = "";
-                        for(int s = 0; s < products.get(j).getSale().length(); s++){
-                            saleStr+=s;
-                            if(products.get(j).getSale().charAt(s) == '%'){
-                                break;
+                if(table != null){
+                    if(DataFake.orders.get(i).getIdProduct() == products.get(j).getId() &&
+                            DataFake.orders.get(i).getIdTable() == table.getId()){
+                        if(products.get(j).getSale().equals("")){//check sale
+                            float sum = products.get(j).getPrice() * DataFake.orders.get(i).getCount();
+                            intoMoney += sum;
+                            totalMoney += sum;
+                        }else {
+                            String saleStr = "";
+                            for(int s = 0; s < products.get(j).getSale().length(); s++){
+                                saleStr+=s;
+                                if(products.get(j).getSale().charAt(s) == '%'){
+                                    break;
+                                }
                             }
+                            int sale = Integer.parseInt(saleStr);
+                            float sum = (products.get(j).getPrice() * DataFake.orders.get(i).getCount() * (100-sale)/(float)100);
+                            intoMoney += sum;
+                            totalMoney += sum;
+                            Log.d("KMFG","OKSALE==="+sum);
                         }
-                        int sale = Integer.parseInt(saleStr);
-                        float sum = (products.get(j).getPrice() * DataFake.orders.get(i).getCount() * (100-sale)/(float)100);
-                        intoMoney += sum;
-                        totalMoney += sum;
-                        Log.d("KMFG","OKSALE==="+sum);
+                        DataFake.orders.get(i).setTotalMoney(intoMoney);
                     }
-                    DataFake.orders.get(i).setTotalMoney(intoMoney);
+                }else{
+                    Toast.makeText(getContext(), "????", Toast.LENGTH_SHORT).show();
+                    if(DataFake.orders.get(i).getIdProduct() == products.get(j).getId()){
+                        if(products.get(j).getSale().equals("")){//check sale
+                            float sum = products.get(j).getPrice() * DataFake.orders.get(i).getCount();
+                            intoMoney += sum;
+                            totalMoney += sum;
+                        }else {
+                            String saleStr = "";
+                            for(int s = 0; s < products.get(j).getSale().length(); s++){
+                                saleStr+=s;
+                                if(products.get(j).getSale().charAt(s) == '%'){
+                                    break;
+                                }
+                            }
+                            int sale = Integer.parseInt(saleStr);
+                            float sum = (products.get(j).getPrice() * DataFake.orders.get(i).getCount() * (100-sale)/(float)100);
+                            intoMoney += sum;
+                            totalMoney += sum;
+                            Log.d("KMFG","OKSALE==="+sum);
+                        }
+                        DataFake.orders.get(i).setTotalMoney(intoMoney);
+                    }
                 }
             }
         }
