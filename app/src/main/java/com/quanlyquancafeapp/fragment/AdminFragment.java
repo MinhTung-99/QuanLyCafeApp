@@ -1,5 +1,6 @@
 package com.quanlyquancafeapp.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,10 +33,12 @@ public class AdminFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ArrayList<Admin> admins = new ArrayList<>();
-        admins.add(new Admin(R.color.blue,R.drawable.ic_speaker,"Báo cáo"));
-        //handle add data admin
+        admins.add(new Admin(R.drawable.rounded_green,R.drawable.ic_speaker,"Báo cáo"));
+        admins.add(new Admin(R.drawable.rounded_teal_200,R.drawable.ic_chair,"Bàn"));
+        admins.add(new Admin(R.drawable.rounded_blue,R.drawable.ic_user,"Nhân viên"));
+        admins.add(new Admin(R.drawable.rounded_orange,R.drawable.ic_store,"Kho"));
         adapter = new AdminAdapter(admins);
-        binding.rvAdmin.setLayoutManager(new GridLayoutManager(getContext(), 2)); //add data background color item_admin
+        binding.rvAdmin.setLayoutManager(new GridLayoutManager(getContext(), 2));
         binding.rvAdmin.setAdapter(adapter);
     }
 }
