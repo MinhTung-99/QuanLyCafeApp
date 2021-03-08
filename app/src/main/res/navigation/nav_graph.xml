@@ -86,5 +86,13 @@
     <fragment
         android:id="@+id/adminFragment"
         android:name="com.quanlyquancafeapp.fragment.AdminFragment"
-        android:label="AdminFragment" />
+        android:label="AdminFragment" >
+        <action
+            android:id="@+id/action_adminFragment_to_reportFragment"
+            app:destination="@id/reportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.quanlyquancafeapp.fragment.ReportFragment"
+        android:label="ReportFragment" />
 </navigation>
