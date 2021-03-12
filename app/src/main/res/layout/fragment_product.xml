@@ -1,77 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/white">
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/blue">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Table Name"
-                android:layout_centerHorizontal="true"
-                android:textSize="20sp"/>
-        </RelativeLayout>
-    </androidx.appcompat.widget.Toolbar>
-    <RelativeLayout
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp">
-        <EditText
-            android:id="@+id/edt_search"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:layout_marginLeft="20dp"
-            android:hint="Tên, mã sản phẩm"
-            android:layout_toLeftOf="@+id/img_qr_code"
-            android:backgroundTint="@color/black"/>
-        <ImageView
-            android:id="@+id/img_qr_code"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_qr_code"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_product"
+            android:layout_height="50dp"
+            android:background="@color/blue">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Table Name"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="20sp"/>
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/btn_cafe"
-            android:layout_below="@id/edt_search"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-        <Button
-            android:id="@+id/btn_cafe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/edt_search"
-            android:text="Cafe" />
-        <Button
-            android:id="@+id/btn_drink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đồ uống"
-            android:layout_marginTop="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/btn_cafe"/>
-        <Button
-            android:id="@+id/btn_store"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lưu"
-            android:backgroundTint="@null"
-            android:background="#05BAFD"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"/>
-    </RelativeLayout>
-</LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:layout_marginLeft="20dp"
+                android:hint="Tên, mã sản phẩm"
+                android:layout_toLeftOf="@+id/img_qr_code"
+                android:backgroundTint="@color/black"/>
+            <ImageView
+                android:id="@+id/img_qr_code"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_qr_code"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/btn_cafe"
+                android:layout_below="@id/edt_search"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            <Button
+                android:id="@+id/btn_cafe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/edt_search"
+                android:text="Cafe" />
+            <Button
+                android:id="@+id/btn_drink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đồ uống"
+                android:layout_marginTop="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/btn_cafe"/>
+            <Button
+                android:id="@+id/btn_store"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lưu"
+                android:backgroundTint="@null"
+                android:background="@color/blue"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

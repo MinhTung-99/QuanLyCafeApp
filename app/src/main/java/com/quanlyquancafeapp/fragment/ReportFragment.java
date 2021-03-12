@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -42,5 +43,8 @@ public class ReportFragment extends Fragment { ;
         }
         pie.data(dataEntries);
         binding.anyChartView.setChart(pie);
+        binding.btnInvoice.setOnClickListener(v->{
+            Navigation.findNavController(getView()).navigate(R.id.invoiceFragment);
+        });
     }
 }

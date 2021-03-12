@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_admin"
+    app:startDestination="@id/reportFragment">
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.quanlyquancafeapp.fragment.ReportFragment"
+        android:label="ReportFragment" >
+        <action
+            android:id="@+id/action_reportFragment_to_invoiceFragment"
+            app:destination="@id/invoiceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/invoiceFragment"
+        android:name="com.quanlyquancafeapp.fragment.InvoiceFragment"
+        android:label="InvoiceFragment" >
+        <action
+            android:id="@+id/action_invoiceFragment_to_invoiceDetailFragment"
+            app:destination="@id/invoiceDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/invoiceDetailFragment"
+        android:name="com.quanlyquancafeapp.fragment.InvoiceDetailFragment"
+        android:label="InvoiceDetailFragment" />
+</navigation>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_pay"
+    app:startDestination="@id/productFragment">
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="com.quanlyquancafeapp.fragment.ProductFragment"
+        android:label="ProductFragment" >
+        <action
+            android:id="@+id/action_productFragment_to_totalMoneyFragment"
+            app:destination="@id/totalMoneyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/totalMoneyFragment"
+        android:name="com.quanlyquancafeapp.fragment.totalMoneyFragment"
+        android:label="totalMoneyFragment" >
+        <action
+            android:id="@+id/action_totalMoneyFragment_to_payFragment"
+            app:destination="@id/payFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/payFragment"
+        android:name="com.quanlyquancafeapp.fragment.PayFragment"
+        android:label="PayFragment" >
+        <action
+            android:id="@+id/action_payFragment_to_tableFragment2"
+            app:destination="@id/tableFragment" />
+        <action
+            android:id="@+id/action_payFragment_to_tableFragment"
+            app:destination="@id/tableFragment" />
+    </fragment>
+</navigation>
