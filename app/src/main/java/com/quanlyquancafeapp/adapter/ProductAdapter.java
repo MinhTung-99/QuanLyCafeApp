@@ -40,21 +40,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        holder.imgProduct.setImageResource(products.get(position).getImage());
-        holder.txtName.setText(products.get(position).getName() + " - ");
-        String setupPrice = PriceUtil.setupPrice(String.valueOf(products.get(position).getPrice()));
-        String setupPriceByComma = PriceUtil.getPriceByComma(setupPrice);
-        holder.txtPrice.setText(setupPriceByComma+"k");
-        holder.txtCount.setText(String.valueOf(products.get(position).getCount()));
-        holder.itemView.setOnClickListener(v->holder.recyclerViewOnItemClick.onClick(position));
-        holder.btnReduction.setOnClickListener(v->holder.recyclerViewOnItemClick.reductionBtn(position));
-        if(products.get(position).getCount() == 0){
-            holder.btnReduction.setVisibility(View.GONE);
-            holder.txtCount.setVisibility(View.GONE);
-        }else {
-            holder.btnReduction.setVisibility(View.VISIBLE);
-            holder.txtCount.setVisibility(View.VISIBLE);
-        }
+        //holder.imgProduct.setImageResource(products.get(position).getImage());
+//        holder.txtName.setText(products.get(position).getName() + " - ");
+//        String setupPrice = PriceUtil.setupPrice(String.valueOf(products.get(position).getPrice()));
+//        String setupPriceByComma = PriceUtil.getPriceByComma(setupPrice);
+//        holder.txtPrice.setText(setupPriceByComma+"k");
+//        //holder.txtCount.setText(String.valueOf(products.get(position).getCount()));
+//        holder.itemView.setOnClickListener(v->holder.recyclerViewOnItemClick.onClick(position));
+//        holder.btnReduction.setOnClickListener(v->holder.recyclerViewOnItemClick.reductionBtn(position));
+//        if(products.get(position).getCount() == 0){
+//            holder.btnReduction.setVisibility(View.GONE);
+//            holder.txtCount.setVisibility(View.GONE);
+//        }else {
+//            holder.btnReduction.setVisibility(View.VISIBLE);
+//            holder.txtCount.setVisibility(View.VISIBLE);
+//        }
     }
     @Override
     public int getItemCount() {

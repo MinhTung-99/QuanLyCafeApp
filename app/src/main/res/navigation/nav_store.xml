@@ -6,5 +6,13 @@
     <fragment
         android:id="@+id/storeFragment"
         android:name="com.quanlyquancafeapp.fragment.StoreFragment"
-        android:label="StoreFragment" />
+        android:label="StoreFragment" >
+        <action
+            android:id="@+id/action_storeFragment_to_addOrUpdateStoreFragment"
+            app:destination="@id/addOrUpdateStoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addOrUpdateStoreFragment"
+        android:name="com.quanlyquancafeapp.fragment.AddOrUpdateStoreFragment"
+        android:label="AddOrUpdateStoreFragment" />
 </navigation>

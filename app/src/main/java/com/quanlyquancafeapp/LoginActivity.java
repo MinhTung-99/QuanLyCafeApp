@@ -4,10 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.quanlyquancafeapp.databinding.ActivityLoginBinding;
+import com.quanlyquancafeapp.databinding.CustomToastBinding;
+import com.quanlyquancafeapp.db.UserHelper;
+import com.quanlyquancafeapp.model.User;
 import com.quanlyquancafeapp.presenter.LoginPresenter;
 import com.quanlyquancafeapp.view.ILoginView;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements ILoginView {
     private ActivityLoginBinding binding;
@@ -15,15 +26,22 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         loginPresenter = new LoginPresenter(this);
+        loginPresenter.visibilityView(this);
         setBackgroundButton();
-        binding.btnRegister.setOnClickListener(v -> loginPresenter.register());
-        binding.txtForgotPassword.setOnClickListener(v -> loginPresenter.forgotPassword());
+        binding.btnRegister.setOnClickListener(v -> loginPresenter.navigateToRegisterActivity());
+        binding.txtForgotPassword.setOnClickListener(v -> loginPresenter.navigateToForgotPasswordActivity());
         binding.btnLogin.setOnClickListener(v -> {
-            //loginPresenter.logInToHome();
-            loginPresenter.logInToAdmin();
+            String typeUser = loginPresenter.handleLogin(this,
+                    binding.edtAccount.getText().toString(), binding.edtPassword.getText().toString());
+            if(typeUser.equals("ADMIN")){
+                loginPresenter.navigateToLogInToHomeAdminActivity();
+                finish();
+            }else if(typeUser.equals("USER")){
+                loginPresenter.navigateToHomeActivity();
+                finish();
+            }
         });
     }
     private void setBackgroundButton() {
@@ -31,24 +49,42 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         binding.btnRegister.setBackgroundResource(R.drawable.rounded_white);
     }
     @Override
-    public void navigateToRegisterFragment() {
+    public void navigateToRegisterActivity() {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }
     @Override
-    public void navigateToForgotPasswordFragment() {
+    public void navigateToForgotPasswordActivity() {
         Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
         startActivity(intent);
     }
     @Override
-    public void navigateToHomeFragment() {
-        //Navigation.findNavController(getView()).navigate(R.id.homeFragment);
+    public void navigateToHomeActivity() {
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
     }
     @Override
-    public void navigateToAdminFragment() {
+    public void navigateToHomeAdminActivity() {
         Intent intent = new Intent(LoginActivity.this, HomeAdminActivity.class);
         startActivity(intent);
-//        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//        startActivity(intent);
+    }
+    @Override
+    public void loginFail() {
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.TOP, 0 , 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        View view = getLayoutInflater().inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.root));
+        TextView txtToast = view.findViewById(R.id.txt_toast);
+        txtToast.setText("Tài khoản hoặc mật khẩu không đúng!!!");
+        toast.setView(view);
+        toast.show();
+    }
+    @Override
+    public void hideView() {
+        binding.btnRegister.setVisibility(View.GONE);
+    }
+    @Override
+    public void showView() {
+        binding.btnRegister.setVisibility(View.VISIBLE);
     }
 }

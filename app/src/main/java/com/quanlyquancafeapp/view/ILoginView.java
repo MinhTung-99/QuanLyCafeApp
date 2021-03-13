@@ -1,8 +1,11 @@
 package com.quanlyquancafeapp.view;
 
 public interface ILoginView {
-    void navigateToRegisterFragment();
-    void navigateToForgotPasswordFragment();
-    void navigateToHomeFragment();
-    void navigateToAdminFragment();
+    void navigateToRegisterActivity();
+    void navigateToForgotPasswordActivity();
+    void navigateToHomeActivity();
+    void navigateToHomeAdminActivity();
+    void loginFail();
+    void hideView();
+    void showView();
 }

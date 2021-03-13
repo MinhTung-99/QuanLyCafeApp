@@ -34,12 +34,13 @@
                 android:layout_marginHorizontal="10dp"
                 android:src="@drawable/ic_user"/>
             <EditText
+                android:id="@+id/edt_account"
                 android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tài khoản"
                 android:textColor="@color/black"
-                android:textColorHint="@color/black"/>
+                android:textColorHint="@color/silver"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_password"
@@ -56,12 +57,14 @@
                 android:layout_marginHorizontal="10dp"
                 android:src="@drawable/ic_password"/>
             <EditText
+                android:id="@+id/edt_password"
                 android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="mật khẩu"
+                android:inputType="textPassword"
                 android:textColor="@color/black"
-                android:textColorHint="@color/black"/>
+                android:textColorHint="@color/silver"/>
         </LinearLayout>
         <Button
             android:id="@+id/btn_login"

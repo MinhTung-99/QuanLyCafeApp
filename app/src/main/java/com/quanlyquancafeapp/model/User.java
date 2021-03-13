@@ -10,10 +10,27 @@ public class User {
     private String password;
     private String typeUser;
 
+    public User() {
+    }
     public User(Long id, String nameStore, String address, String phoneNumber, String gender, String userName, String password, String typeUser) {
         this.id = id;
         this.nameStore = nameStore;
         this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.userName = userName;
+        this.password = password;
+        this.typeUser = typeUser;
+    }
+    public User(String nameStore, String address, String phoneNumber, String userName, String password, String typeUser) {
+        this.nameStore = nameStore;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.userName = userName;
+        this.password = password;
+        this.typeUser = typeUser;
+    }
+    public User(String phoneNumber, String gender, String userName, String password, String typeUser) {
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.userName = userName;

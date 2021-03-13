@@ -1,5 +1,6 @@
 package com.quanlyquancafeapp.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,18 +28,19 @@ public class ProductAdminAdapter extends RecyclerView.Adapter<ProductAdminAdapte
         binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_product_admin, parent, false);
         return new ProductAdminViewHolder(binding);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ProductAdminViewHolder holder, int position) {
         holder.binding.setProduct(products.get(position));
         holder.binding.txtCount.setVisibility(View.GONE);
     }
-
+    public void updateProduct(ArrayList<Product> products){
+        this.products = products;
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
         return products.size();
     }
-
     class ProductAdminViewHolder extends RecyclerView.ViewHolder{
         private ItemProductAdminBinding binding;
         public ProductAdminViewHolder(@NonNull ItemProductAdminBinding itemView) {

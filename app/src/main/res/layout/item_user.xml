@@ -31,13 +31,23 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{user.userName}"
-                    android:textColor="@color/black"
+                    android:orientation="vertical"
                     android:layout_marginLeft="10dp"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{user.userName}"
+                        android:textColor="@color/black" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{user.gender}"
+                        android:textColor="@color/black" />
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

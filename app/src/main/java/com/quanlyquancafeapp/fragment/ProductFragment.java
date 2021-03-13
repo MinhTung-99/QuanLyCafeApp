@@ -34,10 +34,11 @@ import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
+import com.quanlyquancafeapp.view.IProductView;
 
 import java.util.ArrayList;
 
-public class ProductFragment extends Fragment implements IRecyclerViewOnItemClick {
+public class ProductFragment extends Fragment implements IRecyclerViewOnItemClick, IProductView {
     private FragmentProductBinding binding;
     private ProductAdapter adapter;
     private ArrayList<Product> products;
