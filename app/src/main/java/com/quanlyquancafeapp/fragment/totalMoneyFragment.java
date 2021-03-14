@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.TotalMoneyAdapter;
+import com.quanlyquancafeapp.db.ProductHelper;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.utils.DataFake;
@@ -39,10 +40,10 @@ public class totalMoneyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initView();
         Table table = (Table) getArguments().getSerializable("table");
-
         //demo
         float totalMoney = 0;
-        ArrayList<Product> products = DataFake.productFake();
+        ProductHelper db = new ProductHelper(getContext());
+        ArrayList<Product> products = db.getProducts();
         for(int i = 0; i < DataFake.orders.size(); i++){
             for (int j = 0; j < products.size(); j++){
                 float intoMoney = 0;
@@ -70,7 +71,6 @@ public class totalMoneyFragment extends Fragment {
                         DataFake.orders.get(i).setTotalMoney(intoMoney);
                     }
                 }else{
-                    Toast.makeText(getContext(), "????", Toast.LENGTH_SHORT).show();
                     if(DataFake.orders.get(i).getIdProduct() == products.get(j).getId()){
                         if(products.get(j).getSale().equals("")){//check sale
                             float sum = products.get(j).getPrice() * DataFake.orders.get(i).getCount();

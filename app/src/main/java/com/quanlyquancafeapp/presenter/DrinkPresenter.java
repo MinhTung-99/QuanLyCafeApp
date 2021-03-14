@@ -4,15 +4,13 @@ import android.content.Context;
 
 import com.quanlyquancafeapp.db.ProductHelper;
 import com.quanlyquancafeapp.model.Product;
-import com.quanlyquancafeapp.view.IProductView;
 
 import java.util.ArrayList;
 
-public class ProductPresenter {
-    private IProductView productView;
+public class DrinkPresenter {
     private ProductHelper db;
-    public ProductPresenter(IProductView productView, Context context) {
-        this.productView = productView;
+
+    public DrinkPresenter(Context context) {
         db = new ProductHelper(context);
     }
     public ArrayList<Product> getProducts(){

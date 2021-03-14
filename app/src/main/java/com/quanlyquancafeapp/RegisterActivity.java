@@ -24,6 +24,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterView
             registerPresenter.handleRegisterUserAdminDB(this,binding.edtPhoneNumber.getText().toString(),binding.edtNameStore.getText().toString(),
                     binding.edtAddress.getText().toString(), binding.edtUserName.getText().toString(),
                     binding.edtPassword.getText().toString(),binding.edtPasswordAgain.getText().toString());
+            finish();
         });
     }
     @Override

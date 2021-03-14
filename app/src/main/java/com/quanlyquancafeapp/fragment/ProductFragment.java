@@ -31,6 +31,7 @@ import com.quanlyquancafeapp.databinding.FragmentProductBinding;
 import com.quanlyquancafeapp.model.Order;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
+import com.quanlyquancafeapp.presenter.ProductPresenter;
 import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
@@ -45,6 +46,7 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
     private ArrayList<Product> productsCafe;
     private ArrayList<Product> productsDrink;
     private boolean isCafe = true;
+    private ProductPresenter productPresenter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Table table = (Table) getArguments().getSerializable("table");
-
+        productPresenter = new ProductPresenter(this, getContext());
         productsCafe = new ArrayList<>();
         productsDrink = new ArrayList<>();
         setBackgroundButton();
@@ -114,8 +116,7 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
         binding.btnStore.setBackgroundColor(getResources().getColor(R.color.blue));
     }
     private void setAdapter() {
-        products = DataFake.productFake();
-
+        products = productPresenter.getProducts();
         for(Product product: products){
             if(product.getSpecies().equals("CAFE")){
                 productsCafe.add(product);

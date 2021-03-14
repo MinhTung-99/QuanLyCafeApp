@@ -28,7 +28,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         loginPresenter = new LoginPresenter(this);
-        loginPresenter.visibilityView(this);
         setBackgroundButton();
         binding.btnRegister.setOnClickListener(v -> loginPresenter.navigateToRegisterActivity());
         binding.txtForgotPassword.setOnClickListener(v -> loginPresenter.navigateToForgotPasswordActivity());
@@ -86,5 +85,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @Override
     public void showView() {
         binding.btnRegister.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loginPresenter.visibilityView(this);
     }
 }

@@ -1,5 +1,7 @@
 package com.quanlyquancafeapp.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,21 +42,23 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        //holder.imgProduct.setImageResource(products.get(position).getImage());
-//        holder.txtName.setText(products.get(position).getName() + " - ");
-//        String setupPrice = PriceUtil.setupPrice(String.valueOf(products.get(position).getPrice()));
-//        String setupPriceByComma = PriceUtil.getPriceByComma(setupPrice);
-//        holder.txtPrice.setText(setupPriceByComma+"k");
-//        //holder.txtCount.setText(String.valueOf(products.get(position).getCount()));
-//        holder.itemView.setOnClickListener(v->holder.recyclerViewOnItemClick.onClick(position));
-//        holder.btnReduction.setOnClickListener(v->holder.recyclerViewOnItemClick.reductionBtn(position));
-//        if(products.get(position).getCount() == 0){
-//            holder.btnReduction.setVisibility(View.GONE);
-//            holder.txtCount.setVisibility(View.GONE);
-//        }else {
-//            holder.btnReduction.setVisibility(View.VISIBLE);
-//            holder.txtCount.setVisibility(View.VISIBLE);
-//        }
+        Bitmap bitmap = BitmapFactory.decodeByteArray(products.get(position).getImage(), 0, products.get(position).getImage().length);
+        products.get(position).setBitmap(bitmap);
+        holder.imgProduct.setImageBitmap(products.get(position).getBitmap());
+        holder.txtName.setText(products.get(position).getName() + " - ");
+        String setupPrice = PriceUtil.setupPrice(String.valueOf(products.get(position).getPrice()));
+        String setupPriceByComma = PriceUtil.getPriceByComma(setupPrice);
+        holder.txtPrice.setText(setupPriceByComma+"k");
+        holder.txtCount.setText(String.valueOf(products.get(position).getCount()));
+        holder.itemView.setOnClickListener(v->holder.recyclerViewOnItemClick.onClick(position));
+        holder.btnReduction.setOnClickListener(v->holder.recyclerViewOnItemClick.reductionBtn(position));
+        if(products.get(position).getCount() == 0){
+            holder.btnReduction.setVisibility(View.GONE);
+            holder.txtCount.setVisibility(View.GONE);
+        }else {
+            holder.btnReduction.setVisibility(View.VISIBLE);
+            holder.txtCount.setVisibility(View.VISIBLE);
+        }
     }
     @Override
     public int getItemCount() {

@@ -1,5 +1,7 @@
 package com.quanlyquancafeapp.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.ProductAdminAdapter;
 import com.quanlyquancafeapp.databinding.FragmentDrinkBinding;
 import com.quanlyquancafeapp.model.Product;
+import com.quanlyquancafeapp.presenter.DrinkPresenter;
 import com.quanlyquancafeapp.utils.DataFake;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public class DrinkFragment extends Fragment {
     private FragmentDrinkBinding binding;
     private ArrayList<Product> productDrink;
     private ProductAdminAdapter adapter;
+    private DrinkPresenter drinkPresenter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,11 +36,13 @@ public class DrinkFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        ArrayList<Product> products = DataFake.productFake();
+        drinkPresenter = new DrinkPresenter(getContext());
+        ArrayList<Product> products = drinkPresenter.getProducts();
         productDrink = new ArrayList<>();
         for(Product product: products){
             if(product.getSpecies().equals("DRINK")){
+                Bitmap bitmap = BitmapFactory.decodeByteArray(product.getImage(), 0, product.getImage().length);
+                product.setBitmap(bitmap);
                 productDrink.add(product);
             }
         }
