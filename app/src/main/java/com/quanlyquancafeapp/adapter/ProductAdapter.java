@@ -11,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
+import com.quanlyquancafeapp.databinding.ItemProductBinding;
 import com.quanlyquancafeapp.fragment.TableFragment;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
@@ -37,46 +39,46 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent, false);
-        return new ProductViewHolder(view, recyclerViewOnItemClick);
+        ItemProductBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.item_product, parent, false);
+        return new ProductViewHolder(binding, recyclerViewOnItemClick);
     }
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(products.get(position).getImage(), 0, products.get(position).getImage().length);
-        products.get(position).setBitmap(bitmap);
-        holder.imgProduct.setImageBitmap(products.get(position).getBitmap());
-        holder.txtName.setText(products.get(position).getName() + " - ");
+        convertImageByteArrToBitmap(position);
+        holder.binding.imgProduct.setImageBitmap(products.get(position).getBitmap());
+        holder.binding.txtName.setText(products.get(position).getName() + " - ");
         String setupPrice = PriceUtil.setupPrice(String.valueOf(products.get(position).getPrice()));
         String setupPriceByComma = PriceUtil.getPriceByComma(setupPrice);
-        holder.txtPrice.setText(setupPriceByComma+"k");
-        holder.txtCount.setText(String.valueOf(products.get(position).getCount()));
+        holder.binding.txtPrice.setText(setupPriceByComma+"k");
+        holder.binding.txtCount.setText(String.valueOf(products.get(position).getCount()));
+
         holder.itemView.setOnClickListener(v->holder.recyclerViewOnItemClick.onClick(position));
-        holder.btnReduction.setOnClickListener(v->holder.recyclerViewOnItemClick.reductionBtn(position));
+        holder.binding.btnReduction.setOnClickListener(v->holder.recyclerViewOnItemClick.reductionBtn(position));
+
         if(products.get(position).getCount() == 0){
-            holder.btnReduction.setVisibility(View.GONE);
-            holder.txtCount.setVisibility(View.GONE);
+            hideOrShowView(holder, View.GONE);
         }else {
-            holder.btnReduction.setVisibility(View.VISIBLE);
-            holder.txtCount.setVisibility(View.VISIBLE);
+            hideOrShowView(holder, View.VISIBLE);
         }
+    }
+    private void convertImageByteArrToBitmap(int position){
+        Bitmap bitmap = BitmapFactory.decodeByteArray(products.get(position).getImage(), 0, products.get(position).getImage().length);
+        products.get(position).setBitmap(bitmap);
+    }
+    private void hideOrShowView(ProductViewHolder holder, int visibility){
+        holder.binding.btnReduction.setVisibility(visibility);
+        holder.binding.txtCount.setVisibility(visibility);
     }
     @Override
     public int getItemCount() {
         return products.size();
     }
     class ProductViewHolder extends RecyclerView.ViewHolder{
-        private ImageView imgProduct;
-        private TextView txtName, txtPrice, txtCount;
-        private Button btnReduction;
+        private ItemProductBinding binding;
         private IRecyclerViewOnItemClick recyclerViewOnItemClick;
-        public ProductViewHolder(@NonNull View itemView, IRecyclerViewOnItemClick recyclerViewOnItemClick) {
-            super(itemView);
-
-            imgProduct = itemView.findViewById(R.id.img_product);
-            txtName = itemView.findViewById(R.id.txt_name);
-            txtPrice = itemView.findViewById(R.id.txt_price);
-            txtCount = itemView.findViewById(R.id.txt_count);
-            btnReduction = itemView.findViewById(R.id.btn_reduction);
+        public ProductViewHolder(@NonNull ItemProductBinding itemView, IRecyclerViewOnItemClick recyclerViewOnItemClick) {
+            super(itemView.getRoot());
+            this.binding = itemView;
             this.recyclerViewOnItemClick = recyclerViewOnItemClick;
         }
     }

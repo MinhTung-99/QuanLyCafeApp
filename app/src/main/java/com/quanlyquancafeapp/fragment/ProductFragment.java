@@ -58,21 +58,19 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Table table = (Table) getArguments().getSerializable("table");
-        productPresenter = new ProductPresenter(this, getContext());
-        productsCafe = new ArrayList<>();
-        productsDrink = new ArrayList<>();
-        setBackgroundButton();
+        init();
+        setFirstBackgroundButton();
         setAdapter();
         binding.btnCafe.setOnClickListener(v->{
-            binding.btnCafe.setBackgroundColor(getResources().getColor(R.color.blue));
+            productPresenter.setBackgroundButton(binding.btnCafe, R.color.blue);
+            productPresenter.setBackgroundButton(binding.btnDrink, R.color.brown);
             adapter.updateProduct(productsCafe);
-            binding.btnDrink.setBackgroundColor(getResources().getColor(R.color.brown));
             isCafe = true;
         });
         binding.btnDrink.setOnClickListener(v->{
-            binding.btnDrink.setBackgroundColor(getResources().getColor(R.color.blue));
+            productPresenter.setBackgroundButton(binding.btnDrink, R.color.blue);
+            productPresenter.setBackgroundButton(binding.btnCafe, R.color.brown);
             adapter.updateProduct(productsDrink);
-            binding.btnCafe.setBackgroundColor(getResources().getColor(R.color.brown));
             isCafe = false;
         });
         binding.btnStore.setOnClickListener(v->{
@@ -105,55 +103,33 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
                 Navigation.findNavController(v).navigate(R.id.totalMoneyFragment, bundle);
             }
         });
-        binding.imgQrCode.setOnClickListener(v->{
-            Intent intent = new Intent(getActivity(), ScanCodeActivity.class);
-            startActivity(intent);
-        });
+        binding.imgQrCode.setOnClickListener(v-> navigateToScanCodeActivity());
     }
-    private void setBackgroundButton() {
-        binding.btnCafe.setBackgroundColor(getResources().getColor(R.color.blue));
-        binding.btnDrink.setBackgroundColor(getResources().getColor(R.color.brown));
-        binding.btnStore.setBackgroundColor(getResources().getColor(R.color.blue));
+    private void init() {
+        productPresenter = new ProductPresenter(this, getContext());
+        productsCafe = productPresenter.getProductsCafe();
+        productsDrink = productPresenter.getProductsDrink();
+    }
+    private void setFirstBackgroundButton() {
+        productPresenter.setBackgroundButton(binding.btnCafe, R.color.blue);
+        productPresenter.setBackgroundButton(binding.btnDrink, R.color.brown);
+        productPresenter.setBackgroundButton(binding.btnStore, R.color.blue);
     }
     private void setAdapter() {
-        products = productPresenter.getProducts();
-        for(Product product: products){
-            if(product.getSpecies().equals("CAFE")){
-                productsCafe.add(product);
-            }else if(product.getSpecies().equals("DRINK")){
-                productsDrink.add(product);
-            }
-        }
         adapter = new ProductAdapter(productsCafe, this);
         binding.rvProduct.setAdapter(adapter);
     }
     @Override
     public void onClick(Object position) {
-        handleCount(Constance.recyclerviewItem, (int) position);
+        productPresenter.handleCount(Constance.recyclerviewItem, (int) position, productsCafe, productsDrink, isCafe, adapter);
     }
     @Override
     public void reductionBtn(int position) {
-        handleCount(Constance.reductionBtn, position);
+        productPresenter.handleCount(Constance.recyclerviewItem, (int) position, productsCafe, productsDrink, isCafe, adapter);
     }
-    private void handleCount(String typeClick, int position){
-        if(isCafe){
-            int count = productsCafe.get(position).getCount();
-            if(typeClick.equals(Constance.recyclerviewItem)){
-                count++;
-            }else if(typeClick.equals(Constance.reductionBtn)){
-                count--;
-            }
-            productsCafe.get(position).setCount(count);
-            adapter.updateProduct(productsCafe);
-        }else{
-            int count = productsDrink.get(position).getCount();
-            if(typeClick.equals(Constance.recyclerviewItem)){
-                count++;
-            }else if(typeClick.equals(Constance.reductionBtn)){
-                count--;
-            }
-            productsDrink.get(position).setCount(count);
-            adapter.updateProduct(productsDrink);
-        }
+    @Override
+    public void navigateToScanCodeActivity() {
+        Intent intent = new Intent(getActivity(), ScanCodeActivity.class);
+        startActivity(intent);
     }
 }
