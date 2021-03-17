@@ -37,7 +37,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
     }
     @Override
     public void onBindViewHolder(@NonNull TableViewHolder holder, int position) {
-        holder.txtTableName.setText(tables.get(position).getTableId());
+        holder.txtTableName.setText(tables.get(position).getName());
         holder.itemView.setOnClickListener(v -> holder.recyclerViewOnClick.onClick(tables.get(position)));
         if(DataFake.order.getIdTable() != null){
             if(DataFake.order.getIdTable().equals(tables.get(position).getId())){

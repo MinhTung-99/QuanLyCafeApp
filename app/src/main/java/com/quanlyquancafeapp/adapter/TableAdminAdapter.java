@@ -18,9 +18,11 @@ import java.util.ArrayList;
 public class TableAdminAdapter extends RecyclerSwipeAdapter<TableAdminAdapter.TableAdminViewHolder> {
     private ItemTableAdminBinding binding;
     private ArrayList<Table> tables;
+    private RecyclerViewItemOnClick recyclerViewItemOnClick;
 
-    public TableAdminAdapter(ArrayList<Table> tables) {
+    public TableAdminAdapter(ArrayList<Table> tables, RecyclerViewItemOnClick recyclerViewItemOnClick) {
         this.tables = tables;
+        this.recyclerViewItemOnClick = recyclerViewItemOnClick;
     }
 
     @NonNull
@@ -33,22 +35,27 @@ public class TableAdminAdapter extends RecyclerSwipeAdapter<TableAdminAdapter.Ta
     public void onBindViewHolder(@NonNull TableAdminViewHolder holder, int position) {
         holder.binding.txtName.setText(tables.get(position).getName());
         mItemManger.bindView(holder.itemView, position);// open one item in swipe
+        holder.binding.btnDelete.setOnClickListener(v->recyclerViewItemOnClick.btnDeleteOnClick(tables.get(position)));
+    }
+    public void updateTableAdmin(ArrayList<Table> tables){
+        this.tables = tables;
     }
     @Override
     public int getItemCount() {
         return tables.size();
     }
-
     @Override
     public int getSwipeLayoutResourceId(int position) {
         return R.id.swipe;
     }
-
     class TableAdminViewHolder extends RecyclerView.ViewHolder{
         private ItemTableAdminBinding binding;
         public TableAdminViewHolder(@NonNull ItemTableAdminBinding itemView) {
             super(itemView.getRoot());
             this.binding = itemView;
         }
+    }
+    public interface RecyclerViewItemOnClick{
+        void btnDeleteOnClick(Table table);
     }
 }

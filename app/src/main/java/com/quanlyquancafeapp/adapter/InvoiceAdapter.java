@@ -1,7 +1,6 @@
 package com.quanlyquancafeapp.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,16 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.ItemInvoiceBinding;
-import com.quanlyquancafeapp.model.Invoice;
-import com.quanlyquancafeapp.model.Order;
+import com.quanlyquancafeapp.model.InvoiceOld;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 
 import java.util.ArrayList;
 
 public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.InvoiceViewHolder>{
-    private ArrayList<Invoice> invoices;
+    private ArrayList<InvoiceOld> invoices;
     private IRecyclerViewOnItemClick recyclerViewOnItemClick;
-    public InvoiceAdapter(ArrayList<Invoice> invoices, IRecyclerViewOnItemClick recyclerViewOnItemClick) {
+    public InvoiceAdapter(ArrayList<InvoiceOld> invoices, IRecyclerViewOnItemClick recyclerViewOnItemClick) {
         this.invoices = invoices;
         this.recyclerViewOnItemClick = recyclerViewOnItemClick;
     }

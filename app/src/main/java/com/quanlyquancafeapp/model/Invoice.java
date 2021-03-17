@@ -1,17 +1,15 @@
 package com.quanlyquancafeapp.model;
 
-import java.io.Serializable;
-import java.util.Date;
-
-public class Invoice extends Order implements Serializable {
+public class Invoice {
     private Long id;
-    private String date;
-
-    public Invoice(Long id, String date, Long idProduct, Long idTable, Long idAccount, int count, float totalMoney, float intoMoney) {
-        super(idProduct, idTable, idAccount, count, totalMoney, intoMoney);
-        this.id = id;
-        this.date = date;
-    }
+    private Long idAccount;
+    private Long idProduct;
+    private Long idTable;
+    private Integer count;
+    private float totalMoney;
+    private float inToMoney;
+    private String dateBuy;
+    private Integer isPay;
 
     public Long getId() {
         return id;
@@ -19,10 +17,52 @@ public class Invoice extends Order implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getDate() {
-        return date;
+    public Long getIdAccount() {
+        return idAccount;
     }
-    public void setDate(String date) {
-        this.date = date;
+    public void setIdAccount(Long idAccount) {
+        this.idAccount = idAccount;
+    }
+    public Long getIdProduct() {
+        return idProduct;
+    }
+    public void setIdProduct(Long idProduct) {
+        this.idProduct = idProduct;
+    }
+    public Long getIdTable() {
+        return idTable;
+    }
+    public void setIdTable(Long idTable) {
+        this.idTable = idTable;
+    }
+    public Integer getCount() {
+        return count;
+    }
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+    public float getTotalMoney() {
+        return totalMoney;
+    }
+    public void setTotalMoney(float totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+    public float getInToMoney() {
+        return inToMoney;
+    }
+    public void setInToMoney(float inToMoney) {
+        this.inToMoney = inToMoney;
+    }
+    public String getDateBuy() {
+        return dateBuy;
+    }
+    public void setDateBuy(String dateBuy) {
+        this.dateBuy = dateBuy;
+    }
+    public Integer getIsPay() {
+        return isPay;
+    }
+    public void setIsPay(Integer isPay) {
+        this.isPay = isPay;
     }
 }

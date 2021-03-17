@@ -42,7 +42,6 @@ import java.util.ArrayList;
 public class ProductFragment extends Fragment implements IRecyclerViewOnItemClick, IProductView {
     private FragmentProductBinding binding;
     private ProductAdapter adapter;
-    private ArrayList<Product> products;
     private ArrayList<Product> productsCafe;
     private ArrayList<Product> productsDrink;
     private boolean isCafe = true;

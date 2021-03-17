@@ -1,7 +1,6 @@
 package com.quanlyquancafeapp.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,9 @@ import androidx.fragment.app.Fragment;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.TotalMoneyAdapter;
 import com.quanlyquancafeapp.databinding.FragmentInvoiceDetailBinding;
-import com.quanlyquancafeapp.model.Invoice;
+import com.quanlyquancafeapp.model.InvoiceOld;
 import com.quanlyquancafeapp.model.Order;
-import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.utils.DataFake;
-import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 
 import java.util.ArrayList;
 
@@ -38,7 +35,7 @@ public class InvoiceDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         orders = new ArrayList<>();
-        Invoice invoice = (Invoice) getArguments().getSerializable("invoice");
+        InvoiceOld invoice = (InvoiceOld) getArguments().getSerializable("invoice");
         Toast.makeText(getContext(), invoice.getDate(),Toast.LENGTH_SHORT).show();
         DataFake.orders = DataFake.orderFake();
 //        ArrayList<Product> products = DataFake.productFake();

@@ -4,11 +4,13 @@ import java.io.Serializable;
 
 public class Table implements Serializable {
     private Long id;
-    private String tableId;
     private String name;
-    public Table(Long id, String tableId,String name) {
+
+    public Table() {
+    }
+
+    public Table(Long id, String name) {
         this.id = id;
-        this.tableId = tableId;
         this.name = name;
     }
     public Long getId() {
@@ -16,12 +18,6 @@ public class Table implements Serializable {
     }
     public void setId(Long id) {
         this.id = id;
-    }
-    public String getTableId() {
-        return tableId;
-    }
-    public void setTableId(String tableId) {
-        this.tableId = tableId;
     }
     public String getName() {
         return name;

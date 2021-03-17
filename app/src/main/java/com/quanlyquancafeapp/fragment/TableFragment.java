@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.TableAdapter;
+import com.quanlyquancafeapp.databinding.DialogAddTableBinding;
+import com.quanlyquancafeapp.databinding.FragmentTableBinding;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
@@ -23,29 +26,26 @@ import java.util.ArrayList;
 public class TableFragment extends Fragment implements IRecyclerViewOnItemClick {
     private TableAdapter adapter;
     private ArrayList<Table> tables;
-    private RecyclerView rvTable;
+    private FragmentTableBinding tableBinding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_table, container, false);
+        tableBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_table, container, false);
+        return tableBinding.getRoot();
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initView();
         setAdapter();
     }
     private void setAdapter() {
-        tables.add(new Table(1L,"001","ban 1 tang 1"));
-        tables.add(new Table(2L,"002","ban 2 tang 1"));
-        rvTable.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        adapter = new TableAdapter(tables, this);
-        rvTable.setAdapter(adapter);
-    }
-    private void initView() {
         tables = new ArrayList<>();
-        rvTable = getView().findViewById(R.id.rv_table);
+//        tables.add(new Table(1L,"001","ban 1 tang 1"));
+//        tables.add(new Table(2L,"002","ban 2 tang 1"));
+        tableBinding.rvTable.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        adapter = new TableAdapter(tables, this);
+        tableBinding.rvTable.setAdapter(adapter);
     }
     @Override
     public void onClick(Object model) {

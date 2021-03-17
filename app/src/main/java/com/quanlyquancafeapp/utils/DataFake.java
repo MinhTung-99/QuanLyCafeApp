@@ -1,7 +1,6 @@
 package com.quanlyquancafeapp.utils;
 
-import com.quanlyquancafeapp.R;
-import com.quanlyquancafeapp.model.Invoice;
+import com.quanlyquancafeapp.model.InvoiceOld;
 import com.quanlyquancafeapp.model.Order;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
@@ -22,16 +21,16 @@ public class DataFake {
         return products;
     }
 
-    public static ArrayList<Invoice> invoiceFake(){
-        ArrayList<Invoice> invoices = new ArrayList<>();
-        invoices.add(new Invoice(1L,"20/10/2021",1L,1L,1L,5,256,652));
-        invoices.add(new Invoice(2L,"06/10/2021",1L,1L,1L,5,256,652));
+    public static ArrayList<InvoiceOld> invoiceFake(){
+        ArrayList<InvoiceOld> invoices = new ArrayList<>();
+        invoices.add(new InvoiceOld(1L,"20/10/2021",1L,1L,1L,5,256,652));
+        invoices.add(new InvoiceOld(2L,"06/10/2021",1L,1L,1L,5,256,652));
         return invoices;
     }
     public static ArrayList<Order> orderFake(){
         ArrayList<Order> invoices = new ArrayList<>();
-        invoices.add(new Invoice(1L,"20/10/2021",1L,1L,1L,5,256,652));
-        invoices.add(new Invoice(2L,"06/10/2021",1L,1L,1L,5,256,652));
+        invoices.add(new InvoiceOld(1L,"20/10/2021",1L,1L,1L,5,256,652));
+        invoices.add(new InvoiceOld(2L,"06/10/2021",1L,1L,1L,5,256,652));
         return invoices;
     }
     public static ArrayList<User> userFake(){
@@ -41,8 +40,8 @@ public class DataFake {
     }
     public static ArrayList<Table> tableFake(){
         ArrayList<Table> tables = new ArrayList<>();
-        tables.add(new Table(1L,"001","ban 1 tang 1"));
-        tables.add(new Table(2L,"002","ban 2 tang 1"));
+//        tables.add(new Table(1L,"001","ban 1 tang 1"));
+//        tables.add(new Table(2L,"002","ban 2 tang 1"));
         return tables;
     }
 }

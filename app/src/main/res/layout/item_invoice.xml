@@ -3,7 +3,7 @@
     <data>
         <variable
             name="invoice"
-            type="com.quanlyquancafeapp.model.Invoice" />
+            type="com.quanlyquancafeapp.model.InvoiceOld" />
     </data>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
