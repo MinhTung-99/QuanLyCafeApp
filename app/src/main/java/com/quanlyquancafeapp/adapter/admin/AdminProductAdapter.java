@@ -1,6 +1,5 @@
-package com.quanlyquancafeapp.adapter;
+package com.quanlyquancafeapp.adapter.admin;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,13 @@ import com.quanlyquancafeapp.model.Product;
 
 import java.util.ArrayList;
 
-public class ProductAdminAdapter extends RecyclerView.Adapter<ProductAdminAdapter.ProductAdminViewHolder>{
+public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapter.ProductAdminViewHolder>{
     private ArrayList<Product> products;
     private ItemProductAdminBinding binding;
-    public ProductAdminAdapter(ArrayList<Product> products) {
+    private RecyclerViewItemOnclick recyclerViewItemOnclick;
+    public AdminProductAdapter(ArrayList<Product> products, RecyclerViewItemOnclick recyclerViewItemOnclick) {
         this.products = products;
+        this.recyclerViewItemOnclick = recyclerViewItemOnclick;
     }
 
     @NonNull
@@ -32,6 +33,8 @@ public class ProductAdminAdapter extends RecyclerView.Adapter<ProductAdminAdapte
     public void onBindViewHolder(@NonNull ProductAdminViewHolder holder, int position) {
         holder.binding.setProduct(products.get(position));
         holder.binding.txtCount.setVisibility(View.GONE);
+        holder.binding.btnDelete.setOnClickListener(v->recyclerViewItemOnclick.btnDelete());
+        holder.binding.btnUpdate.setOnClickListener(v->recyclerViewItemOnclick.btnUpdate(products.get(position)));
     }
     public void updateProduct(ArrayList<Product> products){
         this.products = products;
@@ -47,5 +50,9 @@ public class ProductAdminAdapter extends RecyclerView.Adapter<ProductAdminAdapte
             super(itemView.getRoot());
             this.binding = itemView;
         }
+    }
+    public interface RecyclerViewItemOnclick{
+        void btnUpdate(Product product);
+        void btnDelete();
     }
 }

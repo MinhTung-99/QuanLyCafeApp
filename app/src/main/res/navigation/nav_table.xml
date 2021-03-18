@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/tableAdminFragment"
-        android:name="com.quanlyquancafeapp.fragment.TableAdminFragment"
+        android:name="com.quanlyquancafeapp.fragment.admin.AdminTableFragment"
         android:label="TableAdminFragment" />
 </navigation>

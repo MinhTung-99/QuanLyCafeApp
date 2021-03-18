@@ -1,8 +1,8 @@
-package com.quanlyquancafeapp.view;
+package com.quanlyquancafeapp.view.admin;
 
 import com.quanlyquancafeapp.model.User;
 
-public interface IUserView {
+public interface IAdminUserView {
     void initDiaLogAdd();
     void initDiaLogUpdate();
     void initDiaLogDelete();

@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/userFragment"
-        android:name="com.quanlyquancafeapp.fragment.UserFragment"
+        android:name="com.quanlyquancafeapp.fragment.admin.AdminUserFragment"
         android:label="UserFragment" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.quanlyquancafeapp.presenter;
+package com.quanlyquancafeapp.presenter.admin.product;
 
 import android.content.Context;
 
@@ -7,10 +7,10 @@ import com.quanlyquancafeapp.model.Product;
 
 import java.util.ArrayList;
 
-public class DrinkPresenter {
+public class AdminDrinkPresenter {
     private ProductHelper db;
 
-    public DrinkPresenter(Context context) {
+    public AdminDrinkPresenter(Context context) {
         db = new ProductHelper(context);
     }
     public ArrayList<Product> getProducts(){

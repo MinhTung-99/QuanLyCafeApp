@@ -1,4 +1,4 @@
-package com.quanlyquancafeapp.fragment;
+package com.quanlyquancafeapp.fragment.admin;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -10,45 +10,46 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import com.quanlyquancafeapp.R;
-import com.quanlyquancafeapp.adapter.UserAdapter;
+import com.quanlyquancafeapp.adapter.admin.AdminUserAdapter;
 import com.quanlyquancafeapp.databinding.DialogAddUserBinding;
 import com.quanlyquancafeapp.databinding.DialogDeleteUserBinding;
 import com.quanlyquancafeapp.databinding.DialogUpdateUserBinding;
-import com.quanlyquancafeapp.databinding.FragmentUserBinding;
+import com.quanlyquancafeapp.databinding.FragmentAdminUserBinding;
 import com.quanlyquancafeapp.model.User;
-import com.quanlyquancafeapp.presenter.UserPresenter;
-import com.quanlyquancafeapp.view.IUserView;
+import com.quanlyquancafeapp.presenter.admin.AdminUserPresenter;
+import com.quanlyquancafeapp.view.admin.IAdminUserView;
 import java.util.ArrayList;
 
-public class UserFragment extends Fragment implements UserAdapter.IRecyclerViewOnClick, IUserView {
-    private FragmentUserBinding binding;
+public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRecyclerViewOnClick, IAdminUserView {
+    private FragmentAdminUserBinding fragmentAdminUserBinding;
     private ArrayList<User> users;
-    private UserAdapter adapter;
+    private AdminUserAdapter adapter;
     private AlertDialog alertDialogAdd;
     private AlertDialog alertDialogUpdate;
     private AlertDialog alertDialogDelete;
     private DialogAddUserBinding dialogAddUserBinding;
     private DialogUpdateUserBinding dialogUpdateUserBinding;
     private DialogDeleteUserBinding dialogDeleteUserBinding;
-    private UserPresenter userPresenter;
+    private AdminUserPresenter adminUserPresenter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         dialogAddUserBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_add_user, container, false);
         dialogUpdateUserBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_update_user, container, false);
         dialogDeleteUserBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_delete_user, container, false);
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user, container, false);
-        return binding.getRoot();
+        fragmentAdminUserBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_admin_user, container, false);
+        return fragmentAdminUserBinding.getRoot();
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userPresenter = new UserPresenter(this, getContext());
+        adminUserPresenter = new AdminUserPresenter(this, getContext());
         initDiaLogAdd();
         initDiaLogUpdate();
         initDiaLogDelete();
         setAdapter();
-        binding.imgAdd.setOnClickListener(v->{
+        fragmentAdminUserBinding.imgAdd.setOnClickListener(v->{
             alertDialogAdd.show();
             setHintEdtDialogAdd();
         });
@@ -57,20 +58,20 @@ public class UserFragment extends Fragment implements UserAdapter.IRecyclerViewO
     private void onClickDialogAdd(){
         dialogAddUserBinding.btnYes.setOnClickListener(v->{
             String gender = setGenderAdd();
-            userPresenter.addUserDB(
+            adminUserPresenter.addUserDB(
                     dialogAddUserBinding.edtUserName.getText().toString(), dialogAddUserBinding.edtPhoneNumber.getText().toString(),
                     dialogAddUserBinding.edtPassword.getText().toString(), gender);
             alertDialogAdd.cancel();
-            adapter.updateUser(userPresenter.getUsersDB());
+            adapter.updateUser(adminUserPresenter.getUsersDB());
         });
         dialogAddUserBinding.btnCancel.setOnClickListener(v->{
             alertDialogAdd.cancel();
         });
     }
     private void setAdapter(){
-        users = userPresenter.getUsersDB();
-        adapter = new UserAdapter(users, getContext(), this);
-        binding.rvUser.setAdapter(adapter);
+        users = adminUserPresenter.getUsersDB();
+        adapter = new AdminUserAdapter(users, getContext(), this);
+        fragmentAdminUserBinding.rvUser.setAdapter(adapter);
     }
     private String setGenderAdd(){
         if(dialogAddUserBinding.radioMan.isChecked()){
@@ -119,10 +120,10 @@ public class UserFragment extends Fragment implements UserAdapter.IRecyclerViewO
     private void onClickDialogUpdate(User user){
         dialogUpdateUserBinding.btnYes.setOnClickListener(v->{
             String gender = setGenderUpdate();
-            userPresenter.updateUserDB(user.getId(),
+            adminUserPresenter.updateUserDB(user.getId(),
                     dialogUpdateUserBinding.edtUserName.getText().toString(), dialogUpdateUserBinding.edtPhoneNumber.getText().toString(),
                     dialogUpdateUserBinding.edtPassword.getText().toString(), gender);
-            adapter.updateUser(userPresenter.getUsersDB());
+            adapter.updateUser(adminUserPresenter.getUsersDB());
             alertDialogUpdate.cancel();
         });
         dialogUpdateUserBinding.btnCancel.setOnClickListener(v->{
@@ -156,13 +157,13 @@ public class UserFragment extends Fragment implements UserAdapter.IRecyclerViewO
         onClickDialogUpdate(user);
     }
     @Override
-    public void btnDeleteOnClick(int position) {
+    public void btnDeleteOnClick(User user) {
         alertDialogDelete.show();
         dialogDeleteUserBinding.txtToolbar.setText("Xoá nhân viên");
         dialogDeleteUserBinding.btnYes.setOnClickListener(v1->{
-            userPresenter.deleteUserDB(users.get(position).getId());
-            alertDialogDelete.cancel();
-            adapter.updateUser(userPresenter.getUsersDB());
+            adminUserPresenter.deleteUserDB(user.getId());
+            alertDialogDelete.dismiss();
+            adapter.updateUser(adminUserPresenter.getUsersDB());
             adapter.closeSwipe();
         });
     }

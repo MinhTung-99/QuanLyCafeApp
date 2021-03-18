@@ -1,19 +1,19 @@
-package com.quanlyquancafeapp.presenter;
+package com.quanlyquancafeapp.presenter.admin;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.quanlyquancafeapp.db.UserHelper;
 import com.quanlyquancafeapp.model.User;
-import com.quanlyquancafeapp.view.IUserView;
+import com.quanlyquancafeapp.view.admin.IAdminUserView;
 
 import java.util.ArrayList;
 
-public class UserPresenter {
-    private IUserView userView;
+public class AdminUserPresenter {
+    private IAdminUserView userView;
     private UserHelper db;
 
-    public UserPresenter(IUserView userView, Context context) {
+    public AdminUserPresenter(IAdminUserView userView, Context context) {
         this.userView = userView;
         db = new UserHelper(context);
     }

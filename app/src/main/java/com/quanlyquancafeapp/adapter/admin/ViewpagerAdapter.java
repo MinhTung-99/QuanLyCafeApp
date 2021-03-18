@@ -1,15 +1,11 @@
-package com.quanlyquancafeapp.adapter;
+package com.quanlyquancafeapp.adapter.admin;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.quanlyquancafeapp.fragment.CafeFragment;
-import com.quanlyquancafeapp.fragment.DrinkFragment;
-import com.quanlyquancafeapp.fragment.ReportFragment;
-import com.quanlyquancafeapp.fragment.StoreFragment;
-import com.quanlyquancafeapp.fragment.UserFragment;
+import com.quanlyquancafeapp.fragment.admin.product.CafeFragment;
+import com.quanlyquancafeapp.fragment.admin.product.DrinkFragment;
 
 public class ViewpagerAdapter extends FragmentStateAdapter {
 
