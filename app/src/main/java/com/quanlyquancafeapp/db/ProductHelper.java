@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 import com.quanlyquancafeapp.model.Product;
+
 import java.util.ArrayList;
 
 public class ProductHelper extends SQLiteOpenHelper {
@@ -45,7 +46,7 @@ public class ProductHelper extends SQLiteOpenHelper {
             db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(KEY_NAME,product.getName());
-            values.put(KEY_IMAGE,product.getImage());
+            values.put(KEY_IMAGE,product.getImageByteArr());
             values.put(KEY_UNIT, product.getUnit());
             values.put(KEY_PRICE,product.getPrice());
             values.put(KEY_SALE, product.getSale());
@@ -69,7 +70,7 @@ public class ProductHelper extends SQLiteOpenHelper {
                 Product product = new Product();
                 product.setId(cursor.getLong(0));
                 product.setName(cursor.getString(1));
-                product.setImage(cursor.getBlob(2));
+                product.setImageByteArr(cursor.getBlob(2));
                 product.setUnit(cursor.getString(3));
                 product.setPrice(cursor.getFloat(4));
                 product.setSale(cursor.getString(5));
@@ -80,6 +81,28 @@ public class ProductHelper extends SQLiteOpenHelper {
             } while(cursor.moveToNext());
         }
         return products;
+    }
+    public int updateProduct(Product product){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME,product.getName());
+        values.put(KEY_IMAGE,product.getImageByteArr());
+        values.put(KEY_UNIT,product.getUnit());
+        values.put(KEY_PRICE,product.getPrice());
+        values.put(KEY_SALE, product.getSale());
+        values.put(KEY_AVAILABLE_QUANTITY, product.getAvailableQuantity());
+        values.put(KEY_SPECIES, product.getSpecies());
+        values.put(KEY_BARCODE, product.getBarcode());
+        return db.update(TABLE_PRODUCT,
+                values,
+                KEY_ID+"=?",
+                new String[]{String.valueOf(product.getId())});
+    }
+    public int deleteProduct(Long id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_PRODUCT,
+                KEY_ID+"=?",
+                new String[]{String.valueOf(id)});
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}

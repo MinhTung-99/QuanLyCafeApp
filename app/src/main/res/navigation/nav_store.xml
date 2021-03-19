@@ -9,10 +9,10 @@
         android:label="StoreFragment" >
         <action
             android:id="@+id/action_storeFragment_to_addOrUpdateStoreFragment"
-            app:destination="@id/addOrUpdateStoreFragment" />
+            app:destination="@id/addOrUpdateProductFragment" />
     </fragment>
     <fragment
-        android:id="@+id/addOrUpdateStoreFragment"
-        android:name="com.quanlyquancafeapp.fragment.AddOrUpdateStoreFragment"
+        android:id="@+id/addOrUpdateProductFragment"
+        android:name="com.quanlyquancafeapp.fragment.admin.product.AddOrUpdateProductFragment"
         android:label="AddOrUpdateStoreFragment" />
 </navigation>

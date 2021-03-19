@@ -33,8 +33,12 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
     public void onBindViewHolder(@NonNull ProductAdminViewHolder holder, int position) {
         holder.binding.setProduct(products.get(position));
         holder.binding.txtCount.setVisibility(View.GONE);
-        holder.binding.btnDelete.setOnClickListener(v->recyclerViewItemOnclick.btnDelete());
+        holder.binding.btnDelete.setOnClickListener(v->recyclerViewItemOnclick.btnDelete(products.get(position)));
         holder.binding.btnUpdate.setOnClickListener(v->recyclerViewItemOnclick.btnUpdate(products.get(position)));
+        holder.itemView.setOnLongClickListener(v->{
+            recyclerViewItemOnclick.onLongClick(products.get(position));
+            return false;
+        });
     }
     public void updateProduct(ArrayList<Product> products){
         this.products = products;
@@ -53,6 +57,7 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
     }
     public interface RecyclerViewItemOnclick{
         void btnUpdate(Product product);
-        void btnDelete();
+        void btnDelete(Product product);
+        void onLongClick(Product product);
     }
 }

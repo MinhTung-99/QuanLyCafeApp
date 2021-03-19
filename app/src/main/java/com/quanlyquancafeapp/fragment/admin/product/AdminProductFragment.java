@@ -1,13 +1,12 @@
 package com.quanlyquancafeapp.fragment.admin.product;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.quanlyquancafeapp.R;
-import com.quanlyquancafeapp.adapter.admin.AdminProductAdapter;
 import com.quanlyquancafeapp.adapter.admin.ViewpagerAdapter;
 import com.quanlyquancafeapp.databinding.FragmentAdminProductBinding;
 import com.quanlyquancafeapp.model.Product;
@@ -51,14 +49,17 @@ public class AdminProductFragment extends Fragment {
         fragmentAdminProductBinding.imgAdd.setOnClickListener(v->{
             int positionTab = fragmentAdminProductBinding.tabLayout.getSelectedTabPosition();
             Bundle bundle = new Bundle();
+            Product product = new Product();
             if(positionTab == 0){
-                Log.d("KMFG", "CAFE");
-                bundle.putString("species","CAFE");
+                product.setSpecies("CAFE");
+                //bundle.putString("species","CAFE");
             }else if(positionTab == 1) {
-                Log.d("KMFG", "DRINK");
-                bundle.putString("species","DRINK");
+                product.setSpecies("DRINK");
+                //bundle.putString("species","DRINK");
             }
-            Navigation.findNavController(getView()).navigate(R.id.addOrUpdateStoreFragment, bundle);
+            product.setAdd(true);
+            bundle.putSerializable("product", product);
+            Navigation.findNavController(getView()).navigate(R.id.addOrUpdateProductFragment, bundle);
         });
     }
 }

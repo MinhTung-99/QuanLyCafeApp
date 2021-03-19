@@ -2,13 +2,9 @@ package com.quanlyquancafeapp.adapter;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -16,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.ItemProductBinding;
-import com.quanlyquancafeapp.fragment.TableFragment;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 import com.quanlyquancafeapp.utils.PriceUtil;
@@ -45,7 +40,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         convertImageByteArrToBitmap(position);
-        holder.binding.imgProduct.setImageBitmap(products.get(position).getBitmap());
+        holder.binding.imgProduct.setImageBitmap(products.get(position).getImageBitmap());
         holder.binding.txtName.setText(products.get(position).getName() + " - ");
         String setupPrice = PriceUtil.setupPrice(String.valueOf(products.get(position).getPrice()));
         String setupPriceByComma = PriceUtil.getPriceByComma(setupPrice);
@@ -62,8 +57,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
     }
     private void convertImageByteArrToBitmap(int position){
-        Bitmap bitmap = BitmapFactory.decodeByteArray(products.get(position).getImage(), 0, products.get(position).getImage().length);
-        products.get(position).setBitmap(bitmap);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(products.get(position).getImageByteArr(), 0, products.get(position).getImageByteArr().length);
+        products.get(position).setImageBitmap(bitmap);
     }
     private void hideOrShowView(ProductViewHolder holder, int visibility){
         holder.binding.btnReduction.setVisibility(visibility);

@@ -1,18 +1,17 @@
 package com.quanlyquancafeapp.fragment.admin.product;
 
 import android.app.AlertDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.admin.AdminProductAdapter;
@@ -44,34 +43,39 @@ public class CafeFragment extends Fragment implements AdminProductAdapter.Recycl
         super.onViewCreated(view, savedInstanceState);
         initDialogDelete();
         cafePresenter = new AdminCafePresenter(getContext());
-        ArrayList<Product> products = cafePresenter.getProducts();
-        productCafe = new ArrayList<>();
-        for(Product product: products){
-            if(product.getSpecies().equals("CAFE")){
-                Bitmap bitmap = BitmapFactory.decodeByteArray(product.getImage(), 0, product.getImage().length);
-                product.setBitmap(bitmap);
-                productCafe.add(product);
-            }
-        }
-        adapter = new AdminProductAdapter(productCafe, this);
-        binding.rvCafe.setAdapter(adapter);
-        adapter.updateProduct(productCafe);
-
+        productCafe = cafePresenter.getCafeProducts();
+        setCafeAdapter();
         dialogDeleteProductBinding.btnCancel.setOnClickListener(v->{
             alertDialogDelete.dismiss();
         });
     }
+    private void setCafeAdapter(){
+        adapter = new AdminProductAdapter(productCafe, this);
+        binding.rvCafe.setAdapter(adapter);
+    }
     @Override
     public void btnUpdate(Product product) {
-        Toast.makeText(getContext(), "prduct", Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        product.setAdd(false);
+        bundle.putSerializable("product", product);
+        Navigation.findNavController(getView()).navigate(R.id.addOrUpdateProductFragment, bundle);
+    }
+    @Override
+    public void btnDelete(Product product) {
+        alertDialogDelete.show();
+        dialogDeleteProductBinding.btnYes.setOnClickListener(v->{
+            cafePresenter.deleteProduct(product.getId());
+            productCafe = cafePresenter.getCafeProducts();
+            adapter.updateProduct(productCafe);
+            binding.rvCafe.setAdapter(adapter);
+            alertDialogDelete.dismiss();
+        });
     }
 
     @Override
-    public void btnDelete() {
-        alertDialogDelete.show();
-        dialogDeleteProductBinding.btnYes.setOnClickListener(v->{
-
-        });
+    public void onLongClick(Product product) {
+        AdminProductBottomSheetFragment adminProductBottomSheetFragment = new AdminProductBottomSheetFragment(product);
+        adminProductBottomSheetFragment.show(getChildFragmentManager(), adminProductBottomSheetFragment.getTag());
     }
 
     @Override

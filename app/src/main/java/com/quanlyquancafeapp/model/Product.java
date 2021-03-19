@@ -1,13 +1,14 @@
 package com.quanlyquancafeapp.model;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private Long id;
     private String name;
-    private byte[] image;
-    private Bitmap bitmap;
+    private byte[] imageByteArr;
+    private Bitmap imageBitmap;
     private String unit;
     private float price;
     private String sale;
@@ -15,26 +16,26 @@ public class Product {
     private String species;
     private int count;
     private int barcode;
+    private boolean isAdd; //check add or update product
 
     public Product() {
     }
     public Product(Long id, String name, byte[] image, int price, String species, String sale) {
         this.id = id;
         this.name = name;
-        this.image = image;
+        this.imageByteArr = image;
         this.price = price;
         this.species = species;
         this.sale = sale;
     }
-
-    public Product(String name, byte[] image, String unit, float price, String sale, int availableQuantity, String species, int barcode) {
+    public Product(Long id ,String name, byte[] image, String unit, float price, String sale, int availableQuantity, int barcode) {
+        this.id = id;
         this.name = name;
-        this.image = image;
+        this.imageByteArr = image;
         this.unit = unit;
         this.price = price;
         this.sale = sale;
         this.availableQuantity = availableQuantity;
-        this.species = species;
         this.barcode = barcode;
     }
 
@@ -50,11 +51,11 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
-    public byte[] getImage() {
-        return image;
+    public byte[] getImageByteArr() {
+        return imageByteArr;
     }
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImageByteArr(byte[] imageByteArr) {
+        this.imageByteArr = imageByteArr;
     }
     public String getUnit() {
         return unit;
@@ -98,10 +99,16 @@ public class Product {
     public void setBarcode(int barcode) {
         this.barcode = barcode;
     }
-    public Bitmap getBitmap() {
-        return bitmap;
+    public Bitmap getImageBitmap() {
+        return imageBitmap;
     }
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public void setImageBitmap(Bitmap imageBitmap) {
+        this.imageBitmap = imageBitmap;
+    }
+    public boolean isAdd() {
+        return isAdd;
+    }
+    public void setAdd(boolean add) {
+        isAdd = add;
     }
 }
