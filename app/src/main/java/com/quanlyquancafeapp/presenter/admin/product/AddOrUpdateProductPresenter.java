@@ -2,7 +2,7 @@ package com.quanlyquancafeapp.presenter.admin.product;
 
 import android.content.Context;
 
-import com.quanlyquancafeapp.db.ProductHelper;
+import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.view.admin.IAddOrUpdateView;
 
@@ -12,10 +12,10 @@ import java.io.InputStream;
 
 public class AddOrUpdateProductPresenter {
     private IAddOrUpdateView addOrUpdateView;
-    private ProductHelper db;
+    private DatabaseHelper db;
     public AddOrUpdateProductPresenter(IAddOrUpdateView addOrUpdateView, Context context) {
         this.addOrUpdateView = addOrUpdateView;
-        db = new ProductHelper(context);
+        db = new DatabaseHelper(context);
     }
     public void addProductDB(Product product){
         try {

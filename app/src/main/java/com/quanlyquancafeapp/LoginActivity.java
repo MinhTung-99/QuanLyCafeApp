@@ -5,20 +5,16 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quanlyquancafeapp.databinding.ActivityLoginBinding;
-import com.quanlyquancafeapp.databinding.CustomToastBinding;
-import com.quanlyquancafeapp.db.UserHelper;
-import com.quanlyquancafeapp.model.User;
+import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.presenter.LoginPresenter;
 import com.quanlyquancafeapp.view.ILoginView;
-
-import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements ILoginView {
     private ActivityLoginBinding binding;
@@ -42,6 +38,16 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
                 finish();
             }
         });
+
+//        DatabaseHelper db = new DatabaseHelper(this);
+//        Invoice invoice = new Invoice(1L,1L,500L,1L,
+//                23,100,100,"20/10/2020",1);
+//        try {
+//            db.addInvoice(invoice);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        Toast.makeText(LoginActivity.this, db.getInvoices().size()+" ==", Toast.LENGTH_SHORT).show();
     }
     private void setBackgroundButton() {
         binding.btnLogin.setBackgroundResource(R.drawable.rounded_white);
@@ -86,7 +92,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     public void showView() {
         binding.btnRegister.setVisibility(View.VISIBLE);
     }
-
     @Override
     protected void onResume() {
         super.onResume();

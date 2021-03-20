@@ -2,7 +2,7 @@ package com.quanlyquancafeapp.presenter;
 
 import android.content.Context;
 
-import com.quanlyquancafeapp.db.UserHelper;
+import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.User;
 import com.quanlyquancafeapp.view.ILoginView;
 
@@ -24,7 +24,7 @@ public class LoginPresenter {
     }
     public void navigateToLogInToHomeAdminActivity(){loginView.navigateToHomeAdminActivity();}
     public String handleLogin(Context context,String userName, String password){
-        UserHelper db = new UserHelper(context);
+        DatabaseHelper db = new DatabaseHelper(context);
         ArrayList<User> users = db.getUsers();
         for(User user: users){
             if(user.getUserName().equals(userName) && user.getPassword().equals(password)){
@@ -35,7 +35,7 @@ public class LoginPresenter {
         return "NULL";
     }
     public void visibilityView(Context context){
-        UserHelper db = new UserHelper(context);
+        DatabaseHelper db = new DatabaseHelper(context);
         ArrayList<User> users = db.getUsers();
         if(users.size() > 0){
             for(User user: users){

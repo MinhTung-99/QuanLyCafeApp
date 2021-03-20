@@ -1,9 +1,8 @@
 package com.quanlyquancafeapp.presenter;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import com.quanlyquancafeapp.db.UserHelper;
+import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.User;
 import com.quanlyquancafeapp.view.IRegisterView;
 
@@ -17,13 +16,10 @@ public class RegisterPresenter {
         registerPresenter.backToLoginActivity();
     }
     public void handleRegisterUserAdminDB(Context context, String phoneNumber, String nameStore,String address ,String userName, String password, String passwordAgain){
-        UserHelper db = new UserHelper(context);
+        DatabaseHelper db = new DatabaseHelper(context);
         User user = new User(nameStore, address, phoneNumber, userName, password, "ADMIN");
         try {
-            if(password.equals(passwordAgain)){
-                db.addUser(user);
-                Toast.makeText(context, "OK", Toast.LENGTH_SHORT).show();
-            }
+            db.addUser(user);
         } catch (Exception e) {
             e.printStackTrace();
         }

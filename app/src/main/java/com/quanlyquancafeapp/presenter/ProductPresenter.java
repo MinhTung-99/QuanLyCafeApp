@@ -1,11 +1,9 @@
 package com.quanlyquancafeapp.presenter;
 
 import android.content.Context;
-import android.widget.Button;
 
-import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.ProductAdapter;
-import com.quanlyquancafeapp.db.ProductHelper;
+import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.view.IProductView;
@@ -14,13 +12,13 @@ import java.util.ArrayList;
 
 public class ProductPresenter {
     private IProductView productView;
-    private ProductHelper db;
+    private DatabaseHelper db;
     private Context context;
 
     public ProductPresenter(IProductView productView, Context context) {
         this.productView = productView;
         this.context = context;
-        db = new ProductHelper(context);
+        db = new DatabaseHelper(context);
     }
     public ArrayList<Product> getProductsCafe(){
         ArrayList<Product> products = db.getProducts();

@@ -11,6 +11,21 @@ public class Invoice {
     private String dateBuy;
     private Integer isPay;
 
+    public Invoice() {
+    }
+
+    public Invoice(Long id, Long idAccount, Long idProduct, Long idTable, Integer count, float totalMoney, float inToMoney, String dateBuy, Integer isPay) {
+        this.id = id;
+        this.idAccount = idAccount;
+        this.idProduct = idProduct;
+        this.idTable = idTable;
+        this.count = count;
+        this.totalMoney = totalMoney;
+        this.inToMoney = inToMoney;
+        this.dateBuy = dateBuy;
+        this.isPay = isPay;
+    }
+
     public Long getId() {
         return id;
     }

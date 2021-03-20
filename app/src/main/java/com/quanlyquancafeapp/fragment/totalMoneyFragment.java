@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.TotalMoneyAdapter;
-import com.quanlyquancafeapp.db.ProductHelper;
+import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.utils.DataFake;
@@ -42,7 +41,7 @@ public class totalMoneyFragment extends Fragment {
         Table table = (Table) getArguments().getSerializable("table");
         //demo
         float totalMoney = 0;
-        ProductHelper db = new ProductHelper(getContext());
+        DatabaseHelper db = new DatabaseHelper(getContext());
         ArrayList<Product> products = db.getProducts();
         for(int i = 0; i < DataFake.orders.size(); i++){
             for (int j = 0; j < products.size(); j++){

@@ -2,7 +2,7 @@ package com.quanlyquancafeapp.presenter.admin;
 
 import android.content.Context;
 
-import com.quanlyquancafeapp.db.TableHelper;
+import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.view.admin.IAdminTableView;
 
@@ -10,10 +10,10 @@ import java.util.ArrayList;
 
 public class AdminTablePresenter {
     private IAdminTableView tableView;
-    private TableHelper db;
+    private DatabaseHelper db;
     public AdminTablePresenter(IAdminTableView tableView, Context context) {
         this.tableView = tableView;
-        db = new TableHelper(context);
+        db = new DatabaseHelper(context);
     }
     public void addTable(Table table){
         try {

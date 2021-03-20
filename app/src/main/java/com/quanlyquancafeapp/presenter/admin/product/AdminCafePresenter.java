@@ -4,15 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.quanlyquancafeapp.db.ProductHelper;
+import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Product;
 
 import java.util.ArrayList;
 
 public class AdminCafePresenter {
-    private ProductHelper db;
+    private DatabaseHelper db;
     public AdminCafePresenter(Context context) {
-        db = new ProductHelper(context);
+        db = new DatabaseHelper(context);
     }
     public ArrayList<Product> getCafeProducts(){
         ArrayList<Product> products = db.getProducts();
