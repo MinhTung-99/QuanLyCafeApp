@@ -44,7 +44,7 @@ public class InvoiceDetailFragment extends Fragment {
 //                orders.add(invoice);
 //            }
 //        }
-        adapter = new TotalMoneyAdapter(DataFake.orders);
-        binding.rvInvoices.setAdapter(adapter);
+//        adapter = new TotalMoneyAdapter(DataFake.orders);
+//        binding.rvInvoices.setAdapter(adapter);
     }
 }

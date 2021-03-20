@@ -28,6 +28,8 @@ import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.ScanCodeActivity;
 import com.quanlyquancafeapp.adapter.ProductAdapter;
 import com.quanlyquancafeapp.databinding.FragmentProductBinding;
+import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.Order;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
@@ -47,6 +49,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
     private boolean isCafe = true;
     private ProductPresenter productPresenter;
     private Table table;
+    DatabaseHelper db;
 
     @Nullable
     @Override
@@ -59,6 +62,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         table = (Table) getArguments().getSerializable("table");
+        db = new DatabaseHelper(getContext());
         init();
         initAction();
         setFirstBackgroundButton();
@@ -102,7 +106,14 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
         button.setBackgroundColor(getContext().getResources().getColor(color));
     }
     @Override
+    public void navigateToTotalMoneyFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("table", null);
+        Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
+    }
+    @Override
     public void onClick(View v) {
+
         switch (v.getId()){
             case R.id.btn_cafe:
                 setBackgroundBtn(binding.btnCafe, R.color.blue);
@@ -117,33 +128,12 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
                 isCafe = false;
                 break;
             case R.id.btn_store:
-                for(int i = 0; i < productsCafe.size(); i++){
-                    if(productsCafe.get(i).getCount() > 0){
-                        Order order = new Order();
-                        order.setIdProduct(productsCafe.get(i).getId());
-                        order.setCount(productsCafe.get(i).getCount());
-                        if(table != null)
-                            order.setIdTable(table.getId());
-                        DataFake.orders.add(order);
-                    }
-                }
-                for(int i = 0; i < productsDrink.size(); i++){
-                    if(productsDrink.get(i).getCount() > 0){
-                        Order order = new Order();
-                        order.setIdProduct(productsDrink.get(i).getId());
-                        order.setCount(productsDrink.get(i).getCount());
-                        if(table != null)
-                            order.setIdTable(table.getId());
-                        DataFake.orders.add(order);
-                    }
-                }
+                productPresenter.addInvoice(productsCafe, productsDrink);
                 if(table != null){
                     DataFake.order.setIdTable(table.getId());
                     Navigation.findNavController(v).popBackStack();
                 }else {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("table", null);
-                    Navigation.findNavController(v).navigate(R.id.totalMoneyFragment, bundle);
+                    navigateToTotalMoneyFragment();
                 }
                 break;
             case R.id.img_qr_code:

@@ -28,7 +28,7 @@
                     android:layout_centerHorizontal="true"/>
             </RelativeLayout>
             <TextView
-                android:id="@+id/txt_table_id"
+                android:id="@+id/txt_table_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="id"

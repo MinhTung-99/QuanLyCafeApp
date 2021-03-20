@@ -18,6 +18,8 @@ import com.quanlyquancafeapp.adapter.TableAdapter;
 import com.quanlyquancafeapp.databinding.DialogAddTableBinding;
 import com.quanlyquancafeapp.databinding.FragmentTableBinding;
 import com.quanlyquancafeapp.model.Table;
+import com.quanlyquancafeapp.presenter.TablePresenter;
+import com.quanlyquancafeapp.presenter.admin.AdminTablePresenter;
 import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 
@@ -27,6 +29,7 @@ public class TableFragment extends Fragment implements IRecyclerViewOnItemClick 
     private TableAdapter adapter;
     private ArrayList<Table> tables;
     private FragmentTableBinding tableBinding;
+    private TablePresenter tablePresenter;
 
     @Nullable
     @Override
@@ -37,12 +40,11 @@ public class TableFragment extends Fragment implements IRecyclerViewOnItemClick 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        tablePresenter = new TablePresenter(getContext());
         setAdapter();
     }
     private void setAdapter() {
-        tables = new ArrayList<>();
-//        tables.add(new Table(1L,"001","ban 1 tang 1"));
-//        tables.add(new Table(2L,"002","ban 2 tang 1"));
+        tables = tablePresenter.getTables();
         tableBinding.rvTable.setLayoutManager(new GridLayoutManager(getContext(), 2));
         adapter = new TableAdapter(tables, this);
         tableBinding.rvTable.setAdapter(adapter);

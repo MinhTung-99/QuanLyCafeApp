@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.quanlyquancafeapp.adapter.ProductAdapter;
 import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.view.IProductView;
@@ -60,6 +61,28 @@ public class ProductPresenter {
             }
             productsDrink.get(position).setCount(count);
             adapter.updateProduct(productsDrink);
+        }
+    }
+    public void addInvoice( ArrayList<Product> productsCafe, ArrayList<Product> productsDrink){
+        for(int i = 0; i < productsCafe.size(); i++){
+            if(productsCafe.get(i).getCount() > 0){
+                Invoice invoice = new Invoice(1L,db.getUsers().get(1).getId(),productsCafe.get(i).getId(),1L, productsCafe.get(i).getCount(),100,100,"20/10/2020",0);
+                try {
+                    db.addInvoice(invoice);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        for(int i = 0; i < productsDrink.size(); i++){
+            if(productsDrink.get(i).getCount() > 0){
+                Invoice invoice = new Invoice(1L,1L,productsDrink.get(i).getId(),1L, productsDrink.get(i).getCount(),100,100,"20/10/2020",0);
+                try {
+                    db.addInvoice(invoice);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

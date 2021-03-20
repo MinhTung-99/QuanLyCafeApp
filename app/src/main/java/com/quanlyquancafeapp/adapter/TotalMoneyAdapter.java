@@ -1,15 +1,18 @@
 package com.quanlyquancafeapp.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
-import com.quanlyquancafeapp.fragment.TableFragment;
+import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.Order;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.utils.DataFake;
@@ -18,10 +21,11 @@ import com.quanlyquancafeapp.utils.PriceUtil;
 import java.util.ArrayList;
 
 public class TotalMoneyAdapter extends RecyclerView.Adapter<TotalMoneyAdapter.TotalMoneyViewHolder>{
-    private ArrayList<Order> orders;
-
-    public TotalMoneyAdapter(ArrayList<Order> orders) {
-        this.orders = orders;
+    private ArrayList<Invoice> invoices;
+    private Context context;
+    public TotalMoneyAdapter(ArrayList<Invoice> invoices, Context context) {
+        this.invoices = invoices;
+        this.context = context;
     }
 
     @NonNull
@@ -32,26 +36,28 @@ public class TotalMoneyAdapter extends RecyclerView.Adapter<TotalMoneyAdapter.To
     }
     @Override
     public void onBindViewHolder(@NonNull TotalMoneyViewHolder holder, int position) {
-        holder.txtCount.setText(String.valueOf(orders.get(position).getCount()));
-
-        ArrayList<Product> products = DataFake.productFake();
+        holder.txtCount.setText(String.valueOf(invoices.get(position).getCount()));
+        DatabaseHelper db = new DatabaseHelper(context);
+        ArrayList<Product> products = db.getProducts();
         for(int i = 0; i < products.size(); i++){
-            if(DataFake.orders.get(position).getIdProduct() == products.get(i).getId()){
-                holder.txtProduct.setText(String.valueOf(products.get(i).getName()));
-                holder.txtSale.setText("("+products.get(i).getSale()+")");
-                if(products.get(i).getSale().equals("")){
-                    holder.txtSale.setVisibility(View.GONE);
-                }else {
-                    holder.txtSale.setVisibility(View.VISIBLE);
+            if(invoices.get(position).getIsPay() == 0){
+                if(invoices.get(position).getIdProduct() == products.get(i).getId()){
+                    holder.txtProduct.setText(String.valueOf(products.get(i).getName()));
+                    holder.txtSale.setText("("+products.get(i).getSale()+")");
+                    if(products.get(i).getSale().equals("")){
+                        holder.txtSale.setVisibility(View.GONE);
+                    }else {
+                        holder.txtSale.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }
-        String setupPrice = PriceUtil.setupPrice(String.valueOf(orders.get(position).getTotalMoney()));
+        String setupPrice = PriceUtil.setupPrice(String.valueOf(invoices.get(position).getInToMoney()));
         holder.txtIntoMoney.setText(setupPrice);
     }
     @Override
     public int getItemCount() {
-        return orders.size();
+        return invoices.size();
     }
     class TotalMoneyViewHolder extends RecyclerView.ViewHolder{
         private TextView txtCount;

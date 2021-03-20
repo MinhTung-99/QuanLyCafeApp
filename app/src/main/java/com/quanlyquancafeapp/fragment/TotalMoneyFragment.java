@@ -1,0 +1,73 @@
+package com.quanlyquancafeapp.fragment;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.quanlyquancafeapp.R;
+import com.quanlyquancafeapp.adapter.TotalMoneyAdapter;
+import com.quanlyquancafeapp.databinding.FragmentTotalMoneyBinding;
+import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.Invoice;
+import com.quanlyquancafeapp.model.Product;
+import com.quanlyquancafeapp.model.Table;
+import com.quanlyquancafeapp.presenter.TotalMoneyPresenter;
+import com.quanlyquancafeapp.utils.DataFake;
+import com.quanlyquancafeapp.utils.PriceUtil;
+import com.quanlyquancafeapp.view.ITotalMoneyView;
+
+import java.util.ArrayList;
+
+public class TotalMoneyFragment extends Fragment implements ITotalMoneyView {
+    private TotalMoneyPresenter totalMoneyPresenter;
+    private TotalMoneyAdapter adapter;
+    private ArrayList<Invoice> invoicesNotPay;
+    private FragmentTotalMoneyBinding totalMoneyBinding;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        totalMoneyBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_total_money, container, false);
+        return totalMoneyBinding.getRoot();
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        init();
+        Table table = (Table) getArguments().getSerializable("table");
+        float totalMoney = totalMoneyPresenter.handleTotalMoney(table, invoicesNotPay);
+        String setupMoney = PriceUtil.setupPrice(String.valueOf(totalMoney));
+        totalMoneyBinding.btnTotalMoney.setText(setupMoney);
+        totalMoneyBinding.btnTotalMoney.setOnClickListener(v->{
+            navigateToPayFragment(totalMoney);
+        });
+        setAdapter();
+    }
+    private void init(){
+        totalMoneyPresenter = new TotalMoneyPresenter(getContext());
+        invoicesNotPay = new ArrayList<>();
+    }
+    private void setAdapter(){
+        adapter = new TotalMoneyAdapter(invoicesNotPay, getContext());
+        totalMoneyBinding.rvTotalMoney.addItemDecoration(new DividerItemDecoration(totalMoneyBinding.rvTotalMoney.getContext(), DividerItemDecoration.VERTICAL));
+        totalMoneyBinding.rvTotalMoney.setAdapter(adapter);
+    }
+    @Override
+    public void navigateToPayFragment(float totalMoney) {
+        Bundle bundle = new Bundle();
+        bundle.putFloat("totalMoney", totalMoney);
+        Navigation.findNavController(getView()).navigate(R.id.payFragment, bundle);
+    }
+}

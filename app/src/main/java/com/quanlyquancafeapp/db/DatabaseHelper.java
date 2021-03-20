@@ -294,10 +294,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.close();
         }
     }
+    public int updateInvoice(Invoice invoice){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_INVOICE, invoice.getId());
+        values.put(KEY_ID_ACCOUNT,invoice.getIdAccount());
+        values.put(KEY_ID_PRODUCT,invoice.getIdProduct());
+        values.put(KEY_ID_TABLE, invoice.getIdTable());
+        values.put(KEY_COUNT,invoice.getCount());
+        values.put(KEY_TOTAL_MONEY, invoice.getTotalMoney());
+        values.put(KEY_INTO_MONEY, invoice.getInToMoney());
+        values.put(KEY_DATE, invoice.getDateBuy());
+        values.put(KEY_PAYED, invoice.getIsPay());
+        return db.update(TABLE_INVOICE,
+                values,
+                KEY_ID_INVOICE+"=?",
+                new String[]{String.valueOf(invoice.getId())});
+    }
+    public int deleteInvoice(Long id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_INVOICE,
+                KEY_ID_INVOICE+"=?",
+                new String[]{String.valueOf(id)});
+    }
     public ArrayList<Invoice> getInvoices(){
         ArrayList<Invoice> invoices = new ArrayList<>();
-        //String selectQuery = "SELECT * FROM " + TABLE_INVOICE;
-        String selectQuery = "SELECT * FROM invoices a INNER JOIN users b ON a.id_account=b.id";
+        String selectQuery = "SELECT * FROM invoices iv INNER JOIN users u ON iv.id_account=u.id"
+                //+" INNER JOIN tables t ON iv.id_table=t.id"
+                +" INNER JOIN products p ON iv.id_product=p.id";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
