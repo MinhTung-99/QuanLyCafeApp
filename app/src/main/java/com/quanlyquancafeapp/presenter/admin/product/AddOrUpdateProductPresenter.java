@@ -1,11 +1,14 @@
 package com.quanlyquancafeapp.presenter.admin.product;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.quanlyquancafeapp.db.ProductHelper;
 import com.quanlyquancafeapp.model.Product;
-import com.quanlyquancafeapp.view.IAddOrUpdateView;
+import com.quanlyquancafeapp.view.admin.IAddOrUpdateView;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class AddOrUpdateProductPresenter {
     private IAddOrUpdateView addOrUpdateView;
@@ -23,5 +26,16 @@ public class AddOrUpdateProductPresenter {
     }
     public void updateProductDB(Product product){
         db.updateProduct(product);
+    }
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
     }
 }

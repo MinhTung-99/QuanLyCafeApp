@@ -42,9 +42,6 @@ public class ProductPresenter {
         }
         return productsDrink;
     }
-    public void setBackgroundButton(Button button, int color){
-        button.setBackgroundColor(context.getResources().getColor(color));
-    }
     public void handleCount(String typeClick, int position, ArrayList<Product> productsCafe,
                             ArrayList<Product> productsDrink, boolean isCafe, ProductAdapter adapter){
         if(isCafe){

@@ -26,7 +26,7 @@
                 </RelativeLayout>
             </androidx.appcompat.widget.Toolbar>
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/img_product"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="20dp"
@@ -130,7 +130,7 @@
                 android:id="@+id/btn_add_or_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ADD"
+                android:text="Thêm mới"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/orange"/>
         </LinearLayout>

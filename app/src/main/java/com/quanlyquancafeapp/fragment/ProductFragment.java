@@ -39,13 +39,15 @@ import com.quanlyquancafeapp.view.IProductView;
 
 import java.util.ArrayList;
 
-public class ProductFragment extends Fragment implements IRecyclerViewOnItemClick, IProductView {
+public class ProductFragment extends Fragment implements View.OnClickListener, IRecyclerViewOnItemClick, IProductView {
     private FragmentProductBinding binding;
     private ProductAdapter adapter;
     private ArrayList<Product> productsCafe;
     private ArrayList<Product> productsDrink;
     private boolean isCafe = true;
     private ProductPresenter productPresenter;
+    private Table table;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,53 +58,17 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Table table = (Table) getArguments().getSerializable("table");
+        table = (Table) getArguments().getSerializable("table");
         init();
+        initAction();
         setFirstBackgroundButton();
         setAdapter();
-        binding.btnCafe.setOnClickListener(v->{
-            productPresenter.setBackgroundButton(binding.btnCafe, R.color.blue);
-            productPresenter.setBackgroundButton(binding.btnDrink, R.color.brown);
-            adapter.updateProduct(productsCafe);
-            isCafe = true;
-        });
-        binding.btnDrink.setOnClickListener(v->{
-            productPresenter.setBackgroundButton(binding.btnDrink, R.color.blue);
-            productPresenter.setBackgroundButton(binding.btnCafe, R.color.brown);
-            adapter.updateProduct(productsDrink);
-            isCafe = false;
-        });
-        binding.btnStore.setOnClickListener(v->{
-            for(int i = 0; i < productsCafe.size(); i++){
-                if(productsCafe.get(i).getCount() > 0){
-                    Order order = new Order();
-                    order.setIdProduct(productsCafe.get(i).getId());
-                    order.setCount(productsCafe.get(i).getCount());
-                    if(table != null)
-                        order.setIdTable(table.getId());
-                    DataFake.orders.add(order);
-                }
-            }
-            for(int i = 0; i < productsDrink.size(); i++){
-                if(productsDrink.get(i).getCount() > 0){
-                    Order order = new Order();
-                    order.setIdProduct(productsDrink.get(i).getId());
-                    order.setCount(productsDrink.get(i).getCount());
-                    if(table != null)
-                        order.setIdTable(table.getId());
-                    DataFake.orders.add(order);
-                }
-            }
-            if(table != null){
-                DataFake.order.setIdTable(table.getId());
-                Navigation.findNavController(v).popBackStack();
-            }else {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("table", null);
-                Navigation.findNavController(v).navigate(R.id.totalMoneyFragment, bundle);
-            }
-        });
-        binding.imgQrCode.setOnClickListener(v-> navigateToScanCodeActivity());
+    }
+    private void initAction() {
+        binding.btnCafe.setOnClickListener(this);
+        binding.btnDrink.setOnClickListener(this);
+        binding.btnStore.setOnClickListener(this);
+        binding.imgQrCode.setOnClickListener(this);
     }
     private void init() {
         productPresenter = new ProductPresenter(this, getContext());
@@ -110,9 +76,9 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
         productsDrink = productPresenter.getProductsDrink();
     }
     private void setFirstBackgroundButton() {
-        productPresenter.setBackgroundButton(binding.btnCafe, R.color.blue);
-        productPresenter.setBackgroundButton(binding.btnDrink, R.color.brown);
-        productPresenter.setBackgroundButton(binding.btnStore, R.color.blue);
+        setBackgroundBtn(binding.btnCafe, R.color.blue);
+        setBackgroundBtn(binding.btnDrink, R.color.brown);
+        setBackgroundBtn(binding.btnStore, R.color.blue);
     }
     private void setAdapter() {
         adapter = new ProductAdapter(productsCafe, this);
@@ -130,5 +96,59 @@ public class ProductFragment extends Fragment implements IRecyclerViewOnItemClic
     public void navigateToScanCodeActivity() {
         Intent intent = new Intent(getActivity(), ScanCodeActivity.class);
         startActivity(intent);
+    }
+    @Override
+    public void setBackgroundBtn(Button button, int color) {
+        button.setBackgroundColor(getContext().getResources().getColor(color));
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_cafe:
+                setBackgroundBtn(binding.btnCafe, R.color.blue);
+                setBackgroundBtn(binding.btnDrink, R.color.brown);
+                adapter.updateProduct(productsCafe);
+                isCafe = true;
+                break;
+            case R.id.btn_drink:
+                setBackgroundBtn(binding.btnCafe, R.color.brown);
+                setBackgroundBtn(binding.btnDrink, R.color.blue);
+                adapter.updateProduct(productsDrink);
+                isCafe = false;
+                break;
+            case R.id.btn_store:
+                for(int i = 0; i < productsCafe.size(); i++){
+                    if(productsCafe.get(i).getCount() > 0){
+                        Order order = new Order();
+                        order.setIdProduct(productsCafe.get(i).getId());
+                        order.setCount(productsCafe.get(i).getCount());
+                        if(table != null)
+                            order.setIdTable(table.getId());
+                        DataFake.orders.add(order);
+                    }
+                }
+                for(int i = 0; i < productsDrink.size(); i++){
+                    if(productsDrink.get(i).getCount() > 0){
+                        Order order = new Order();
+                        order.setIdProduct(productsDrink.get(i).getId());
+                        order.setCount(productsDrink.get(i).getCount());
+                        if(table != null)
+                            order.setIdTable(table.getId());
+                        DataFake.orders.add(order);
+                    }
+                }
+                if(table != null){
+                    DataFake.order.setIdTable(table.getId());
+                    Navigation.findNavController(v).popBackStack();
+                }else {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("table", null);
+                    Navigation.findNavController(v).navigate(R.id.totalMoneyFragment, bundle);
+                }
+                break;
+            case R.id.img_qr_code:
+                navigateToScanCodeActivity();
+                break;
+        }
     }
 }

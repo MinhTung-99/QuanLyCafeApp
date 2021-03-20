@@ -34,9 +34,9 @@ public class AdminProductBottomSheetFragment extends BottomSheetDialogFragment {
         adminProductBottomSheetBinding.imgProduct.setImageBitmap(product.getImageBitmap());
         adminProductBottomSheetBinding.txtName.setText("Tên sản phẩm: " + product.getName());
         adminProductBottomSheetBinding.txtUnit.setText("Đơn vị: " + product.getUnit());
-        adminProductBottomSheetBinding.txtPrice.setText("Giá: " + product.getPrice());
-        adminProductBottomSheetBinding.txtSale.setText("Khuyến mãi: " + product.getSale());
-        adminProductBottomSheetBinding.txtAvailableQuantity.setText("Số lượng: " + product.getAvailableQuantity());
+        adminProductBottomSheetBinding.txtPrice.setText("Giá: " + product.getPrice() + " VND");
+        adminProductBottomSheetBinding.txtSale.setText("Khuyến mãi: " + product.getSale() + " %");
+        adminProductBottomSheetBinding.txtAvailableQuantity.setText("Số lượng: " + product.getAvailableQuantity() + " " + product.getUnit());
         adminProductBottomSheetBinding.txtBarcode.setText("Mã vạch: " + product.getBarcode());
     }
     @Override

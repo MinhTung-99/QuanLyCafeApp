@@ -15,15 +15,16 @@ import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.FragmentAddOrUpdateProductBinding;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.presenter.admin.product.AddOrUpdateProductPresenter;
-import com.quanlyquancafeapp.view.IAddOrUpdateView;
+import com.quanlyquancafeapp.view.admin.IAddOrUpdateView;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class AddOrUpdateProductFragment extends Fragment implements IAddOrUpdateView {
+public class AddOrUpdateProductFragment extends Fragment implements View.OnClickListener, IAddOrUpdateView {
     private FragmentAddOrUpdateProductBinding binding;
     private AddOrUpdateProductPresenter addOrUpdatePresenter;
     private byte[] bytes;
+    Product product;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,54 +34,59 @@ public class AddOrUpdateProductFragment extends Fragment implements IAddOrUpdate
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        addOrUpdatePresenter = new AddOrUpdateProductPresenter(this,getContext());
-        Product product = (Product) getArguments().getSerializable("product");
+        init();
+        initAction();
         if(!product.isAdd()){
-            binding.edtName.setText(product.getName());
-            binding.image.setImageBitmap(product.getImageBitmap());
-            binding.edtUnit.setText(product.getUnit());
-            binding.edtPrice.setText(String.valueOf(product.getPrice()));
-            binding.edtAvailableQuantity.setText(String.valueOf(product.getAvailableQuantity()));
-            binding.edtBarcode.setText(String.valueOf(product.getBarcode()));
-            binding.txtUnit.setText(product.getUnit());
+            setTextEdt();
+            setImgImageView();
+            setTextBtn();
         }
-        binding.btnAddOrUpdate.setOnClickListener(v->{
-            Product myProduct = new Product(product.getId(),binding.edtName.getText().toString(), bytes, binding.edtUnit.getText().toString(),
-                    Float.parseFloat(binding.edtPrice.getText().toString()), binding.edtSale.getText().toString(),
-                    Integer.parseInt(binding.edtAvailableQuantity.getText().toString()),Integer.parseInt(binding.edtBarcode.getText().toString()));
-
-            if(product.getSpecies().equals("CAFE")){
-                myProduct.setSpecies("CAFE");
-                if(product.isAdd()){
-                    addOrUpdatePresenter.addProductDB(myProduct);
-                }else {
-                    if(product.getImageByteArr() != null){
-                        myProduct.setImageByteArr(product.getImageByteArr());
-                    }else {
-                        myProduct.setImageByteArr(bytes);
-                    }
-                    addOrUpdatePresenter.updateProductDB(myProduct);
-                }
-            }else if(product.getSpecies().equals("DRINK")){
-                myProduct.setSpecies("DRINK");
-                if(product.isAdd()){
-                    addOrUpdatePresenter.addProductDB(myProduct);
-                }else {
-                    if(product.getImageByteArr() != null){
-                        myProduct.setImageByteArr(product.getImageByteArr());
-                    }else {
-                        myProduct.setImageByteArr(bytes);
-                    }
-                    addOrUpdatePresenter.updateProductDB(myProduct);
-                }
+    }
+    private void initAction() {
+        binding.btnAddOrUpdate.setOnClickListener(this);
+        binding.imgProduct.setOnClickListener(this);
+    }
+    private Product setProduct(){
+        Product product = new Product();
+        product.setId(this.product.getId());
+        product.setName(binding.edtName.getText().toString());
+        product.setImageByteArr(bytes);
+        product.setUnit(binding.edtUnit.getText().toString());
+        product.setPrice(Float.parseFloat(binding.edtPrice.getText().toString()));
+        product.setSale(binding.edtSale.getText().toString());
+        product.setAvailableQuantity(Integer.parseInt(binding.edtAvailableQuantity.getText().toString()));
+        product.setBarcode(Integer.parseInt(binding.edtBarcode.getText().toString()));
+        if(this.product.getSpecies().equals("CAFE")){
+            product.setSpecies("CAFE");
+        }else if(this.product.getSpecies().equals("DRINK")){
+            product.setSpecies("DRINK");
+        }
+        if(this.product.getImageByteArr() != null){
+            product.setImageByteArr(this.product.getImageByteArr());
+        }else {
+            product.setImageByteArr(bytes);
+        }
+        return product;
+    }
+    private void addOrUpdateProduct(){
+        Product product = setProduct();
+        if(this.product.getSpecies().equals("CAFE")){
+            if(this.product.isAdd()){
+                addOrUpdatePresenter.addProductDB(product);
+            }else {
+                addOrUpdatePresenter.updateProductDB(product);
             }
-            Navigation.findNavController(view).popBackStack();
-        });
-        binding.image.setOnClickListener(v->{
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            startActivityForResult(photoPickerIntent, 1001);
-        });
+        }else if(this.product.getSpecies().equals("DRINK")){
+            if(this.product.isAdd()){
+                addOrUpdatePresenter.addProductDB(product);
+            }else {
+                addOrUpdatePresenter.updateProductDB(product);
+            }
+        }
+    }
+    private void init() {
+        addOrUpdatePresenter = new AddOrUpdateProductPresenter(this,getContext());
+        product = (Product) getArguments().getSerializable("product");
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -88,24 +94,47 @@ public class AddOrUpdateProductFragment extends Fragment implements IAddOrUpdate
         if (resultCode == getActivity().RESULT_OK) {
             try {
                 final Uri imageUri = data.getData();
-                binding.image.setImageURI(imageUri);
+                binding.imgProduct.setImageURI(imageUri);
                 InputStream iStream = getActivity().getContentResolver().openInputStream(imageUri);
-                byte[] bytes = getBytes(iStream);
-                this.bytes = bytes;
+                this.bytes = addOrUpdatePresenter.getBytes(iStream);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
-    public byte[] getBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
+    @Override
+    public void setTextEdt() {
+        binding.edtName.setText(product.getName());
+        binding.edtUnit.setText(product.getUnit());
+        binding.edtPrice.setText(String.valueOf(product.getPrice()));
+        binding.edtAvailableQuantity.setText(String.valueOf(product.getAvailableQuantity()));
+        binding.edtBarcode.setText(String.valueOf(product.getBarcode()));
+        binding.txtUnit.setText(product.getUnit());
+    }
+    @Override
+    public void setImgImageView() {
+        binding.imgProduct.setImageBitmap(product.getImageBitmap());
+    }
+    @Override
+    public void setTextBtn() {
+        binding.btnAddOrUpdate.setText("Cập nhập");
+    }
+    @Override
+    public void takePhoto() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, 1001);
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_add_or_update:
+                addOrUpdateProduct();
+                Navigation.findNavController(v).popBackStack();
+                break;
+            case R.id.img_product:
+                takePhoto();
+                break;
         }
-        return byteBuffer.toByteArray();
     }
 }
