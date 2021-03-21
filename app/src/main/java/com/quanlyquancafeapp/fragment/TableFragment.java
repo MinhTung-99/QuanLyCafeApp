@@ -1,6 +1,7 @@
 package com.quanlyquancafeapp.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +21,13 @@ import com.quanlyquancafeapp.databinding.FragmentTableBinding;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.presenter.TablePresenter;
 import com.quanlyquancafeapp.presenter.admin.AdminTablePresenter;
+import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 
 import java.util.ArrayList;
 
-public class TableFragment extends Fragment implements IRecyclerViewOnItemClick {
+public class TableFragment extends Fragment implements TableAdapter.RecyclerViewItemOnClick {
     private TableAdapter adapter;
     private ArrayList<Table> tables;
     private FragmentTableBinding tableBinding;
@@ -46,22 +48,28 @@ public class TableFragment extends Fragment implements IRecyclerViewOnItemClick 
     private void setAdapter() {
         tables = tablePresenter.getTables();
         tableBinding.rvTable.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        adapter = new TableAdapter(tables, this);
+        adapter = new TableAdapter(tables, this, getContext());
         tableBinding.rvTable.setAdapter(adapter);
     }
     @Override
-    public void onClick(Object model) {
-        Table table = (Table) model;
-        if(DataFake.order.getIdTable() == table.getId()){
+    public void onClick(int position) {
+        boolean isTable = false;
+        for (int i = 0; i < tablePresenter.getInvoicesDetail().size(); i++){
+            if(tablePresenter.getInvoicesDetail().get(i).getIdTable() != null){
+                if(tablePresenter.getInvoicesDetail().get(i).getIdTable() == tables.get(position).getId()){
+                    Constance.TYPE_PAY = getArguments().getString("typePay");
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("table", tables.get(position));
+                    Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
+                    isTable = true;
+                }
+            }
+        }
+        if(!isTable){
             Bundle bundle = new Bundle();
-            bundle.putSerializable("table", (Table) model);
-            Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
-        }else{
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("table", (Table) model);
+            bundle.putSerializable("table", tables.get(position));
+            bundle.putString("typePay", getArguments().getString("typePay"));
             Navigation.findNavController(getView()).navigate(R.id.productFragment, bundle);
         }
     }
-    @Override
-    public void reductionBtn(int position) { }
 }

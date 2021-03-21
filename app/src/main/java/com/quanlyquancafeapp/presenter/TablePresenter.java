@@ -3,6 +3,7 @@ package com.quanlyquancafeapp.presenter;
 import android.content.Context;
 
 import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Table;
 
 import java.util.ArrayList;
@@ -14,5 +15,8 @@ public class TablePresenter {
     }
     public ArrayList<Table> getTables(){
         return db.getTables();
+    }
+    public ArrayList<InvoiceDetail> getInvoicesDetail(){
+        return db.getDetailInvoices();
     }
 }

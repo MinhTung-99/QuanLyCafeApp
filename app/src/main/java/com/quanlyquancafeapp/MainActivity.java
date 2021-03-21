@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHost.getNavController();
         NavInflater navInflater = navController.getNavInflater();
         NavGraph graph;
+        Bundle bundle;
         switch (typeAdmin){
             case "REPORT":
                 graph = navInflater.inflate(R.navigation.nav_report);
@@ -44,13 +45,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "PAY":
                 graph = navInflater.inflate(R.navigation.nav_pay);
-                Bundle bundle = new Bundle();
+                bundle = new Bundle();
                 bundle.putSerializable("table", null);
+                bundle.putString("typePay", "PAY");
                 navController.setGraph(graph, bundle);
                 break;
             case "SHELL":
                 graph = navInflater.inflate(R.navigation.nav_shell);
-                navController.setGraph(graph);
+                bundle = new Bundle();
+                bundle.putString("typePay", "SHELL");
+                navController.setGraph(graph, bundle);
                 break;
         }
     }

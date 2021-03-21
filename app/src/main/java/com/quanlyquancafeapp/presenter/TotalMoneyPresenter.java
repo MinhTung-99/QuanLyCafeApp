@@ -5,79 +5,64 @@ import android.util.Log;
 
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Invoice;
+import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
-import com.quanlyquancafeapp.utils.DataFake;
+import com.quanlyquancafeapp.utils.Constance;
 
 import java.util.ArrayList;
 
 public class TotalMoneyPresenter {
     private DatabaseHelper db;
     private ArrayList<Product> products;
-    private ArrayList<Invoice> invoices;
+    private ArrayList<InvoiceDetail> invoiceDetails;
     private float intoMoney;
     private float totalMoney;
-    private ArrayList<Invoice> invoicesNotPay;
+    private ArrayList<InvoiceDetail> invoicesNotPay;
 
     public TotalMoneyPresenter(Context context) {
         db = new DatabaseHelper(context);
     }
-    public float handleTotalMoney(Table table, ArrayList<Invoice> invoicesNotPay){
+    public float handleTotalMoney(Table table, ArrayList<InvoiceDetail> invoicesNotPay){
+        Log.d("KMFG", "TEST");
         this.invoicesNotPay = invoicesNotPay;
         totalMoney = 0;
         products = db.getProducts();
-        invoices = db.getInvoices();
-        for(int i = 0; i < invoices.size(); i++){
-            if(invoices.get(i).getIsPay() == 0){
+        invoiceDetails = db.getDetailInvoices();
+        for(int i = 0; i < invoiceDetails.size(); i++){
+            Log.d("KMFG", invoiceDetails.get(i).getIsPay() + " -----" + invoiceDetails.get(i).getTypePay() + "----"+Constance.TYPE_PAY);
+            if(invoiceDetails.get(i).getIsPay() == 0 && invoiceDetails.get(i).getTypePay().equals(Constance.TYPE_PAY)){
                 for (int j = 0; j < products.size(); j++){
                     intoMoney = 0;
-                    if(table != null){
-                        if(invoices.get(i).getIdProduct() == products.get(j).getId() &&
-                                invoices.get(i).getIdTable() == table.getId()){
-                            if(products.get(j).getSale().equals("")){//check sale
-                                float sum = products.get(j).getPrice() * DataFake.orders.get(i).getCount();
-                                intoMoney += sum;
-                                totalMoney += sum;
-                            }else {
-                                String saleStr = "";
-                                for(int s = 0; s < products.get(j).getSale().length(); s++){
-                                    saleStr+=s;
-                                    if(products.get(j).getSale().charAt(s) == '%'){
-                                        break;
-                                    }
-                                }
-                                int sale = Integer.parseInt(saleStr);
-                                float sum = (products.get(j).getPrice() * DataFake.orders.get(i).getCount() * (100-sale)/(float)100);
-                                intoMoney += sum;
-                                totalMoney += sum;
-                            }
-                            invoices.get(i).setTotalMoney(intoMoney);
-                            db.updateInvoice(invoices.get(i));
+                    if(table != null && invoiceDetails.get(i).getIdTable() != null){
+                        if(invoiceDetails.get(i).getIdProduct() == products.get(j).getId() &&
+                                invoiceDetails.get(i).getIdTable() == table.getId()){
+                            handleTotalAndIntoMoneyPay(i,j);
+                            Log.d("KMFG", "RIGHT");
                         }
                     }else{
-                        handleTotalAndIntoMoneyPayAtTheCounter(i,j);
+                        if(invoiceDetails.get(i).getIdProduct() == products.get(j).getId()){
+                            handleTotalAndIntoMoneyPay(i,j);
+                        }
                     }
                 }
             }
         }
         return totalMoney;
     }
-    private void handleTotalAndIntoMoneyPayAtTheCounter(int i, int j){
-        if(invoices.get(i).getIdProduct() == products.get(j).getId()){
-            String saleStr = "";
-            for(int s = 0; s < products.get(j).getSale().length(); s++){
-                saleStr+=s;
-                if(products.get(j).getSale().charAt(s) == '%'){
-                    break;
-                }
+    private void handleTotalAndIntoMoneyPay(int i, int j){
+        String saleStr = "";
+        for(int s = 0; s < products.get(j).getSale().length(); s++){
+            saleStr+=s;
+            if(products.get(j).getSale().charAt(s) == '%'){
+                break;
             }
-            int sale = Integer.parseInt(saleStr);
-            float sum = (products.get(j).getPrice() * invoices.get(i).getCount() * (100-sale)/(float)100);
-            intoMoney += sum;
-            totalMoney += sum;
-            invoices.get(i).setInToMoney(intoMoney);
-            invoicesNotPay.add(invoices.get(i));
-            db.updateInvoice(invoices.get(i));
         }
+        int sale = Integer.parseInt(saleStr);
+        float sum = (products.get(j).getPrice() * invoiceDetails.get(i).getCount() * (100-sale)/(float)100);
+        intoMoney += sum;
+        totalMoney += sum;
+        invoiceDetails.get(i).setInToMoney(intoMoney);
+        invoicesNotPay.add(invoiceDetails.get(i));
     }
 }

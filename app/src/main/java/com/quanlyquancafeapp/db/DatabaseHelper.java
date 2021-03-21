@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.quanlyquancafeapp.model.Invoice;
+import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.model.User;
@@ -19,108 +20,78 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "cafeManage";
 
-    //INVOICE TABLE
-    private static final String TABLE_INVOICE = "invoices";
-    private static final String KEY_ID_INVOICE = "id";
-    private static final String KEY_ID_ACCOUNT = "id_account";
-    private static final String KEY_ID_PRODUCT = "id_product";
-    private static final String KEY_ID_TABLE = "id_table";
-    private static final String KEY_COUNT = "count";
-    private static final String KEY_TOTAL_MONEY = "total_money";
-    private static final String KEY_INTO_MONEY = "into_money";
-    private static final String KEY_DATE = "date";
-    private static final String KEY_PAYED = "payed";
+    //DETAIL INVOICE TABLE
 
-    //USER TABLE
-    private static final String TABLE_USERS = "users";
-    private static final String KEY_ID_USER = "id";
-    private static final String KEY_NAME_STORE = "name_store";
-    private static final String KEY_ADDRESS = "address";
-    private static final String KEY_PHONE_NUMBER = "phone_number";
-    private static final String KEY_GENDER = "gender";
-    private static final String KEY_USERNAME = "username";
-    private static final String KEY_PASSWORD = "password";
-    private static final String KEY_TYPE_USER = "type_user";
-
-    //TABLES TABLE
-    private static final String TABLE_TABLES = "tables";
-    private static final String KEY_ID_TABLES = "id";
-    private static final String KEY_NAME_TABLE = "name";
-
-    //PRODUCT TABLE
-    private static final String TABLE_PRODUCT = "products";
-    private static final String KEY_ID_PRODUCTS = "id";
-    private static final String KEY_NAME_PRODUCT = "name";
-    private static final String KEY_IMAGE = "image";
-    private static final String KEY_UNIT = "unit";
-    private static final String KEY_PRICE = "price";
-    private static final String KEY_SALE = "sale";
-    private static final String KEY_AVAILABLE_QUANTITY = "availableQuantity";
-    private static final String KEY_SPECIES = "species";
-    private static final String KEY_BARCODE = "barcode";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USERS + " (" +
-                KEY_ID_USER + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                KEY_NAME_STORE + " TEXT," +
-                KEY_ADDRESS + " TEXT," +
-                KEY_PHONE_NUMBER + " TEXT," +
-                KEY_GENDER + " TEXT," +
-                KEY_USERNAME + " TEXT," +
-                KEY_PASSWORD + " TEXT," +
-                KEY_TYPE_USER + " TEXT)";
+        String CREATE_USER_TABLE = "CREATE TABLE " + UserTable.TABLE_NAME + " (" +
+                UserTable.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                UserTable.KEY_NAME_STORE + " TEXT," +
+                UserTable.KEY_ADDRESS + " TEXT," +
+                UserTable.KEY_PHONE_NUMBER + " TEXT," +
+                UserTable.KEY_GENDER + " TEXT," +
+                UserTable.KEY_USERNAME + " TEXT," +
+                UserTable.KEY_PASSWORD + " TEXT," +
+                UserTable.KEY_TYPE_USER + " TEXT)";
         db.execSQL(CREATE_USER_TABLE);
 
-        String CREATE_TABLES_TABLE = "CREATE TABLE " + TABLE_TABLES + " (" +
-                KEY_ID_TABLES + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                KEY_NAME_TABLE + " TEXT)";
-        db.execSQL(CREATE_TABLES_TABLE);
+        String CREATE_TABLES_FURNITURE = "CREATE TABLE " + FurnitureTable.TABLE_NAME + " (" +
+                FurnitureTable.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                FurnitureTable.KEY_NAME + " TEXT)";
+        db.execSQL(CREATE_TABLES_FURNITURE);
 
-        String CREATE_PRODUCT_TABLE = "CREATE TABLE " + TABLE_PRODUCT + " (" +
-                KEY_ID_PRODUCTS + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                KEY_NAME_PRODUCT + " TEXT," +
-                KEY_IMAGE + " BLOB," +
-                KEY_UNIT + " TEXT," +
-                KEY_PRICE + " REAL," +
-                KEY_SALE + " TEXT," +
-                KEY_AVAILABLE_QUANTITY + " INTEGER," +
-                KEY_SPECIES + " TEXT," +
-                KEY_BARCODE + " INTEGER)";
+        String CREATE_PRODUCT_TABLE = "CREATE TABLE " + ProductTable.TABLE_NAME + " (" +
+                ProductTable.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                ProductTable.KEY_NAME + " TEXT," +
+                ProductTable.KEY_IMAGE + " BLOB," +
+                ProductTable.KEY_UNIT + " TEXT," +
+                ProductTable.KEY_PRICE + " REAL," +
+                ProductTable.KEY_SALE + " TEXT," +
+                ProductTable.KEY_AVAILABLE_QUANTITY + " INTEGER," +
+                ProductTable.KEY_SPECIES + " TEXT," +
+                ProductTable.KEY_BARCODE + " INTEGER)";
         db.execSQL(CREATE_PRODUCT_TABLE);
 
         String CREATE_TABLE_INVOICE = "CREATE TABLE "
-                + TABLE_INVOICE + " ("
-                + KEY_ID_INVOICE + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + KEY_ID_ACCOUNT + " INTEGER,"
-                + KEY_ID_PRODUCT + " INTEGER,"
-                + KEY_ID_TABLE + " INTEGER,"
-                + KEY_COUNT + " INTEGER,"
-                + KEY_TOTAL_MONEY + " REAL,"
-                + KEY_INTO_MONEY + " REAL,"
-                + KEY_DATE + " TEXT,"
-                + KEY_PAYED + " INTEGER,"
-                + " FOREIGN KEY ("+KEY_ID_ACCOUNT+") REFERENCES "+TABLE_USERS+"("+KEY_ID_USER+"),"
-                + " FOREIGN KEY ("+KEY_ID_PRODUCT+") REFERENCES "+TABLE_PRODUCT+"("+KEY_ID_PRODUCT+"),"
-                + " FOREIGN KEY ("+KEY_ID_TABLE+") REFERENCES "+TABLE_TABLES+"("+KEY_ID_TABLES+"));";
+                + InvoiceTable.TABLE_NAME + " ("
+                + InvoiceTable.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + InvoiceTable.KEY_ID_USER + " INTEGER,"
+                + InvoiceTable.KEY_ID_PRODUCT + " INTEGER,"
+                + InvoiceTable.KEY_ID_TABLE + " INTEGER,"
+                + InvoiceTable.KEY_TOTAL_MONEY + " REAL,"
+                + InvoiceTable.KEY_INTO_MONEY + " REAL,"
+                + InvoiceTable.KEY_DATE + " TEXT,"
+                + InvoiceTable.KEY_TYPE_PAY + " TEXT,"
+                + InvoiceTable.KEY_PAYED + " INTEGER,"
+                + " FOREIGN KEY ("+InvoiceTable.KEY_ID_USER+") REFERENCES "+UserTable.TABLE_NAME+"("+UserTable.KEY_ID+"),"
+                + " FOREIGN KEY ("+InvoiceTable.KEY_ID_TABLE+") REFERENCES "+FurnitureTable.TABLE_NAME+"("+FurnitureTable.KEY_ID+"));";
         db.execSQL(CREATE_TABLE_INVOICE);
+
+        String CREATE_TABLES_DETAIL_INVOICE = "CREATE TABLE " + InvoiceDetailTable.TABLE_NAME + " (" +
+                InvoiceDetailTable.KEY_ID_INVOICE + " INTEGER," +
+                InvoiceDetailTable.KEY_ID_PRODUCT + " INTEGER,"+
+                InvoiceDetailTable.KEY_COUNT + " INTEGER,"+
+                " FOREIGN KEY ("+ InvoiceDetailTable.KEY_ID_INVOICE+") REFERENCES "+InvoiceTable.TABLE_NAME+"("+InvoiceTable.KEY_ID+"),"
+                + " FOREIGN KEY ("+ InvoiceDetailTable.KEY_ID_PRODUCT+") REFERENCES "+ProductTable.TABLE_NAME+"("+ProductTable.KEY_ID+"));";
+        db.execSQL(CREATE_TABLES_DETAIL_INVOICE);
     }
     public void addUser(User user) throws Exception{
         SQLiteDatabase db = null;
         try{
             db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(KEY_NAME_STORE,user.getNameStore());
-            values.put(KEY_ADDRESS,user.getAddress());
-            values.put(KEY_PHONE_NUMBER, user.getPhoneNumber());
-            values.put(KEY_GENDER,user.getGender());
-            values.put(KEY_USERNAME, user.getUserName());
-            values.put(KEY_PASSWORD, user.getPassword());
-            values.put(KEY_TYPE_USER, user.getTypeUser());
-            db.insert(TABLE_USERS,"",values);
+            values.put(UserTable.KEY_NAME_STORE,user.getNameStore());
+            values.put(UserTable.KEY_ADDRESS,user.getAddress());
+            values.put(UserTable.KEY_PHONE_NUMBER, user.getPhoneNumber());
+            values.put(UserTable.KEY_GENDER,user.getGender());
+            values.put(UserTable.KEY_USERNAME, user.getUserName());
+            values.put(UserTable.KEY_PASSWORD, user.getPassword());
+            values.put(UserTable.KEY_TYPE_USER, user.getTypeUser());
+            db.insert(UserTable.TABLE_NAME,"",values);
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }finally {
@@ -130,7 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList<User> getUsers(){
         ArrayList<User> users = new ArrayList<>();
 
-        String selectQuery = "SELECT * FROM " + TABLE_USERS;
+        String selectQuery = "SELECT * FROM " + UserTable.TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
@@ -154,15 +125,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try{
             db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(KEY_NAME_PRODUCT,product.getName());
-            values.put(KEY_IMAGE,product.getImageByteArr());
-            values.put(KEY_UNIT, product.getUnit());
-            values.put(KEY_PRICE,product.getPrice());
-            values.put(KEY_SALE, product.getSale());
-            values.put(KEY_AVAILABLE_QUANTITY, product.getAvailableQuantity());
-            values.put(KEY_SPECIES, product.getSpecies());
-            values.put(KEY_BARCODE, product.getBarcode());
-            db.insert(TABLE_PRODUCT,null,values);
+            values.put(ProductTable.KEY_NAME,product.getName());
+            values.put(ProductTable.KEY_IMAGE,product.getImageByteArr());
+            values.put(ProductTable.KEY_UNIT, product.getUnit());
+            values.put(ProductTable.KEY_PRICE,product.getPrice());
+            values.put(ProductTable.KEY_SALE, product.getSale());
+            values.put(ProductTable.KEY_AVAILABLE_QUANTITY, product.getAvailableQuantity());
+            values.put(ProductTable.KEY_SPECIES, product.getSpecies());
+            values.put(ProductTable.KEY_BARCODE, product.getBarcode());
+            db.insert(ProductTable.TABLE_NAME,null,values);
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }finally {
@@ -172,41 +143,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int updateUser(User user){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_USERNAME,user.getUserName());
-        values.put(KEY_PHONE_NUMBER,user.getPhoneNumber());
-        values.put(KEY_GENDER,user.getGender());
-        values.put(KEY_PASSWORD,user.getPassword());
-        return db.update(TABLE_USERS,
+        values.put(UserTable.KEY_USERNAME,user.getUserName());
+        values.put(UserTable.KEY_PHONE_NUMBER,user.getPhoneNumber());
+        values.put(UserTable.KEY_GENDER,user.getGender());
+        values.put(UserTable.KEY_PASSWORD,user.getPassword());
+        return db.update(UserTable.TABLE_NAME,
                 values,
-                KEY_ID_USER+"=?",
+                UserTable.KEY_ID+"=?",
                 new String[]{String.valueOf(user.getId())});
     }
     public int deleteUser(Long id){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_USERS,
-                KEY_ID_USER+"=?",
+        return db.delete(UserTable.TABLE_NAME,
+                UserTable.KEY_ID+"=?",
                 new String[]{String.valueOf(id)});
     }
     public int updateProduct(Product product){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME_PRODUCT,product.getName());
-        values.put(KEY_IMAGE,product.getImageByteArr());
-        values.put(KEY_UNIT,product.getUnit());
-        values.put(KEY_PRICE,product.getPrice());
-        values.put(KEY_SALE, product.getSale());
-        values.put(KEY_AVAILABLE_QUANTITY, product.getAvailableQuantity());
-        values.put(KEY_SPECIES, product.getSpecies());
-        values.put(KEY_BARCODE, product.getBarcode());
-        return db.update(TABLE_PRODUCT,
+        values.put(ProductTable.KEY_NAME,product.getName());
+        values.put(ProductTable.KEY_IMAGE,product.getImageByteArr());
+        values.put(ProductTable.KEY_UNIT,product.getUnit());
+        values.put(ProductTable.KEY_PRICE,product.getPrice());
+        values.put(ProductTable.KEY_SALE, product.getSale());
+        values.put(ProductTable.KEY_AVAILABLE_QUANTITY, product.getAvailableQuantity());
+        values.put(ProductTable.KEY_SPECIES, product.getSpecies());
+        values.put(ProductTable.KEY_BARCODE, product.getBarcode());
+        return db.update(ProductTable.TABLE_NAME,
                 values,
-                KEY_ID_PRODUCTS+"=?",
+                ProductTable.KEY_ID+"=?",
                 new String[]{String.valueOf(product.getId())});
     }
     public int deleteProduct(Long id){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_PRODUCT,
-                KEY_ID_PRODUCTS+"=?",
+        return db.delete(ProductTable.TABLE_NAME,
+                ProductTable.KEY_ID+"=?",
                 new String[]{String.valueOf(id)});
     }
     public void addTable(Table table) throws Exception{
@@ -214,8 +185,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try{
             db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(KEY_NAME_TABLE,table.getName());
-            db.insert(TABLE_TABLES,"",values);
+            values.put(FurnitureTable.KEY_NAME,table.getName());
+            db.insert(FurnitureTable.TABLE_NAME,"",values);
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }finally {
@@ -224,7 +195,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public ArrayList<Table> getTables(){
         ArrayList<Table> tables = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_TABLES;
+        String selectQuery = "SELECT * FROM " + FurnitureTable.TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
@@ -240,21 +211,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int updateTable(Table table){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME_TABLE,table.getName());
-        return db.update(TABLE_TABLES,
+        values.put(FurnitureTable.KEY_NAME,table.getName());
+        return db.update(FurnitureTable.TABLE_NAME,
                 values,
-                KEY_ID_TABLES+"=?",
+                FurnitureTable.KEY_ID+"=?",
                 new String[]{String.valueOf(table.getId())});
     }
     public int deleteTable(Long id){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_TABLES,
-                KEY_ID_TABLES+"=?",
+        return db.delete(FurnitureTable.TABLE_NAME,
+                FurnitureTable.KEY_ID+"=?",
                 new String[]{String.valueOf(id)});
     }
     public ArrayList<Product> getProducts(){
         ArrayList<Product> products = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_PRODUCT;
+        String selectQuery = "SELECT * FROM " + ProductTable.TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
@@ -279,15 +250,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try{
             db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(KEY_ID_ACCOUNT,invoice.getIdAccount());
-            values.put(KEY_ID_PRODUCT,invoice.getIdProduct());
-            values.put(KEY_ID_TABLE, invoice.getIdTable());
-            values.put(KEY_COUNT,invoice.getCount());
-            values.put(KEY_TOTAL_MONEY, invoice.getTotalMoney());
-            values.put(KEY_INTO_MONEY, invoice.getInToMoney());
-            values.put(KEY_DATE, invoice.getDateBuy());
-            values.put(KEY_PAYED, invoice.getIsPay());
-            db.insert(TABLE_INVOICE,"",values);
+            values.put(InvoiceTable.KEY_ID_USER,invoice.getIdAccount());
+            values.put(InvoiceTable.KEY_ID_PRODUCT,invoice.getIdProduct());
+            values.put(InvoiceTable.KEY_ID_TABLE, invoice.getIdTable());
+            values.put(InvoiceTable.KEY_TOTAL_MONEY, invoice.getTotalMoney());
+            values.put(InvoiceTable.KEY_INTO_MONEY, invoice.getInToMoney());
+            values.put(InvoiceTable.KEY_DATE, "20/10/2222");
+            values.put(InvoiceTable.KEY_TYPE_PAY, invoice.getTypePay());
+            values.put(InvoiceTable.KEY_PAYED, invoice.getIsPay());
+            db.insert(InvoiceTable.TABLE_NAME,"",values);
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }finally {
@@ -297,31 +268,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int updateInvoice(Invoice invoice){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_ID_INVOICE, invoice.getId());
-        values.put(KEY_ID_ACCOUNT,invoice.getIdAccount());
-        values.put(KEY_ID_PRODUCT,invoice.getIdProduct());
-        values.put(KEY_ID_TABLE, invoice.getIdTable());
-        values.put(KEY_COUNT,invoice.getCount());
-        values.put(KEY_TOTAL_MONEY, invoice.getTotalMoney());
-        values.put(KEY_INTO_MONEY, invoice.getInToMoney());
-        values.put(KEY_DATE, invoice.getDateBuy());
-        values.put(KEY_PAYED, invoice.getIsPay());
-        return db.update(TABLE_INVOICE,
+        values.put(InvoiceTable.KEY_ID, invoice.getId());
+        values.put(InvoiceTable.KEY_ID_USER,invoice.getIdAccount());
+        values.put(InvoiceTable.KEY_ID_PRODUCT,invoice.getIdProduct());
+        values.put(InvoiceTable.KEY_ID_TABLE, invoice.getIdTable());
+        values.put(InvoiceTable.KEY_TOTAL_MONEY, invoice.getTotalMoney());
+        values.put(InvoiceTable.KEY_INTO_MONEY, invoice.getInToMoney());
+        values.put(InvoiceTable.KEY_DATE, invoice.getDateBuy());
+        values.put(InvoiceTable.KEY_TYPE_PAY, invoice.getTypePay());
+        values.put(InvoiceTable.KEY_PAYED, invoice.getIsPay());
+        return db.update(InvoiceTable.TABLE_NAME,
                 values,
-                KEY_ID_INVOICE+"=?",
+                InvoiceTable.KEY_ID+"=?",
                 new String[]{String.valueOf(invoice.getId())});
     }
     public int deleteInvoice(Long id){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_INVOICE,
-                KEY_ID_INVOICE+"=?",
+        return db.delete(InvoiceTable.TABLE_NAME,
+                InvoiceTable.KEY_ID+"=?",
                 new String[]{String.valueOf(id)});
     }
     public ArrayList<Invoice> getInvoices(){
         ArrayList<Invoice> invoices = new ArrayList<>();
-        String selectQuery = "SELECT * FROM invoices iv INNER JOIN users u ON iv.id_account=u.id"
-                //+" INNER JOIN tables t ON iv.id_table=t.id"
-                +" INNER JOIN products p ON iv.id_product=p.id";
+        String selectQuery = "";
+//        if(typePay.equals(Constance.TYPE_STORE)){
+            selectQuery = "SELECT * FROM invoice"; //iv INNER JOIN users u ON iv.id_account=u.id"
+                    //+" INNER JOIN tables t ON iv.id_table=t.id"
+                    //+" INNER JOIN products p ON iv.id_product=p.id";
+//        }else if(typePay.equals(Constance.TYPE_PAY)){
+//            selectQuery = "SELECT * FROM invoices iv INNER JOIN users u ON iv.id_account=u.id"
+//                    +" INNER JOIN products p ON iv.id_product=p.id";
+//        }
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
@@ -331,15 +308,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 invoice.setIdAccount(cursor.getLong(1));
                 invoice.setIdProduct(cursor.getLong(2));
                 invoice.setIdTable(cursor.getLong(3));
-                invoice.setCount(cursor.getInt(4));
-                invoice.setTotalMoney(cursor.getFloat(5));
-                invoice.setInToMoney(cursor.getFloat(6));
-                invoice.setDateBuy(cursor.getString(7));
+                invoice.setTotalMoney(cursor.getFloat(4));
+                invoice.setInToMoney(cursor.getFloat(5));
+                invoice.setDateBuy(cursor.getString(6));
+                invoice.setTypePay(cursor.getString(7));
                 invoice.setIsPay(cursor.getInt(8));
                 invoices.add(invoice);
             } while(cursor.moveToNext());
         }
         return invoices;
+    }
+    public void addDetailInvoice(InvoiceDetail invoiceDetail) throws Exception{
+        SQLiteDatabase db = null;
+        try{
+            db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(InvoiceDetailTable.KEY_ID_INVOICE,invoiceDetail.getIdInvoice());
+            values.put(InvoiceDetailTable.KEY_ID_PRODUCT, invoiceDetail.getIdProduct());
+            values.put(InvoiceDetailTable.KEY_COUNT,invoiceDetail.getCount());
+            db.insert(InvoiceDetailTable.TABLE_NAME,"",values);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }finally {
+            db.close();
+        }
+    }
+    public ArrayList<InvoiceDetail> getDetailInvoices(){
+        ArrayList<InvoiceDetail> invoiceDetails = new ArrayList<>();
+        String selectQuery;
+        selectQuery = "SELECT * FROM detail_invoice INNER JOIN invoice ON detail_invoice.id_invoice = invoice.id";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do{
+                InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
+                invoiceDetail.setCount(cursor.getInt(2));
+               // Log.d("KMFG",cursor.getColumnIndexOrThrow("id_table")+" ===");
+               // Log.d("KMFG", cursor.getInt(11)+ " ===");
+                invoiceDetail.setIdTable(cursor.getLong(6));
+                invoiceDetail.setTypePay(cursor.getString(10));
+                invoiceDetail.setIsPay(cursor.getInt(11));
+                invoiceDetails.add(invoiceDetail);
+            } while(cursor.moveToNext());
+        }
+        return invoiceDetails;
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

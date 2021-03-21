@@ -1,11 +1,14 @@
 package com.quanlyquancafeapp.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.quanlyquancafeapp.adapter.ProductAdapter;
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Invoice;
+import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Product;
+import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.view.IProductView;
 
@@ -63,26 +66,43 @@ public class ProductPresenter {
             adapter.updateProduct(productsDrink);
         }
     }
-    public void addInvoice( ArrayList<Product> productsCafe, ArrayList<Product> productsDrink){
+    public void addInvoice(ArrayList<Product> productsCafe, ArrayList<Product> productsDrink, String typePay, Table table){
+        InvoiceDetail invoiceDetail = null;
+        int size = 0;
+        Invoice invoice = null;
+        if(table != null) invoice = new Invoice(1L,db.getUsers().get(1).getId(),productsCafe.get(0).getId(),table.getId(), productsCafe.get(0).getCount(),
+                100,100,"20/10/2020",typePay,0);
+        else  invoice = new Invoice(1L,db.getUsers().get(1).getId(),productsCafe.get(0).getId(),100L, productsCafe.get(0).getCount(),
+                100,100,"20/10/2020",typePay,0);
+        try {
+            db.addInvoice(invoice);
+            size = db.getInvoices().size();
+            invoiceDetail = new InvoiceDetail();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         for(int i = 0; i < productsCafe.size(); i++){
             if(productsCafe.get(i).getCount() > 0){
-                Invoice invoice = new Invoice(1L,db.getUsers().get(1).getId(),productsCafe.get(i).getId(),1L, productsCafe.get(i).getCount(),100,100,"20/10/2020",0);
                 try {
-                    db.addInvoice(invoice);
+                    invoiceDetail.setIdInvoice(db.getInvoices().get(size-1).getId());
+                    invoiceDetail.setIdProduct(productsCafe.get(i).getId());
+                    invoiceDetail.setCount(productsCafe.get(i).getCount());
+                    invoice.setIsPay(0);
+                    db.addDetailInvoice(invoiceDetail);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-        for(int i = 0; i < productsDrink.size(); i++){
-            if(productsDrink.get(i).getCount() > 0){
-                Invoice invoice = new Invoice(1L,1L,productsDrink.get(i).getId(),1L, productsDrink.get(i).getCount(),100,100,"20/10/2020",0);
-                try {
-                    db.addInvoice(invoice);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+//        for(int i = 0; i < productsDrink.size(); i++){
+//            if(productsDrink.get(i).getCount() > 0){
+//                Invoice invoice = new Invoice(1L,1L,productsDrink.get(i).getId(),1L, productsDrink.get(i).getCount(),100,100,"20/10/2020",typePay,0);
+//                try {
+//                    db.addInvoice(invoice);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
     }
 }

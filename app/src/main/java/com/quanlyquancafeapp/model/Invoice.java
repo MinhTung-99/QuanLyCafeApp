@@ -5,24 +5,26 @@ public class Invoice {
     private Long idAccount;
     private Long idProduct;
     private Long idTable;
-    private Integer count;
+    //private Integer count;
     private float totalMoney;
     private float inToMoney;
     private String dateBuy;
+    private String typePay;
     private Integer isPay;
 
     public Invoice() {
     }
 
-    public Invoice(Long id, Long idAccount, Long idProduct, Long idTable, Integer count, float totalMoney, float inToMoney, String dateBuy, Integer isPay) {
+    public Invoice(Long id, Long idAccount, Long idProduct, Long idTable, Integer count, float totalMoney, float inToMoney, String dateBuy,String typePay ,Integer isPay) {
         this.id = id;
         this.idAccount = idAccount;
         this.idProduct = idProduct;
         this.idTable = idTable;
-        this.count = count;
+        //this.count = count;
         this.totalMoney = totalMoney;
         this.inToMoney = inToMoney;
         this.dateBuy = dateBuy;
+        this.typePay = typePay;
         this.isPay = isPay;
     }
 
@@ -50,12 +52,12 @@ public class Invoice {
     public void setIdTable(Long idTable) {
         this.idTable = idTable;
     }
-    public Integer getCount() {
-        return count;
-    }
-    public void setCount(Integer count) {
-        this.count = count;
-    }
+//    public Integer getCount() {
+//        return count;
+//    }
+//    public void setCount(Integer count) {
+//        this.count = count;
+//    }
     public float getTotalMoney() {
         return totalMoney;
     }
@@ -74,6 +76,13 @@ public class Invoice {
     public void setDateBuy(String dateBuy) {
         this.dateBuy = dateBuy;
     }
+    public String getTypePay() {
+        return typePay;
+    }
+    public void setTypePay(String typePay) {
+        this.typePay = typePay;
+    }
+
     public Integer getIsPay() {
         return isPay;
     }

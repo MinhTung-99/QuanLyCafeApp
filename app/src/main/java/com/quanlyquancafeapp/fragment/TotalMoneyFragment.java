@@ -5,8 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,17 +12,15 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.TotalMoneyAdapter;
 import com.quanlyquancafeapp.databinding.FragmentTotalMoneyBinding;
-import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Invoice;
-import com.quanlyquancafeapp.model.Product;
+import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.presenter.TotalMoneyPresenter;
-import com.quanlyquancafeapp.utils.DataFake;
+import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.utils.PriceUtil;
 import com.quanlyquancafeapp.view.ITotalMoneyView;
 
@@ -33,7 +29,7 @@ import java.util.ArrayList;
 public class TotalMoneyFragment extends Fragment implements ITotalMoneyView {
     private TotalMoneyPresenter totalMoneyPresenter;
     private TotalMoneyAdapter adapter;
-    private ArrayList<Invoice> invoicesNotPay;
+    private ArrayList<InvoiceDetail> invoicesNotPay;
     private FragmentTotalMoneyBinding totalMoneyBinding;
 
     @Nullable
@@ -47,7 +43,13 @@ public class TotalMoneyFragment extends Fragment implements ITotalMoneyView {
         super.onViewCreated(view, savedInstanceState);
         init();
         Table table = (Table) getArguments().getSerializable("table");
-        float totalMoney = totalMoneyPresenter.handleTotalMoney(table, invoicesNotPay);
+        float totalMoney;
+        if(table == null){
+            totalMoney = totalMoneyPresenter.handleTotalMoney(table, invoicesNotPay);
+        }else {
+            totalMoney = totalMoneyPresenter.handleTotalMoney(table, invoicesNotPay);
+        }
+
         String setupMoney = PriceUtil.setupPrice(String.valueOf(totalMoney));
         totalMoneyBinding.btnTotalMoney.setText(setupMoney);
         totalMoneyBinding.btnTotalMoney.setOnClickListener(v->{

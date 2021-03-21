@@ -1,6 +1,7 @@
 package com.quanlyquancafeapp.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Invoice;
+import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Order;
 import com.quanlyquancafeapp.model.Product;
+import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.PriceUtil;
 
 import java.util.ArrayList;
 
 public class TotalMoneyAdapter extends RecyclerView.Adapter<TotalMoneyAdapter.TotalMoneyViewHolder>{
-    private ArrayList<Invoice> invoices;
+    private ArrayList<InvoiceDetail> invoices;
     private Context context;
-    public TotalMoneyAdapter(ArrayList<Invoice> invoices, Context context) {
+    public TotalMoneyAdapter(ArrayList<InvoiceDetail> invoices, Context context) {
         this.invoices = invoices;
         this.context = context;
     }
@@ -40,7 +43,7 @@ public class TotalMoneyAdapter extends RecyclerView.Adapter<TotalMoneyAdapter.To
         DatabaseHelper db = new DatabaseHelper(context);
         ArrayList<Product> products = db.getProducts();
         for(int i = 0; i < products.size(); i++){
-            if(invoices.get(position).getIsPay() == 0){
+            if(invoices.get(position).getIsPay() == 0 && invoices.get(position).getTypePay().equals(Constance.TYPE_PAY)){
                 if(invoices.get(position).getIdProduct() == products.get(i).getId()){
                     holder.txtProduct.setText(String.valueOf(products.get(i).getName()));
                     holder.txtSale.setText("("+products.get(i).getSale()+")");

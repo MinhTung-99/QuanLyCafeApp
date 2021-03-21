@@ -113,7 +113,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
     }
     @Override
     public void onClick(View v) {
-
         switch (v.getId()){
             case R.id.btn_cafe:
                 setBackgroundBtn(binding.btnCafe, R.color.blue);
@@ -128,9 +127,10 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
                 isCafe = false;
                 break;
             case R.id.btn_store:
-                productPresenter.addInvoice(productsCafe, productsDrink);
+                String typePay = getArguments().getString("typePay");
+                Constance.TYPE_PAY = typePay;
+                productPresenter.addInvoice(productsCafe, productsDrink, typePay, table);
                 if(table != null){
-                    DataFake.order.setIdTable(table.getId());
                     Navigation.findNavController(v).popBackStack();
                 }else {
                     navigateToTotalMoneyFragment();

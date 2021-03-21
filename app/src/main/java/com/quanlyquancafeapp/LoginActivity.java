@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.quanlyquancafeapp.databinding.ActivityLoginBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Invoice;
+import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.presenter.LoginPresenter;
 import com.quanlyquancafeapp.view.ILoginView;
 
@@ -38,16 +40,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
                 finish();
             }
         });
-
-//        DatabaseHelper db = new DatabaseHelper(this);
-//        Invoice invoice = new Invoice(1L,1L,500L,1L,
-//                23,100,100,"20/10/2020",1);
-//        try {
-//            db.addInvoice(invoice);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        Toast.makeText(LoginActivity.this, db.getInvoices().size()+" ==", Toast.LENGTH_SHORT).show();
     }
     private void setBackgroundButton() {
         binding.btnLogin.setBackgroundResource(R.drawable.rounded_white);
