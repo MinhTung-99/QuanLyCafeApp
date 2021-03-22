@@ -16,11 +16,19 @@ import androidx.navigation.Navigation;
 
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.FragmentPayBinding;
+import com.quanlyquancafeapp.model.Invoice;
+import com.quanlyquancafeapp.presenter.PayPresenter;
 import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.PriceUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PayFragment extends Fragment {
     private FragmentPayBinding binding;
+    private PayPresenter payPresenter;
+    private Invoice invoice;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,8 +38,10 @@ public class PayFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        invoice = new Invoice();
+        payPresenter = new PayPresenter(getContext());
         float totalMoney = getArguments().getFloat("totalMoney");
+        long[] idInvoiceDetail = getArguments().getLongArray("idInvoiceDetail");
         String setupMoney = PriceUtil.setupPrice(String.valueOf(totalMoney));
         binding.txtTotalMoney.setText(setupMoney);
 
@@ -56,11 +66,21 @@ public class PayFragment extends Fragment {
 
             }
         });
-
         binding.btnPay.setOnClickListener(v->{
+            for(int i = 0; i < idInvoiceDetail.length; i++){
+                invoice.setId(idInvoiceDetail[i]);
+                invoice.setTotalMoney(totalMoney);
+                //invoice.setInToMoney();
+                SimpleDateFormat getDate = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat getTime = new SimpleDateFormat("HH:mm:ss");
+                Date date = new Date();
+                invoice.setDateBuy(getDate.format(date));
+                invoice.setTime(getTime.format(date));
+                invoice.setIsPay(1);
+                payPresenter.updateInvoice(invoice);
+            }
             for(int i = 0; i < 2; i++){
                 Navigation.findNavController(v).popBackStack();
-                //DELETE TABLE ORDER
             }
         });
     }

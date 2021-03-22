@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -65,6 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + InvoiceTable.KEY_TOTAL_MONEY + " REAL,"
                 + InvoiceTable.KEY_INTO_MONEY + " REAL,"
                 + InvoiceTable.KEY_DATE + " TEXT,"
+                + InvoiceTable.KEY_TIME + " TEXT,"
                 + InvoiceTable.KEY_TYPE_PAY + " TEXT,"
                 + InvoiceTable.KEY_PAYED + " INTEGER,"
                 + " FOREIGN KEY ("+InvoiceTable.KEY_ID_USER+") REFERENCES "+UserTable.TABLE_NAME+"("+UserTable.KEY_ID+"),"
@@ -251,11 +253,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(InvoiceTable.KEY_ID_USER,invoice.getIdAccount());
-            values.put(InvoiceTable.KEY_ID_PRODUCT,invoice.getIdProduct());
             values.put(InvoiceTable.KEY_ID_TABLE, invoice.getIdTable());
             values.put(InvoiceTable.KEY_TOTAL_MONEY, invoice.getTotalMoney());
             values.put(InvoiceTable.KEY_INTO_MONEY, invoice.getInToMoney());
-            values.put(InvoiceTable.KEY_DATE, "20/10/2222");
+            values.put(InvoiceTable.KEY_DATE, invoice.getDateBuy());
+            values.put(InvoiceTable.KEY_TIME, invoice.getTime());
             values.put(InvoiceTable.KEY_TYPE_PAY, invoice.getTypePay());
             values.put(InvoiceTable.KEY_PAYED, invoice.getIsPay());
             db.insert(InvoiceTable.TABLE_NAME,"",values);
@@ -270,11 +272,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(InvoiceTable.KEY_ID, invoice.getId());
         values.put(InvoiceTable.KEY_ID_USER,invoice.getIdAccount());
-        values.put(InvoiceTable.KEY_ID_PRODUCT,invoice.getIdProduct());
         values.put(InvoiceTable.KEY_ID_TABLE, invoice.getIdTable());
         values.put(InvoiceTable.KEY_TOTAL_MONEY, invoice.getTotalMoney());
         values.put(InvoiceTable.KEY_INTO_MONEY, invoice.getInToMoney());
         values.put(InvoiceTable.KEY_DATE, invoice.getDateBuy());
+        values.put(InvoiceTable.KEY_TIME, invoice.getTime());
         values.put(InvoiceTable.KEY_TYPE_PAY, invoice.getTypePay());
         values.put(InvoiceTable.KEY_PAYED, invoice.getIsPay());
         return db.update(InvoiceTable.TABLE_NAME,
@@ -306,13 +308,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Invoice invoice = new Invoice();
                 invoice.setId(cursor.getLong(0));
                 invoice.setIdAccount(cursor.getLong(1));
-                invoice.setIdProduct(cursor.getLong(2));
-                invoice.setIdTable(cursor.getLong(3));
-                invoice.setTotalMoney(cursor.getFloat(4));
-                invoice.setInToMoney(cursor.getFloat(5));
-                invoice.setDateBuy(cursor.getString(6));
-                invoice.setTypePay(cursor.getString(7));
-                invoice.setIsPay(cursor.getInt(8));
+                invoice.setIdTable(cursor.getLong(2));
+                invoice.setTotalMoney(cursor.getFloat(3));
+                invoice.setInToMoney(cursor.getFloat(4));
+                invoice.setDateBuy(cursor.getString(5));
+                invoice.setTypePay(cursor.getString(6));
+                invoice.setIsPay(cursor.getInt(7));
                 invoices.add(invoice);
             } while(cursor.moveToNext());
         }
@@ -333,6 +334,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.close();
         }
     }
+    public int updateDetailInvoice(InvoiceDetail invoiceDetail){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(InvoiceDetailTable.KEY_ID_INVOICE,invoiceDetail.getIdInvoice());
+        values.put(InvoiceDetailTable.KEY_ID_PRODUCT, invoiceDetail.getIdProduct());
+        values.put(InvoiceDetailTable.KEY_COUNT,invoiceDetail.getCount());
+        return db.update(InvoiceDetailTable.TABLE_NAME,
+                values,
+                InvoiceDetailTable.KEY_ID_PRODUCT+"=?",
+                new String[]{String.valueOf(invoiceDetail.getId())});
+    }
     public ArrayList<InvoiceDetail> getDetailInvoices(){
         ArrayList<InvoiceDetail> invoiceDetails = new ArrayList<>();
         String selectQuery;
@@ -343,11 +355,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
                 invoiceDetail.setCount(cursor.getInt(2));
-               // Log.d("KMFG",cursor.getColumnIndexOrThrow("id_table")+" ===");
-               // Log.d("KMFG", cursor.getInt(11)+ " ===");
+                //Log.d("KMFG",cursor.getColumnIndexOrThrow("id")+" ===");
+                //Log.d("KMFG", cursor.getInt(3)+ " IDD===");
+                invoiceDetail.setId(cursor.getLong(3));
                 invoiceDetail.setIdTable(cursor.getLong(6));
-                invoiceDetail.setTypePay(cursor.getString(10));
-                invoiceDetail.setIsPay(cursor.getInt(11));
+                invoiceDetail.setTypePay(cursor.getString(11));
+                invoiceDetail.setIsPay(cursor.getInt(12));
                 invoiceDetails.add(invoiceDetail);
             } while(cursor.moveToNext());
         }

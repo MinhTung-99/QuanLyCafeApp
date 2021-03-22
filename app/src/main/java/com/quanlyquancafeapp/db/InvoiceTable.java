@@ -9,6 +9,7 @@ public class InvoiceTable {
     public static final String KEY_TOTAL_MONEY = "total_money";
     public static final String KEY_INTO_MONEY = "into_money";
     public static final String KEY_DATE = "date";
+    public static final String KEY_TIME = "time";
     public static final String KEY_TYPE_PAY = "type_pay";
     public static final String KEY_PAYED = "payed";
 }

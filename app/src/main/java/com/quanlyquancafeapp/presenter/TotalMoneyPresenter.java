@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.quanlyquancafeapp.db.DatabaseHelper;
-import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
@@ -19,18 +18,19 @@ public class TotalMoneyPresenter {
     private float intoMoney;
     private float totalMoney;
     private ArrayList<InvoiceDetail> invoicesNotPay;
+    private long[] idCurrentInvoiceDetail;
+    private int positionId = 0;
 
     public TotalMoneyPresenter(Context context) {
         db = new DatabaseHelper(context);
+        idCurrentInvoiceDetail = new long[30];
     }
     public float handleTotalMoney(Table table, ArrayList<InvoiceDetail> invoicesNotPay){
-        Log.d("KMFG", "TEST");
         this.invoicesNotPay = invoicesNotPay;
         totalMoney = 0;
         products = db.getProducts();
         invoiceDetails = db.getDetailInvoices();
         for(int i = 0; i < invoiceDetails.size(); i++){
-            Log.d("KMFG", invoiceDetails.get(i).getIsPay() + " -----" + invoiceDetails.get(i).getTypePay() + "----"+Constance.TYPE_PAY);
             if(invoiceDetails.get(i).getIsPay() == 0 && invoiceDetails.get(i).getTypePay().equals(Constance.TYPE_PAY)){
                 for (int j = 0; j < products.size(); j++){
                     intoMoney = 0;
@@ -38,17 +38,25 @@ public class TotalMoneyPresenter {
                         if(invoiceDetails.get(i).getIdProduct() == products.get(j).getId() &&
                                 invoiceDetails.get(i).getIdTable() == table.getId()){
                             handleTotalAndIntoMoneyPay(i,j);
-                            Log.d("KMFG", "RIGHT");
+                            setCurrentIdInvoiceDetail(i);
                         }
                     }else{
                         if(invoiceDetails.get(i).getIdProduct() == products.get(j).getId()){
                             handleTotalAndIntoMoneyPay(i,j);
+                            setCurrentIdInvoiceDetail(i);
                         }
                     }
                 }
             }
         }
         return totalMoney;
+    }
+    private void setCurrentIdInvoiceDetail(int position){
+        idCurrentInvoiceDetail[positionId] = invoiceDetails.get(position).getId();
+        positionId++;
+    }
+    public long[] getCurrentIdInvoiceDetail(){
+        return idCurrentInvoiceDetail;
     }
     private void handleTotalAndIntoMoneyPay(int i, int j){
         String saleStr = "";

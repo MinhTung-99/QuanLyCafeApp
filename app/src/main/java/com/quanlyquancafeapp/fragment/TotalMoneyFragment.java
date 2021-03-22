@@ -1,7 +1,6 @@
 package com.quanlyquancafeapp.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.TotalMoneyAdapter;
 import com.quanlyquancafeapp.databinding.FragmentTotalMoneyBinding;
-import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.presenter.TotalMoneyPresenter;
-import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.utils.PriceUtil;
 import com.quanlyquancafeapp.view.ITotalMoneyView;
 
@@ -70,6 +67,7 @@ public class TotalMoneyFragment extends Fragment implements ITotalMoneyView {
     public void navigateToPayFragment(float totalMoney) {
         Bundle bundle = new Bundle();
         bundle.putFloat("totalMoney", totalMoney);
+        bundle.putLongArray("idInvoiceDetail", totalMoneyPresenter.getCurrentIdInvoiceDetail());
         Navigation.findNavController(getView()).navigate(R.id.payFragment, bundle);
     }
 }
