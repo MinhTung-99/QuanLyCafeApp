@@ -1,6 +1,8 @@
 package com.quanlyquancafeapp.model;
 
-public class Invoice {
+import java.io.Serializable;
+
+public class Invoice implements Serializable {
     private Long id;
     private Long idAccount;
     private Long idTable;

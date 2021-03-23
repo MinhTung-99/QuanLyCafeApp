@@ -12,7 +12,7 @@
     </fragment>
     <fragment
         android:id="@+id/invoiceFragment"
-        android:name="com.quanlyquancafeapp.fragment.InvoiceFragment"
+        android:name="com.quanlyquancafeapp.fragment.admin.AdminInvoiceFragment"
         android:label="InvoiceFragment" >
         <action
             android:id="@+id/action_invoiceFragment_to_invoiceDetailFragment"
@@ -20,6 +20,6 @@
     </fragment>
     <fragment
         android:id="@+id/invoiceDetailFragment"
-        android:name="com.quanlyquancafeapp.fragment.InvoiceDetailFragment"
+        android:name="com.quanlyquancafeapp.fragment.admin.AdminInvoiceDetailFragment"
         android:label="InvoiceDetailFragment" />
 </navigation>
