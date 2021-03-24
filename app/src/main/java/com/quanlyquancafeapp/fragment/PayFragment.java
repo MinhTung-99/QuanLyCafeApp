@@ -69,6 +69,7 @@ public class PayFragment extends Fragment {
         binding.btnPay.setOnClickListener(v->{
             for(int i = 0; i < idInvoiceDetail.length; i++){
                 invoice.setId(idInvoiceDetail[i]);
+                Log.d("KMFG1", idInvoiceDetail[i]+ " ==");
                 invoice.setTotalMoney(totalMoney);
                 //invoice.setInToMoney();
                 SimpleDateFormat getDate = new SimpleDateFormat("dd/MM/yyyy");
@@ -77,6 +78,7 @@ public class PayFragment extends Fragment {
                 invoice.setDateBuy(getDate.format(date));
                 invoice.setTime(getTime.format(date));
                 invoice.setIsPay(1);
+                invoice.setIdTable(0L);
                 payPresenter.updateInvoice(invoice);
             }
             for(int i = 0; i < 2; i++){

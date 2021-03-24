@@ -2,19 +2,16 @@ package com.quanlyquancafeapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.navigation.NavController;
-import androidx.navigation.NavGraph;
-import androidx.navigation.NavInflater;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.quanlyquancafeapp.adapter.AdminAdapter;
 import com.quanlyquancafeapp.databinding.ActivityHomeAdminBinding;
-import com.quanlyquancafeapp.fragment.ReportFragment;
 import com.quanlyquancafeapp.model.Admin;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 
@@ -27,6 +24,7 @@ public class HomeAdminActivity extends AppCompatActivity implements IRecyclerVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home_admin);
+        setSupportActionBar(binding.toolbar);
 
         ArrayList<Admin> admins = new ArrayList<>();
         admins.add(new Admin(R.drawable.rounded_green,R.drawable.ic_speaker,"Báo cáo"));
@@ -63,4 +61,18 @@ public class HomeAdminActivity extends AppCompatActivity implements IRecyclerVie
     }
     @Override
     public void reductionBtn(int position) { }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_shell:
+                startActivity(new Intent(HomeAdminActivity.this, HomeActivity.class));
+            break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

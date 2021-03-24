@@ -13,7 +13,6 @@ import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.admin.AdminInvoiceAdapter;
 import com.quanlyquancafeapp.databinding.FragmentAdminInvoiceBinding;
 import com.quanlyquancafeapp.model.Invoice;
-import com.quanlyquancafeapp.model.InvoiceOld;
 import com.quanlyquancafeapp.presenter.admin.AdminInvoicePresenter;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class AdminInvoiceFragment extends Fragment implements IRecyclerViewOnIte
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adminInvoicePresenter = new AdminInvoicePresenter(getContext());
-        invoices = adminInvoicePresenter.getInvoice();
+        invoices = adminInvoicePresenter.getInvoiceSort();
         adapter = new AdminInvoiceAdapter(invoices, this);
         binding.rvInvoices.setAdapter(adapter);
     }

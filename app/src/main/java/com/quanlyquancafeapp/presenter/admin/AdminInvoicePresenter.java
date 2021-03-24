@@ -12,7 +12,7 @@ public class AdminInvoicePresenter {
     public AdminInvoicePresenter(Context context) {
         db = new DatabaseHelper(context);
     }
-    public ArrayList<Invoice> getInvoice(){
-        return db.getInvoices();
+    public ArrayList<Invoice> getInvoiceSort(){
+        return db.getInvoicesSort();
     }
 }

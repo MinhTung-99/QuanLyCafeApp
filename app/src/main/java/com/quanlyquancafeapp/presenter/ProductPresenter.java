@@ -1,6 +1,7 @@
 package com.quanlyquancafeapp.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.quanlyquancafeapp.adapter.ProductAdapter;
 import com.quanlyquancafeapp.db.DatabaseHelper;
@@ -90,8 +91,10 @@ public class ProductPresenter {
         }
     }
     private void setInvoice(Table table, String typePay){
-        if(table != null) invoice = new Invoice(db.getUsers().get(1).getId(),table.getId(), 0,0,"","",typePay,0);
-        else  invoice = new Invoice(db.getUsers().get(1).getId(),0L, 0,0,"","",typePay,0);
+        if(table != null)
+            invoice = new Invoice(db.getUsers().get(1).getId(),table.getId(), 0,0,"","",typePay,0);
+        else
+            invoice = new Invoice(db.getUsers().get(1).getId(),0L, 0,0,"","",typePay,0);
         try {
             db.addInvoice(invoice);
             sizeInvoice = db.getInvoices().size();

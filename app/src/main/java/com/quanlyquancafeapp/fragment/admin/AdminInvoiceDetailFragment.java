@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import com.quanlyquancafeapp.R;
+import com.quanlyquancafeapp.adapter.admin.AdminProductInvoiceAdapter;
 import com.quanlyquancafeapp.databinding.FragmentAdminInvoiceDetailBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Invoice;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 
 public class AdminInvoiceDetailFragment extends Fragment {
     private FragmentAdminInvoiceDetailBinding binding;
+    private AdminProductInvoiceAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,6 +37,8 @@ public class AdminInvoiceDetailFragment extends Fragment {
         Toast.makeText(getContext(), invoice.getDateBuy(),Toast.LENGTH_SHORT).show();
         DatabaseHelper db = new DatabaseHelper(getContext());
         ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesById(invoice.getId());
-        Log.d("KMFG", db.getProductsInvoiceDetail().get(0).getName()+" ====");
+        adapter = new AdminProductInvoiceAdapter(db.getProductsInvoiceDetail(), db.getCounts());
+        binding.rvProducts.setAdapter(adapter);
+        Log.d("KMFG", db.getCounts()+" ====");
     }
 }

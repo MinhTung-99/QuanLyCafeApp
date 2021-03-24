@@ -41,11 +41,7 @@ public class TotalMoneyFragment extends Fragment implements ITotalMoneyView {
         init();
         Table table = (Table) getArguments().getSerializable("table");
         float totalMoney;
-        if(table == null){
-            totalMoney = totalMoneyPresenter.handleTotalMoney(table, invoicesNotPay);
-        }else {
-            totalMoney = totalMoneyPresenter.handleTotalMoney(table, invoicesNotPay);
-        }
+        totalMoney = totalMoneyPresenter.handleTotalMoney(table, invoicesNotPay);
 
         String setupMoney = PriceUtil.setupPrice(String.valueOf(totalMoney));
         totalMoneyBinding.btnTotalMoney.setText(setupMoney);
