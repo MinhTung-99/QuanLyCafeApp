@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("typePay", "SHELL");
                 navController.setGraph(graph, bundle);
                 break;
+            case "CUSTOMERS":
+                graph = navInflater.inflate(R.navigation.nav_customers);
+                navController.setGraph(graph);
+                break;
         }
     }
 }

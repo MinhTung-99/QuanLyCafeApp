@@ -24,6 +24,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.quanlyquancafeapp.CustomerOrderActivity;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.ScanCodeActivity;
 import com.quanlyquancafeapp.adapter.ProductAdapter;
@@ -127,14 +128,15 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
                 isCafe = false;
                 break;
             case R.id.btn_store:
-                String typePay = getArguments().getString("typePay");
-                Constance.TYPE_PAY = typePay;
-                productPresenter.addInvoice(productsCafe, productsDrink, typePay, table);
-                if(table != null){
-                    Navigation.findNavController(v).popBackStack();
-                }else {
-                    navigateToTotalMoneyFragment();
-                }
+//                String typePay = getArguments().getString("typePay");
+//                Constance.TYPE_PAY = typePay;
+                productPresenter.addInvoice(productsCafe, productsDrink, "ABC", table);
+                Navigation.findNavController(getView()).popBackStack();
+//                if(table != null){
+//                    Navigation.findNavController(v).popBackStack();
+//                }else {
+//                    navigateToTotalMoneyFragment();
+//                }
                 break;
             case R.id.img_qr_code:
                 navigateToScanCodeActivity();

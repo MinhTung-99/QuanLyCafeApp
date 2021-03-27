@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.quanlyquancafeapp.databinding.ActivityHomeBinding;
+import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.presenter.HomePresenter;
 import com.quanlyquancafeapp.view.IHomeView;
 
@@ -25,7 +26,7 @@ public class HomeActivity extends AppCompatActivity implements IHomeView {
     @Override
     public void navigateToTableFragment() {
         Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-        intent.putExtra("TypeAdmin","SHELL");
+        intent.putExtra("TypeAdmin","CUSTOMERS");
         startActivity(intent);
     }
 

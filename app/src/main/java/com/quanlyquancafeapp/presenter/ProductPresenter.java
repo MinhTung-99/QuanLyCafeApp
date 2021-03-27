@@ -73,6 +73,8 @@ public class ProductPresenter {
             if(productsCafe.get(i).getCount() > 0){
                 try {
                     InvoiceDetail invoiceDetail = setInvoiceDetail(productsCafe, i);
+                    db.idCustomer = 1L;
+                    db.idTable = table.getId();
                     db.addDetailInvoice(invoiceDetail);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -92,7 +94,7 @@ public class ProductPresenter {
     }
     private void setInvoice(Table table, String typePay){
         if(table != null)
-            invoice = new Invoice(db.getUsers().get(1).getId(),table.getId(), 0,0,"","",typePay,0);
+            invoice = new Invoice(db.getUsers().get(1).getId(),table.getId(), 0,0,"","3h50",typePay,0);
         else
             invoice = new Invoice(db.getUsers().get(1).getId(),0L, 0,0,"","",typePay,0);
         try {

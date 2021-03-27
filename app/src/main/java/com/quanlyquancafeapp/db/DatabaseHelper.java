@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.quanlyquancafeapp.model.Customer;
 import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Product;
@@ -70,13 +71,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " FOREIGN KEY ("+InvoiceTable.KEY_ID_TABLE+") REFERENCES "+FurnitureTable.TABLE_NAME+"("+FurnitureTable.KEY_ID+"));";
         db.execSQL(CREATE_TABLE_INVOICE);
 
+        String CREATE_TABLES_CUSTOMER = "CREATE TABLE " + CustomerTable.TABLE_NAME + " (" +
+                CustomerTable.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                CustomerTable.KEY_COUNT_PERSON +" INTEGER," +
+                CustomerTable.KEY_DONE + " INTEGER," +
+                CustomerTable.KEY_NAME + " TEXT)";
+        db.execSQL(CREATE_TABLES_CUSTOMER);
+
         String CREATE_TABLES_DETAIL_INVOICE = "CREATE TABLE " + InvoiceDetailTable.TABLE_NAME + " (" +
                 InvoiceDetailTable.KEY_ID_INVOICE + " INTEGER," +
                 InvoiceDetailTable.KEY_ID_PRODUCT + " INTEGER,"+
+                InvoiceDetailTable.KEY_ID_TABLE + " INTEGER,"+
                 InvoiceDetailTable.KEY_COUNT + " INTEGER,"+
+                InvoiceDetailTable.KEY_ID_CUSTOMER + " INTEGER," +
                 " FOREIGN KEY ("+ InvoiceDetailTable.KEY_ID_INVOICE+") REFERENCES "+InvoiceTable.TABLE_NAME+"("+InvoiceTable.KEY_ID+"),"
+                + " FOREIGN KEY ("+ InvoiceDetailTable.KEY_ID_TABLE+") REFERENCES "+FurnitureTable.TABLE_NAME+"("+FurnitureTable.KEY_ID+"),"
+                + " FOREIGN KEY ("+ InvoiceDetailTable.KEY_ID_CUSTOMER+") REFERENCES "+CustomerTable.TABLE_NAME+"("+CustomerTable.KEY_ID+"),"
                 + " FOREIGN KEY ("+ InvoiceDetailTable.KEY_ID_PRODUCT+") REFERENCES "+ProductTable.TABLE_NAME+"("+ProductTable.KEY_ID+"));";
         db.execSQL(CREATE_TABLES_DETAIL_INVOICE);
+    }
+    public void addCustomer(Customer customer) throws Exception{
+        SQLiteDatabase db = null;
+        try{
+            db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(CustomerTable.KEY_NAME,customer.getName());
+            values.put(CustomerTable.KEY_COUNT_PERSON, customer.getCount());
+            values.put(CustomerTable.KEY_DONE, customer.getDone());
+
+            db.insert(CustomerTable.TABLE_NAME,"",values);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }finally {
+            db.close();
+        }
     }
     public void addUser(User user) throws Exception{
         SQLiteDatabase db = null;
@@ -281,12 +309,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 InvoiceTable.KEY_ID+"=?",
                 new String[]{String.valueOf(invoice.getId())});
     }
-    public int deleteInvoice(Long id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(InvoiceTable.TABLE_NAME,
-                InvoiceTable.KEY_ID+"=?",
-                new String[]{String.valueOf(id)});
-    }
+//    public int deleteInvoice(Long id){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        return db.delete(InvoiceTable.TABLE_NAME,
+//                InvoiceTable.KEY_ID+"=?",
+//                new String[]{String.valueOf(id)});
+//    }
     public ArrayList<Invoice> getInvoices(){
         ArrayList<Invoice> invoices = new ArrayList<>();
         String selectQuery = "SELECT * FROM invoice";
@@ -335,6 +363,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return invoices;
     }
+    public static Long idCustomer, idTable;
     public void addDetailInvoice(InvoiceDetail invoiceDetail) throws Exception{
         SQLiteDatabase db = null;
         try{
@@ -343,6 +372,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(InvoiceDetailTable.KEY_ID_INVOICE,invoiceDetail.getIdInvoice());
             values.put(InvoiceDetailTable.KEY_ID_PRODUCT, invoiceDetail.getIdProduct());
             values.put(InvoiceDetailTable.KEY_COUNT,invoiceDetail.getCount());
+            values.put(InvoiceDetailTable.KEY_ID_CUSTOMER,idCustomer);
+            values.put(InvoiceDetailTable.KEY_ID_TABLE, idTable);
             db.insert(InvoiceDetailTable.TABLE_NAME,"",values);
         }catch (Exception e){
             throw new Exception(e.getMessage());
@@ -420,6 +451,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 productsInvoiceDetail.add(product);
 
                 counts.add(cursor.getInt(2));
+            } while(cursor.moveToNext());
+        }
+        return invoiceDetails;
+    }
+
+    public ArrayList<InvoiceDetail> getDetailInvoicesCustomer(){
+        ArrayList<InvoiceDetail> invoiceDetails = new ArrayList<>();
+        productsInvoiceDetail = new ArrayList<>();
+        counts = new ArrayList<>();
+        String selectQuery = "SELECT * FROM detail_invoice INNER JOIN customer ON detail_invoice.id_customer = customer.id_customer "
+                + "INNER JOIN furniture ON furniture.id = detail_invoice.id_table "
+                + "INNER JOIN invoice ON detail_invoice.id_invoice = invoice.id "
+                + "INNER JOIN product ON product.id = detail_invoice.id_product";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if(cursor.moveToFirst()){
+            do{
+                InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
+                invoiceDetail.setCount(cursor.getInt(2));
+                invoiceDetail.setTime(cursor.getString(18));
+                Log.d("KMFG",cursor.getColumnIndexOrThrow("time")+" =COLUM");
+                //Log.d("KMFG", cursor.getBlob(22)+ " =000");
+
+                Customer customer = new Customer();
+                customer.setId(cursor.getLong(5));
+                customer.setCount(cursor.getInt(6));
+                customer.setDone(cursor.getInt(7));
+                customer.setName(cursor.getString(8));
+                invoiceDetail.setCustomer(customer);
+
+                Product product = new Product();
+                product.setName(cursor.getString(22));
+                product.setImageByteArr(cursor.getBlob(23));
+                invoiceDetail.setProduct(product);
+
+//                invoiceDetail.setId(cursor.getLong(7));
+//                invoiceDetail.setIdProduct(cursor.getLong(1));
+                invoiceDetail.setIdTable(cursor.getLong(14));
+//                invoiceDetail.setTypePay(cursor.getString(11));
+//                invoiceDetail.setIsPay(cursor.getInt(12));
+                invoiceDetails.add(invoiceDetail);
+//
+//                Product product = new Product();
+//                product.setName(cursor.getString(8));
+//                product.setPrice(cursor.getFloat(11));
+//                product.setSale(cursor.getString(12));
+//                productsInvoiceDetail.add(product);
+//
+//                counts.add(cursor.getInt(2));
             } while(cursor.moveToNext());
         }
         return invoiceDetails;

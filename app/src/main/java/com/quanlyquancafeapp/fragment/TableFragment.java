@@ -53,23 +53,23 @@ public class TableFragment extends Fragment implements TableAdapter.RecyclerView
     }
     @Override
     public void onClick(int position) {
-        boolean isTable = false;
-        for (int i = 0; i < tablePresenter.getInvoicesDetail().size(); i++){
-            if(tablePresenter.getInvoicesDetail().get(i).getIdTable() != null){
-                if(tablePresenter.getInvoicesDetail().get(i).getIdTable() == tables.get(position).getId()){
-                    Constance.TYPE_PAY = getArguments().getString("typePay");
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("table", tables.get(position));
-                    Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
-                    isTable = true;
-                }
-            }
-        }
-        if(!isTable){
+//        boolean isTable = false;
+//        for (int i = 0; i < tablePresenter.getInvoicesDetail().size(); i++){
+//            if(tablePresenter.getInvoicesDetail().get(i).getIdTable() != null){
+//                if(tablePresenter.getInvoicesDetail().get(i).getIdTable() == tables.get(position).getId()){
+//                    //Constance.TYPE_PAY = getArguments().getString("typePay");
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("table", tables.get(position));
+//                    Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
+//                    isTable = true;
+//                }
+//            }
+//        }
+//        if(!isTable){
             Bundle bundle = new Bundle();
             bundle.putSerializable("table", tables.get(position));
-            bundle.putString("typePay", getArguments().getString("typePay"));
+//            bundle.putString("typePay", getArguments().getString("typePay"));
             Navigation.findNavController(getView()).navigate(R.id.productFragment, bundle);
-        }
+      //  }
     }
 }

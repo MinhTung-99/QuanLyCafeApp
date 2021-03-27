@@ -50,8 +50,8 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
         holder.tableBinding.imgEmployee.setVisibility(View.GONE);
 
         DatabaseHelper db = new DatabaseHelper(context);
-        for(int i = 0; i < db.getDetailInvoices().size(); i++){
-            if(db.getDetailInvoices().get(i).getIdTable() == tables.get(position).getId()){
+        for(int i = 0; i < db.getDetailInvoicesCustomer().size(); i++){
+            if(db.getDetailInvoicesCustomer().get(i).getIdTable() == tables.get(position).getId()){
                 holder.tableBinding.rlTop.setVisibility(View.VISIBLE);
                 holder.tableBinding.rlBottom.setVisibility(View.GONE);
                 holder.tableBinding.imgEmployee.setVisibility(View.VISIBLE);

@@ -13,20 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyQuanCafeApp">
-        <activity android:name=".ScanCodeActivity"></activity>
-        <activity android:name=".NewPasswordActivity" />
-        <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".CustomerOrderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ScanCodeActivity" />
+        <activity android:name=".NewPasswordActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
         <activity android:name=".HomeAdminActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity">
+        </activity>
     </application>
 
 </manifest>
