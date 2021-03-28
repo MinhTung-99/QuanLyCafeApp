@@ -81,9 +81,9 @@ public class PayFragment extends Fragment {
                 invoice.setIdTable(0L);
                 payPresenter.updateInvoice(invoice);
             }
-            for(int i = 0; i < 2; i++){
-                Navigation.findNavController(v).popBackStack();
-            }
+//            for(int i = 0; i < 2; i++){
+//                Navigation.findNavController(v).popBackStack();
+//            }
         });
     }
 }

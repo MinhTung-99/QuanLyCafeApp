@@ -2,7 +2,7 @@ package com.quanlyquancafeapp.db;
 
 public class InvoiceTable {
     public static final String TABLE_NAME = "invoice";
-    public static final String KEY_ID = "id";
+    public static final String KEY_ID = "id_invoice";
     public static final String KEY_ID_USER = "id_user";
     public static final String KEY_ID_PRODUCT = "id_product";
     public static final String KEY_ID_TABLE = "id_table";

@@ -39,6 +39,5 @@ public class AdminInvoiceDetailFragment extends Fragment {
         ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesById(invoice.getId());
         adapter = new AdminProductInvoiceAdapter(db.getProductsInvoiceDetail(), db.getCounts());
         binding.rvProducts.setAdapter(adapter);
-        Log.d("KMFG", db.getCounts()+" ====");
     }
 }

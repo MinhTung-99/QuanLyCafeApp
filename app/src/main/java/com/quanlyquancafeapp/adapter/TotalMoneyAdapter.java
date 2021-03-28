@@ -43,7 +43,7 @@ public class TotalMoneyAdapter extends RecyclerView.Adapter<TotalMoneyAdapter.To
         DatabaseHelper db = new DatabaseHelper(context);
         ArrayList<Product> products = db.getProducts();
         for(int i = 0; i < products.size(); i++){
-            if(invoices.get(position).getIsPay() == 0 && invoices.get(position).getTypePay().equals(Constance.TYPE_PAY)){
+            if(invoices.get(position).getIsPay() == 0 /*&& invoices.get(position).getTypePay().equals(Constance.TYPE_PAY)*/){
                 if(invoices.get(position).getIdProduct() == products.get(i).getId()){
                     holder.txtProduct.setText(String.valueOf(products.get(i).getName()));
                     holder.txtSale.setText("("+products.get(i).getSale()+")");

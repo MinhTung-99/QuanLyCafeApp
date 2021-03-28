@@ -29,10 +29,10 @@ public class TotalMoneyPresenter {
         this.invoicesNotPay = invoicesNotPay;
         totalMoney = 0;
         products = db.getProducts();
-        invoiceDetails = db.getDetailInvoices();
+        invoiceDetails = db.getDetailInvoicesCustomer();
         for(int i = 0; i < invoiceDetails.size(); i++){
-            //Log.d("KMFG", invoiceDetails.get(i).getIsPay()+ " ===");//???? ispay==1
-            if(invoiceDetails.get(i).getIsPay() == 0 && invoiceDetails.get(i).getTypePay().equals(Constance.TYPE_PAY)){
+//            Log.d("KMFG", invoiceDetails.get(i).getIsPay()+ " ===");//???? ispay==1
+            if(invoiceDetails.get(i).getIsPay() == 0 /*&& invoiceDetails.get(i).getTypePay().equals(Constance.TYPE_PAY)*/){
                 for (int j = 0; j < products.size(); j++){
                     intoMoney = 0;
                     if(table != null && invoiceDetails.get(i).getIdTable() != null){

@@ -73,7 +73,7 @@ public class ProductPresenter {
             if(productsCafe.get(i).getCount() > 0){
                 try {
                     InvoiceDetail invoiceDetail = setInvoiceDetail(productsCafe, i);
-                    db.idCustomer = 1L;
+                    //db.idCustomer = 1L;
                     db.idTable = table.getId();
                     db.addDetailInvoice(invoiceDetail);
                 } catch (Exception e) {

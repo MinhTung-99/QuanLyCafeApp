@@ -12,6 +12,7 @@ import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.ItemCustomerOrderBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.InvoiceDetail;
+import com.quanlyquancafeapp.model.Table;
 
 import java.util.ArrayList;
 
@@ -38,6 +39,7 @@ public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdap
             recyclerViewItemOnClick.onClick(invoiceDetails.get(position).getCustomer().getId());
             return false;
         });
+        holder.binding.btnTotalMoney.setOnClickListener(v->recyclerViewItemOnClick.btnTotalMoney(invoiceDetails.get(position).getIdTable()));
     }
     @Override
     public int getItemCount() {
@@ -52,5 +54,6 @@ public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdap
     }
     public interface IRecyclerViewItemOnClick{
         void onClick(Long idCustomer);
+        void btnTotalMoney(Long idTable);
     }
 }

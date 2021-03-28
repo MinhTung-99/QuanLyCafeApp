@@ -8,11 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.CustomerOrderAdapter;
 import com.quanlyquancafeapp.databinding.FragmentCustomerOrderBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.InvoiceDetail;
+import com.quanlyquancafeapp.model.Table;
+
 import java.util.ArrayList;
 
 public class CustomerOrderFragment extends Fragment implements CustomerOrderAdapter.IRecyclerViewItemOnClick {
@@ -37,5 +41,14 @@ public class CustomerOrderFragment extends Fragment implements CustomerOrderAdap
     public void onClick(Long idCustomer) {
         CustomerOrderBottomSheetFragment customerOrderBottomSheetFragment = new CustomerOrderBottomSheetFragment(idCustomer);
         customerOrderBottomSheetFragment.show(getChildFragmentManager(),customerOrderBottomSheetFragment.getTag());
+    }
+
+    @Override
+    public void btnTotalMoney(Long idTable) {
+        Bundle bundle = new Bundle();
+        Table table = new Table();
+        table.setId(idTable);
+        bundle.putSerializable("table",table);
+        Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
     }
 }

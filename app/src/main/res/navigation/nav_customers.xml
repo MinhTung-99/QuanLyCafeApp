@@ -5,5 +5,21 @@
     <fragment
         android:id="@+id/customerOrderFragment"
         android:name="com.quanlyquancafeapp.fragment.admin.CustomerOrderFragment"
-        android:label="CustomerOrderFragment" />
+        android:label="CustomerOrderFragment" >
+        <action
+            android:id="@+id/action_customerOrderFragment_to_totalMoneyFragment2"
+            app:destination="@id/totalMoneyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/totalMoneyFragment"
+        android:name="com.quanlyquancafeapp.fragment.TotalMoneyFragment"
+        android:label="TotalMoneyFragment" >
+        <action
+            android:id="@+id/action_totalMoneyFragment2_to_payFragment3"
+            app:destination="@id/payFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/payFragment"
+        android:name="com.quanlyquancafeapp.fragment.PayFragment"
+        android:label="PayFragment" />
 </navigation>
