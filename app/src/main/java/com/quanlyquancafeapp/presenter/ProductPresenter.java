@@ -73,7 +73,6 @@ public class ProductPresenter {
             if(productsCafe.get(i).getCount() > 0){
                 try {
                     InvoiceDetail invoiceDetail = setInvoiceDetail(productsCafe, i);
-                    //db.idCustomer = 1L;
                     db.idTable = table.getId();
                     db.addDetailInvoice(invoiceDetail);
                 } catch (Exception e) {
@@ -109,6 +108,7 @@ public class ProductPresenter {
         invoiceDetail.setIdInvoice(db.getInvoices().get(sizeInvoice-1).getId());
         invoiceDetail.setIdProduct(products.get(position).getId());
         invoiceDetail.setCount(products.get(position).getCount());
+        Log.d("KMFG5", products.get(position).getCount()+ " ===0000");
         return invoiceDetail;
     }
 }

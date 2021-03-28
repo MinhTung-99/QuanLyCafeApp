@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +16,7 @@ import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.CustomerOrderAdapter;
 import com.quanlyquancafeapp.databinding.FragmentCustomerOrderBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.Customer;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Table;
 
@@ -34,7 +37,16 @@ public class CustomerOrderFragment extends Fragment implements CustomerOrderAdap
         super.onViewCreated(view, savedInstanceState);
         DatabaseHelper db = new DatabaseHelper(getContext());
         ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesCustomer();
-        adapter = new CustomerOrderAdapter(invoiceDetails, this);
+        ArrayList<InvoiceDetail> invoiceDetailArrayList = new ArrayList<>();
+        for(int i = 0; i < invoiceDetails.size()-1; i++){
+            if(invoiceDetails.get(i).getCustomer().getId() != invoiceDetails.get(i+1).getCustomer().getId()){
+                invoiceDetailArrayList.add(invoiceDetails.get(i));
+            }
+        }
+        if(invoiceDetails.get(invoiceDetails.size()-1).getCustomer().getId() != invoiceDetails.get(invoiceDetails.size()-2).getCustomer().getId()){
+            invoiceDetailArrayList.add(invoiceDetails.get(invoiceDetails.size()-1));
+        }
+        adapter = new CustomerOrderAdapter(invoiceDetailArrayList,this);
         binding.rvCustomerOrder.setAdapter(adapter);
     }
     @Override

@@ -20,8 +20,8 @@ public class CustomerOrderActivity extends AppCompatActivity {
         binding.btnLogin.setBackground(getDrawable(R.drawable.rounded_white));
         binding.btnRegister.setBackground(getDrawable(R.drawable.rounded_white));
 
+        DatabaseHelper db = new DatabaseHelper(this);
         binding.btnRegister.setOnClickListener(v->{
-            DatabaseHelper db = new DatabaseHelper(this);
             Customer customer = new Customer();
             customer.setName(binding.edtName.getText().toString());
             customer.setCount(Integer.parseInt(binding.edtCount.getText().toString()));

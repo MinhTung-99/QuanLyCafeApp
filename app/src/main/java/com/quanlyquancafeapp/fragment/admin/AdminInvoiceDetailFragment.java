@@ -34,10 +34,9 @@ public class AdminInvoiceDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Invoice invoice = (Invoice) getArguments().getSerializable("invoice");
-        Toast.makeText(getContext(), invoice.getDateBuy(),Toast.LENGTH_SHORT).show();
         DatabaseHelper db = new DatabaseHelper(getContext());
         ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesById(invoice.getId());
-        adapter = new AdminProductInvoiceAdapter(db.getProductsInvoiceDetail(), db.getCounts());
+        adapter = new AdminProductInvoiceAdapter(invoiceDetails);
         binding.rvProducts.setAdapter(adapter);
     }
 }

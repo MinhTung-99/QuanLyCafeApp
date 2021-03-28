@@ -2,6 +2,7 @@ package com.quanlyquancafeapp.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.ItemCustomerOrderBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.Customer;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Table;
 
@@ -33,13 +35,20 @@ public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdap
     }
     @Override
     public void onBindViewHolder(@NonNull CustomerOrderViewHolder holder, int position) {
-        holder.binding.txtNameCustomer.setText(invoiceDetails.get(position).getCustomer().getName());
-        holder.binding.txtTime.setText(invoiceDetails.get(position).getTime());
-        holder.itemView.setOnLongClickListener(v->{
-            recyclerViewItemOnClick.onClick(invoiceDetails.get(position).getCustomer().getId());
-            return false;
-        });
-        holder.binding.btnTotalMoney.setOnClickListener(v->recyclerViewItemOnClick.btnTotalMoney(invoiceDetails.get(position).getIdTable()));
+        if(invoiceDetails.get(position).getIsPay() == 0){
+            holder.binding.txtNameCustomer.setText(invoiceDetails.get(position).getCustomer().getName());
+            holder.binding.txtTime.setText(invoiceDetails.get(position).getTime());
+            holder.itemView.setOnLongClickListener(v->{
+                recyclerViewItemOnClick.onClick(invoiceDetails.get(position).getCustomer().getId());
+                return false;
+            });
+            holder.binding.btnTotalMoney.setOnClickListener(v->recyclerViewItemOnClick.btnTotalMoney(invoiceDetails.get(position).getIdTable()));
+        }else {
+            holder.binding.txtNameCustomer.setText(invoiceDetails.get(position).getCustomer().getName());
+            holder.binding.txtTime.setText(invoiceDetails.get(position).getTime());
+            holder.binding.btnTotalMoney.setText("Đã thanh toán");
+            holder.binding.btnTotalMoney.setEnabled(false);
+        }
     }
     @Override
     public int getItemCount() {

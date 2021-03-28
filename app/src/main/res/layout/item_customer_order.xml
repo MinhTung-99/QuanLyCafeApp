@@ -3,7 +3,7 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="70dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -16,26 +16,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_centerVertical="true"/>
+                android:textSize="20sp" />
             <TextView
                 android:id="@+id/txt_time"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/txt_name_customer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:layout_centerVertical="true"/>
+                android:layout_below="@+id/txt_name_customer" />
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_total_money"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="20dp"
                 android:text="Tổng tiền"
                 android:textColor="@color/black"
-                android:background="@drawable/rounded_white"
-                android:layout_alignParentRight="true" />
+                android:background="@drawable/rounded_white_state_enable_btn"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
         </RelativeLayout>
         <View
             android:layout_width="match_parent"

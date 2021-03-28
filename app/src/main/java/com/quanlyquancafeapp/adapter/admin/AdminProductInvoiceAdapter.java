@@ -1,24 +1,21 @@
 package com.quanlyquancafeapp.adapter.admin;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.ItemAdminProductInvoiceBinding;
-import com.quanlyquancafeapp.model.Product;
+import com.quanlyquancafeapp.model.InvoiceDetail;
 
 import java.util.ArrayList;
 
 public class AdminProductInvoiceAdapter extends RecyclerView.Adapter<AdminProductInvoiceAdapter.AdminProductInvoiceHolder>{
-    private ArrayList<Product> products;
-    private ArrayList<Integer> counts;
-    public AdminProductInvoiceAdapter(ArrayList<Product> products, ArrayList<Integer> counts) {
-        this.products = products;
-        this.counts = counts;
+    private ArrayList<InvoiceDetail> invoiceDetails;
+    //private ArrayList<Integer> counts;
+    public AdminProductInvoiceAdapter(ArrayList<InvoiceDetail> invoiceDetails) {
+        this.invoiceDetails = invoiceDetails;
     }
     @NonNull
     @Override
@@ -28,12 +25,12 @@ public class AdminProductInvoiceAdapter extends RecyclerView.Adapter<AdminProduc
     }
     @Override
     public void onBindViewHolder(@NonNull AdminProductInvoiceHolder holder, int position) {
-        holder.binding.setProduct(products.get(position));
-        holder.binding.txtCount.setText(String.valueOf(counts.get(position)));
+        holder.binding.setProduct(invoiceDetails.get(position).getProduct());
+        holder.binding.txtCount.setText(String.valueOf(invoiceDetails.get(position).getCount()));
     }
     @Override
     public int getItemCount() {
-        return products.size();
+        return invoiceDetails.size();
     }
     class AdminProductInvoiceHolder extends RecyclerView.ViewHolder{
         private ItemAdminProductInvoiceBinding binding;
