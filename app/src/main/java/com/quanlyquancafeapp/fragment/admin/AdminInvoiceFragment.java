@@ -33,7 +33,13 @@ public class AdminInvoiceFragment extends Fragment implements IRecyclerViewOnIte
         super.onViewCreated(view, savedInstanceState);
         adminInvoicePresenter = new AdminInvoicePresenter(getContext());
         invoices = adminInvoicePresenter.getInvoiceSort();
-        adapter = new AdminInvoiceAdapter(invoices, this);
+        ArrayList<Invoice> invoiceArrayList = new ArrayList<>();
+        for(Invoice invoice: invoices){
+            if(!invoice.getDateBuy().equals("")){
+                invoiceArrayList.add(invoice);
+            }
+        }
+        adapter = new AdminInvoiceAdapter(invoiceArrayList, this);
         binding.rvInvoices.setAdapter(adapter);
     }
     @Override

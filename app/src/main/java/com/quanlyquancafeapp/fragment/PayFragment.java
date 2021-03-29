@@ -67,7 +67,6 @@ public class PayFragment extends Fragment {
             }
         });
         binding.btnPay.setOnClickListener(v->{
-            Log.d("KMFG3","okok="+idInvoiceDetail.length);
             for(int i = 0; i < idInvoiceDetail.length; i++){
                 invoice.setId(idInvoiceDetail[i]);
                 invoice.setTotalMoney(totalMoney);

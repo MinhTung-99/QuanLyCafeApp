@@ -35,12 +35,14 @@ public class TotalMoneyPresenter {
                 for (int j = 0; j < products.size(); j++){
                     intoMoney = 0;
                     if(table != null && invoiceDetails.get(i).getIdTable() != null){
+                        Log.d("KMFG4", "IFFF");
                         if(invoiceDetails.get(i).getIdProduct() == products.get(j).getId() &&
                                 invoiceDetails.get(i).getIdTable() == table.getId()){
                             handleTotalAndIntoMoneyPay(i,j);
                             setCurrentIdInvoiceDetail(i);
                         }
                     }else{
+                        Log.d("KMFG4", "ELSEEE");
                         if(invoiceDetails.get(i).getIdProduct() == products.get(j).getId()){
                             handleTotalAndIntoMoneyPay(i,j);
                             setCurrentIdInvoiceDetail(i);
