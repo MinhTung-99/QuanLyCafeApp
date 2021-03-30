@@ -18,6 +18,7 @@ import com.quanlyquancafeapp.adapter.CustomerOrderBottomSheetAdapter;
 import com.quanlyquancafeapp.databinding.FragmentCustomerOrderBottomSheetBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.InvoiceDetail;
+import com.quanlyquancafeapp.presenter.admin.CustomerOrderBottomSheetPresenter;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public class CustomerOrderBottomSheetFragment extends BottomSheetDialogFragment 
     private FragmentCustomerOrderBottomSheetBinding bottomSheetBinding;
     private CustomerOrderBottomSheetAdapter adapter;
     private Long idCustomer;
+    private CustomerOrderBottomSheetPresenter presenter;
 
     public CustomerOrderBottomSheetFragment(Long idCustomer) {
         this.idCustomer = idCustomer;
@@ -35,18 +37,11 @@ public class CustomerOrderBottomSheetFragment extends BottomSheetDialogFragment 
         bottomSheetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_customer_order_bottom_sheet, container, false);
         return bottomSheetBinding.getRoot();
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        DatabaseHelper db = new DatabaseHelper(getContext());
-        ArrayList<InvoiceDetail> invoiceDetails = new ArrayList<>();
-        for(int i = 0; i < db.getDetailInvoicesCustomer().size(); i++){
-            if(db.getDetailInvoicesCustomer().get(i).getCustomer().getId() == idCustomer){
-                invoiceDetails.add(db.getDetailInvoicesCustomer().get(i));
-            }
-        }
-        adapter = new CustomerOrderBottomSheetAdapter(invoiceDetails);
+        presenter = new CustomerOrderBottomSheetPresenter(getContext());
+        adapter = new CustomerOrderBottomSheetAdapter(presenter.getDetailInvoicesCustomer(idCustomer));
         bottomSheetBinding.rvCustomerOrderBottomSheet.setAdapter(adapter);
     }
     @Override

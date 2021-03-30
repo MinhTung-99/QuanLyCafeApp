@@ -8,15 +8,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.ItemAdminProductInvoiceBinding;
 import com.quanlyquancafeapp.model.InvoiceDetail;
+import com.quanlyquancafeapp.utils.PriceUtil;
 
 import java.util.ArrayList;
 
 public class AdminProductInvoiceAdapter extends RecyclerView.Adapter<AdminProductInvoiceAdapter.AdminProductInvoiceHolder>{
     private ArrayList<InvoiceDetail> invoiceDetails;
-    //private ArrayList<Integer> counts;
     public AdminProductInvoiceAdapter(ArrayList<InvoiceDetail> invoiceDetails) {
         this.invoiceDetails = invoiceDetails;
     }
+
     @NonNull
     @Override
     public AdminProductInvoiceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -25,7 +26,8 @@ public class AdminProductInvoiceAdapter extends RecyclerView.Adapter<AdminProduc
     }
     @Override
     public void onBindViewHolder(@NonNull AdminProductInvoiceHolder holder, int position) {
-        holder.binding.setProduct(invoiceDetails.get(position).getProduct());
+        holder.binding.txtName.setText(invoiceDetails.get(position).getProduct().getName());
+        holder.binding.txtPrice.setText(PriceUtil.setupPrice(String.valueOf(invoiceDetails.get(position).getProduct().getPrice())));
         holder.binding.txtCount.setText(String.valueOf(invoiceDetails.get(position).getCount()));
     }
     @Override

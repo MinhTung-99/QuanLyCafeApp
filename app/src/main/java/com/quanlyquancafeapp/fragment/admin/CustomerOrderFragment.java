@@ -19,12 +19,15 @@ import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Customer;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Table;
+import com.quanlyquancafeapp.presenter.admin.CustomerOrderPresenter;
+import com.quanlyquancafeapp.view.admin.ICustomerOrderView;
 
 import java.util.ArrayList;
 
-public class CustomerOrderFragment extends Fragment implements CustomerOrderAdapter.IRecyclerViewItemOnClick {
+public class CustomerOrderFragment extends Fragment implements CustomerOrderAdapter.IRecyclerViewItemOnClick, ICustomerOrderView {
     private FragmentCustomerOrderBinding binding;
     private CustomerOrderAdapter adapter;
+    private CustomerOrderPresenter presenter;
 
     @Nullable
     @Override
@@ -35,26 +38,14 @@ public class CustomerOrderFragment extends Fragment implements CustomerOrderAdap
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        DatabaseHelper db = new DatabaseHelper(getContext());
-        ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesCustomer();
-        ArrayList<InvoiceDetail> invoiceDetailArrayList = new ArrayList<>();
-        for(int i = 0; i < invoiceDetails.size()-1; i++){
-            if(invoiceDetails.get(i).getCustomer().getId() != invoiceDetails.get(i+1).getCustomer().getId()){
-                invoiceDetailArrayList.add(invoiceDetails.get(i));
-            }
-        }
-        if(invoiceDetails.get(invoiceDetails.size()-1).getCustomer().getId() != invoiceDetails.get(invoiceDetails.size()-2).getCustomer().getId()){
-            invoiceDetailArrayList.add(invoiceDetails.get(invoiceDetails.size()-1));
-        }
-        adapter = new CustomerOrderAdapter(invoiceDetailArrayList,this);
+        presenter = new CustomerOrderPresenter(getContext());
+        adapter = new CustomerOrderAdapter(presenter.getDetailInvoicesCustomer(),this);
         binding.rvCustomerOrder.setAdapter(adapter);
     }
     @Override
     public void onClick(Long idCustomer) {
-        CustomerOrderBottomSheetFragment customerOrderBottomSheetFragment = new CustomerOrderBottomSheetFragment(idCustomer);
-        customerOrderBottomSheetFragment.show(getChildFragmentManager(),customerOrderBottomSheetFragment.getTag());
+        navigateToCustomerOrderBottomSheetFragment(idCustomer);
     }
-
     @Override
     public void btnTotalMoney(Long idTable) {
         Bundle bundle = new Bundle();
@@ -62,5 +53,10 @@ public class CustomerOrderFragment extends Fragment implements CustomerOrderAdap
         table.setId(idTable);
         bundle.putSerializable("table",table);
         Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
+    }
+    @Override
+    public void navigateToCustomerOrderBottomSheetFragment(Long idCustomer) {
+        CustomerOrderBottomSheetFragment customerOrderBottomSheetFragment = new CustomerOrderBottomSheetFragment(idCustomer);
+        customerOrderBottomSheetFragment.show(getChildFragmentManager(),customerOrderBottomSheetFragment.getTag());
     }
 }

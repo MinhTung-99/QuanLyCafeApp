@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class AdminInvoiceFragment extends Fragment implements IRecyclerViewOnItemClick {
     private FragmentAdminInvoiceBinding binding;
     private AdminInvoiceAdapter adapter;
-    private ArrayList<Invoice> invoices;
     private AdminInvoicePresenter adminInvoicePresenter;
     @Nullable
     @Override
@@ -32,14 +31,7 @@ public class AdminInvoiceFragment extends Fragment implements IRecyclerViewOnIte
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adminInvoicePresenter = new AdminInvoicePresenter(getContext());
-        invoices = adminInvoicePresenter.getInvoiceSort();
-        ArrayList<Invoice> invoiceArrayList = new ArrayList<>();
-        for(Invoice invoice: invoices){
-            if(!invoice.getDateBuy().equals("")){
-                invoiceArrayList.add(invoice);
-            }
-        }
-        adapter = new AdminInvoiceAdapter(invoiceArrayList, this);
+        adapter = new AdminInvoiceAdapter(adminInvoicePresenter.getInvoiceSort(), this);
         binding.rvInvoices.setAdapter(adapter);
     }
     @Override

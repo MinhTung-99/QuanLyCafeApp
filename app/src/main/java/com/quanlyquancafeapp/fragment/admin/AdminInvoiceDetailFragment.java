@@ -16,12 +16,14 @@ import com.quanlyquancafeapp.databinding.FragmentAdminInvoiceDetailBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.InvoiceDetail;
+import com.quanlyquancafeapp.presenter.admin.AdminInvoiceDetailPresenter;
 
 import java.util.ArrayList;
 
 public class AdminInvoiceDetailFragment extends Fragment {
     private FragmentAdminInvoiceDetailBinding binding;
     private AdminProductInvoiceAdapter adapter;
+    private AdminInvoiceDetailPresenter presenter;
 
     @Nullable
     @Override
@@ -32,11 +34,9 @@ public class AdminInvoiceDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        presenter = new AdminInvoiceDetailPresenter(getContext());
         Invoice invoice = (Invoice) getArguments().getSerializable("invoice");
-        DatabaseHelper db = new DatabaseHelper(getContext());
-        ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesById(invoice.getId());
-        adapter = new AdminProductInvoiceAdapter(invoiceDetails);
+        adapter = new AdminProductInvoiceAdapter(presenter.getDetailInvoicesById(invoice.getId()));
         binding.rvProducts.setAdapter(adapter);
     }
 }
