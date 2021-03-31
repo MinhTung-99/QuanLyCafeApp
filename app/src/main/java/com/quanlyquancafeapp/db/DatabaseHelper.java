@@ -420,7 +420,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList<InvoiceDetail> getDetailInvoicesById(Long id){
         ArrayList<InvoiceDetail> invoiceDetails = new ArrayList<>();
         String selectQuery = "SELECT * FROM detail_invoice INNER JOIN invoice ON detail_invoice.id_invoice = invoice.id_invoice "
-                + "INNER JOIN product ON product.id = detail_invoice.id_product " +
+                + "INNER JOIN product ON product.id = detail_invoice.id_product "
+                + "INNER JOIN furniture ON furniture.id_table = detail_invoice.id_table " +
                 "WHERE invoice.id_invoice=?";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(id)});
@@ -428,19 +429,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
                 invoiceDetail.setCount(cursor.getInt(3));
- //               Log.d("KMFG",cursor.getColumnIndexOrThrow("count")+" ===ABC");
-//                Log.d("KMFG", cursor.getString(14)+ " IDD===");
+                Log.d("KMFG",cursor.getColumnIndexOrThrow("date")+" ===ABC");
+                //Log.d("KMFG", cursor.getString(14)+ " IDD===");
 
                 invoiceDetail.setId(cursor.getLong(5));
                 invoiceDetail.setIdProduct(cursor.getLong(15));
                 invoiceDetail.setIdTable(cursor.getLong(8));
+                invoiceDetail.setDateBuy(cursor.getString(11));
 //                invoiceDetail.setTypePay(cursor.getString(11));
                 invoiceDetail.setIsPay(cursor.getInt(14));
+
                 Product product = new Product();
                 product.setName(cursor.getString(16));
                 product.setPrice(cursor.getFloat(19));
                 product.setSale(cursor.getString(20));
                 invoiceDetail.setProduct(product);
+
+                Table table = new Table();
+                table.setName(cursor.getString(25));
+                invoiceDetail.setTable(table);
+
                 invoiceDetails.add(invoiceDetail);
             } while(cursor.moveToNext());
         }

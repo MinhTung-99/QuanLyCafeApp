@@ -9,6 +9,9 @@
         <action
             android:id="@+id/action_reportFragment_to_invoiceFragment"
             app:destination="@id/invoiceFragment" />
+        <action
+            android:id="@+id/action_reportFragment_to_revenueFragment"
+            app:destination="@id/revenueFragment" />
     </fragment>
     <fragment
         android:id="@+id/invoiceFragment"
@@ -22,4 +25,8 @@
         android:id="@+id/invoiceDetailFragment"
         android:name="com.quanlyquancafeapp.fragment.admin.AdminInvoiceDetailFragment"
         android:label="InvoiceDetailFragment" />
+    <fragment
+        android:id="@+id/revenueFragment"
+        android:name="com.quanlyquancafeapp.fragment.admin.RevenueFragment"
+        android:label="RevenueFragment" />
 </navigation>

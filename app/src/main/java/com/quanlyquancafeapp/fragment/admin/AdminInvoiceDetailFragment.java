@@ -36,7 +36,12 @@ public class AdminInvoiceDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         presenter = new AdminInvoiceDetailPresenter(getContext());
         Invoice invoice = (Invoice) getArguments().getSerializable("invoice");
-        adapter = new AdminProductInvoiceAdapter(presenter.getDetailInvoicesById(invoice.getId()));
+        ArrayList<InvoiceDetail> invoiceDetails = presenter.getDetailInvoicesById(invoice.getId());
+        adapter = new AdminProductInvoiceAdapter(invoiceDetails);
         binding.rvProducts.setAdapter(adapter);
+
+        binding.txtNameTable.setText(invoiceDetails.get(0).getTable().getName());
+        binding.txtDate.setText(invoiceDetails.get(0).getDateBuy());
+        binding.txtIdInvoice.setText(String.valueOf(invoiceDetails.get(0).getId()));
     }
 }

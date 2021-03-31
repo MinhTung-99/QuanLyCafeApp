@@ -9,10 +9,12 @@ public class InvoiceDetail extends Invoice{
 
     private Customer customer;
     private Product product;
+    private Table table;
 
     public InvoiceDetail() {
         customer = new Customer();
         product = new Product();
+        table = new Table();
     }
 
     public InvoiceDetail(Long idInvoice, Long idProduct) {
@@ -21,6 +23,7 @@ public class InvoiceDetail extends Invoice{
 
         customer = new Customer();
         product = new Product();
+        table = new Table();
     }
 
     public Long getIdInvoice() {
@@ -52,5 +55,11 @@ public class InvoiceDetail extends Invoice{
     }
     public void setProduct(Product product) {
         this.product = product;
+    }
+    public Table getTable() {
+        return table;
+    }
+    public void setTable(Table table) {
+        this.table = table;
     }
 }

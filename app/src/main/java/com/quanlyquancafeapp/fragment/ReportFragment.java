@@ -1,5 +1,6 @@
 package com.quanlyquancafeapp.fragment;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,7 +29,10 @@ import com.quanlyquancafeapp.HomeAdminActivity;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.FragmentReportBinding;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ReportFragment extends Fragment { ;
@@ -59,6 +64,22 @@ public class ReportFragment extends Fragment { ;
         }
         pie.data(dataEntries);
         binding.anyChartView.setChart(pie);
+
+        SimpleDateFormat getDate = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        binding.btnChooseDate.setText(getDate.format(date));
+        binding.btnChooseDate.setOnClickListener(v->{
+            final Calendar c = Calendar.getInstance();
+            int mYear = c.get(Calendar.YEAR);
+            int mMonth = c.get(Calendar.MONTH);
+            int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                    (view1, year, monthOfYear, dayOfMonth)
+                            -> binding.btnChooseDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+                    , mYear, mMonth, mDay);
+            datePickerDialog.show();
+        });
     }
 
     @Override
@@ -73,9 +94,6 @@ public class ReportFragment extends Fragment { ;
         switch (id) {
             case R.id.menu_invoice:
                 Navigation.findNavController(getView()).navigate(R.id.invoiceFragment);
-                break;
-            case R.id.menu_revenue:
-                Toast.makeText(getContext(), "MENU",Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);

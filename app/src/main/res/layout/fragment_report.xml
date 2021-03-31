@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <RelativeLayout
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="@color/white">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -21,12 +22,40 @@
                     android:textSize="20sp"/>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_choose_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@color/teal_700"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Doanh Thu"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8,678,999"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginLeft="20dp"
-            android:layout_above="@id/any_chart_view">
+            android:layout_marginTop="50dp">
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -44,7 +73,7 @@
             android:id="@+id/any_chart_view"
             android:layout_width="350dp"
             android:layout_height="350dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center" />
+    </LinearLayout>
 </layout>

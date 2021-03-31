@@ -3,7 +3,4 @@
     <item
         android:id="@+id/menu_invoice"
         android:title="Xem hoá đơn" />
-    <item
-        android:id="@+id/menu_revenue"
-        android:title="Xem doanh thu" />
 </menu>
