@@ -1,10 +1,8 @@
 package com.quanlyquancafeapp.presenter.admin;
 
 import android.content.Context;
-
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.InvoiceDetail;
-
 import java.util.ArrayList;
 
 public class RevenueDetailPresenter {

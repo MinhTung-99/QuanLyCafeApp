@@ -509,12 +509,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 invoiceDetail.setTime(cursor.getString(12));
                 invoiceDetail.setIsPay(cursor.getInt(14));
 //                invoiceDetail.setId(cursor.getLong(11));
-                Log.d("KMFG123",cursor.getColumnIndexOrThrow("date")+" =COLUM");
+                Log.d("KMFG123",cursor.getColumnIndexOrThrow("price")+" =COLUM");
                // Log.d("KMFG123", cursor.getLong(11)+ " =000");
 
                 Product product = new Product();
                 product.setName(cursor.getString(16));
-               // product.setImageByteArr(cursor.getBlob(23));
+                product.setImageByteArr(cursor.getBlob(17));
+                product.setPrice(cursor.getFloat(19));
                 invoiceDetail.setProduct(product);
 
                 invoiceDetails.add(invoiceDetail);

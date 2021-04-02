@@ -1,5 +1,7 @@
 package com.quanlyquancafeapp.adapter.admin;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +31,14 @@ public class RevenueDetailAdapter extends RecyclerView.Adapter<RevenueDetailAdap
     }
     @Override
     public void onBindViewHolder(@NonNull RevenueDetailViewHolder holder, int position) {
+        convertImageByteArrToBitmap(position);
+        holder.binding.imgProduct.setImageBitmap(invoiceDetails.get(position).getProduct().getImageBitmap());
         holder.binding.txtNameProduct.setText(invoiceDetails.get(position).getProduct().getName());
         holder.binding.txtCount.setText("bán " + invoiceDetails.get(position).getCount());
+    }
+    private void convertImageByteArrToBitmap(int position){
+        Bitmap bitmap = BitmapFactory.decodeByteArray(invoiceDetails.get(position).getProduct().getImageByteArr(), 0, invoiceDetails.get(position).getProduct().getImageByteArr().length);
+        invoiceDetails.get(position).getProduct().setImageBitmap(bitmap);
     }
     @Override
     public int getItemCount() {

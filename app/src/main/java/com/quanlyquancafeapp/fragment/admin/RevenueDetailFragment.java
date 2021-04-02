@@ -31,7 +31,6 @@ public class RevenueDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("KMFG", getArguments().getString("date"));
         presenter = new RevenueDetailPresenter(getContext());
         adapter = new RevenueDetailAdapter(presenter.getInvoiceDetailRevenueDetail(getArguments().getString("date")));
         binding.rvRevenueDetail.setAdapter(adapter);

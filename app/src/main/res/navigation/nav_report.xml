@@ -4,7 +4,7 @@
     app:startDestination="@id/reportFragment">
     <fragment
         android:id="@+id/reportFragment"
-        android:name="com.quanlyquancafeapp.fragment.ReportFragment"
+        android:name="com.quanlyquancafeapp.fragment.admin.AdminReportFragment"
         android:label="ReportFragment" >
         <action
             android:id="@+id/action_reportFragment_to_invoiceFragment"

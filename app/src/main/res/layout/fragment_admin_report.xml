@@ -46,6 +46,7 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"/>
             <TextView
+                android:id="@+id/txt_total_revenue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="8,678,999"
