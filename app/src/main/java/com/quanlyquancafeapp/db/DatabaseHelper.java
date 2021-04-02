@@ -492,6 +492,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return invoiceDetails;
     }
+
+    public ArrayList<InvoiceDetail> getDetailInvoicesRevenueDetail(){
+        ArrayList<InvoiceDetail> invoiceDetails = new ArrayList<>();
+        String selectQuery = "SELECT * FROM detail_invoice "
+                + "INNER JOIN invoice ON detail_invoice.id_invoice = invoice.id_invoice "
+                + "INNER JOIN product ON product.id = detail_invoice.id_product";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
+                invoiceDetail.setCount(cursor.getInt(3));
+                invoiceDetail.setDateBuy(cursor.getString(11));
+                invoiceDetail.setTime(cursor.getString(12));
+                invoiceDetail.setIsPay(cursor.getInt(14));
+//                invoiceDetail.setId(cursor.getLong(11));
+                Log.d("KMFG123",cursor.getColumnIndexOrThrow("date")+" =COLUM");
+               // Log.d("KMFG123", cursor.getLong(11)+ " =000");
+
+                Product product = new Product();
+                product.setName(cursor.getString(16));
+               // product.setImageByteArr(cursor.getBlob(23));
+                invoiceDetail.setProduct(product);
+
+                invoiceDetails.add(invoiceDetail);
+            } while(cursor.moveToNext());
+        }
+        return invoiceDetails;
+    }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 

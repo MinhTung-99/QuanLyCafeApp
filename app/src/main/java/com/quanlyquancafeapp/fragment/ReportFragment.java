@@ -65,7 +65,7 @@ public class ReportFragment extends Fragment { ;
         pie.data(dataEntries);
         binding.anyChartView.setChart(pie);
 
-        SimpleDateFormat getDate = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat getDate = new SimpleDateFormat("d/M/yyyy");
         Date date = new Date();
         binding.btnChooseDate.setText(getDate.format(date));
         binding.btnChooseDate.setOnClickListener(v->{
@@ -79,6 +79,11 @@ public class ReportFragment extends Fragment { ;
                             -> binding.btnChooseDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
                     , mYear, mMonth, mDay);
             datePickerDialog.show();
+        });
+        binding.rlRevenue.setOnClickListener(v->{
+            Bundle bundle = new Bundle();
+            bundle.putString("date", binding.btnChooseDate.getText().toString());
+            Navigation.findNavController(v).navigate(R.id.revenueDetailFragment, bundle);
         });
     }
 

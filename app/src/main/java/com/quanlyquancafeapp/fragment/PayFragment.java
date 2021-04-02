@@ -71,7 +71,7 @@ public class PayFragment extends Fragment {
                 invoice.setId(idInvoiceDetail[i]);
                 invoice.setTotalMoney(totalMoney);
                 //invoice.setInToMoney();
-                SimpleDateFormat getDate = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat getDate = new SimpleDateFormat("d/M/yyyy");
                 SimpleDateFormat getTime = new SimpleDateFormat("HH:mm:ss");
                 Date date = new Date();
                 invoice.setDateBuy(getDate.format(date));
