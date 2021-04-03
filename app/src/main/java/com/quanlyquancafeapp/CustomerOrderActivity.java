@@ -30,12 +30,9 @@ public class CustomerOrderActivity extends AppCompatActivity {
             customer.setName(binding.edtName.getText().toString());
             customer.setCount(Integer.parseInt(binding.edtCount.getText().toString()));
             customer.setDone(0);
-            try {
-                db.addCustomer(customer);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("customer", customer);
             intent.putExtra("TypeAdmin","SHELL");
             startActivity(intent);
         });

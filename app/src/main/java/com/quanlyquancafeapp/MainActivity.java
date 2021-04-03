@@ -14,6 +14,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.quanlyquancafeapp.model.Customer;
+
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
                 graph = navInflater.inflate(R.navigation.nav_shell);
                 bundle = new Bundle();
                 bundle.putString("typePay", "SHELL");
+                Customer customer = (Customer) getIntent().getSerializableExtra("customer");
+                bundle.putSerializable("customer", customer);
                 navController.setGraph(graph, bundle);
                 break;
             case "CUSTOMERS":

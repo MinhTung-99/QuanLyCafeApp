@@ -30,6 +30,7 @@ import com.quanlyquancafeapp.ScanCodeActivity;
 import com.quanlyquancafeapp.adapter.ProductAdapter;
 import com.quanlyquancafeapp.databinding.FragmentProductBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.Customer;
 import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.Order;
 import com.quanlyquancafeapp.model.Product;
@@ -76,7 +77,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
         binding.imgQrCode.setOnClickListener(this);
     }
     private void init() {
-        productPresenter = new ProductPresenter(this, getContext());
+        productPresenter = new ProductPresenter(getContext());
         productsCafe = productPresenter.getProductsCafe();
         productsDrink = productPresenter.getProductsDrink();
     }
@@ -128,15 +129,19 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
                 isCafe = false;
                 break;
             case R.id.btn_store:
-//                String typePay = getArguments().getString("typePay");
-//                Constance.TYPE_PAY = typePay;
-                productPresenter.addInvoice(productsCafe, productsDrink, "ABC", table);
-                Navigation.findNavController(getView()).popBackStack();
-//                if(table != null){
-//                    Navigation.findNavController(v).popBackStack();
-//                }else {
-//                    navigateToTotalMoneyFragment();
-//                }
+                if(table != null){
+                    Constance.TYPE_PAY = "SHELL";
+                    Customer customer = (Customer) getArguments().getSerializable("customer");
+                    productPresenter.addCustomer(customer);
+                    productPresenter.addInvoice(productsCafe, productsDrink, "SHELL", table);
+                    Navigation.findNavController(getView()).popBackStack();
+                }else {
+                    Constance.TYPE_PAY = "";
+                    productPresenter.addInvoice(productsCafe, productsDrink, "", table);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("table", new Table());
+                    Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
+                }
                 break;
             case R.id.img_qr_code:
                 navigateToScanCodeActivity();

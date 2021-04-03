@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.quanlyquancafeapp.adapter.ProductAdapter;
 import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.Customer;
 import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Product;
@@ -15,13 +16,11 @@ import com.quanlyquancafeapp.view.IProductView;
 import java.util.ArrayList;
 
 public class ProductPresenter {
-    private IProductView productView;
     private DatabaseHelper db;
     private int sizeInvoice;
     private Invoice invoice;
 
-    public ProductPresenter(IProductView productView, Context context) {
-        this.productView = productView;
+    public ProductPresenter(Context context) {
         db = new DatabaseHelper(context);
     }
     public ArrayList<Product> getProductsCafe(){
@@ -73,7 +72,11 @@ public class ProductPresenter {
             if(productsCafe.get(i).getCount() > 0){
                 try {
                     InvoiceDetail invoiceDetail = setInvoiceDetail(productsCafe, i);
-                    db.idTable = table.getId();
+                    if(table == null){
+                        db.idTable = 0L;
+                    } else {
+                        db.idTable = table.getId();
+                    }
                     db.addDetailInvoice(invoiceDetail);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -94,8 +97,10 @@ public class ProductPresenter {
     private void setInvoice(Table table, String typePay){
         if(table != null)
             invoice = new Invoice(db.getUsers().get(1).getId(),table.getId(), 0,0,"","3h50",typePay,0);
-        else
+        else{
+            Log.d("KMFG123", "ELSE");
             invoice = new Invoice(db.getUsers().get(1).getId(),0L, 0,0,"","",typePay,0);
+        }
         try {
             db.addInvoice(invoice);
             sizeInvoice = db.getInvoices().size();
@@ -109,5 +114,13 @@ public class ProductPresenter {
         invoiceDetail.setIdProduct(products.get(position).getId());
         invoiceDetail.setCount(products.get(position).getCount());
         return invoiceDetail;
+    }
+
+    public void addCustomer(Customer customer){
+        try {
+            db.addCustomer(customer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

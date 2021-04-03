@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.TableAdapter;
 import com.quanlyquancafeapp.databinding.DialogAddTableBinding;
 import com.quanlyquancafeapp.databinding.FragmentTableBinding;
+import com.quanlyquancafeapp.model.Customer;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.presenter.TablePresenter;
 import com.quanlyquancafeapp.presenter.admin.AdminTablePresenter;
@@ -67,7 +69,9 @@ public class TableFragment extends Fragment implements TableAdapter.RecyclerView
 //        }
 //        if(!isTable){
             Bundle bundle = new Bundle();
+            Customer customer = (Customer) getArguments().getSerializable("customer");
             bundle.putSerializable("table", tables.get(position));
+            bundle.putSerializable("customer", customer);
 //            bundle.putString("typePay", getArguments().getString("typePay"));
             Navigation.findNavController(getView()).navigate(R.id.productFragment, bundle);
       //  }

@@ -20,6 +20,7 @@ import com.quanlyquancafeapp.model.Customer;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.presenter.admin.CustomerOrderPresenter;
+import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.view.admin.ICustomerOrderView;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class CustomerOrderFragment extends Fragment implements CustomerOrderAdap
     }
     @Override
     public void btnTotalMoney(Long idTable) {
+        Constance.TYPE_PAY = "SHELL";
         Bundle bundle = new Bundle();
         Table table = new Table();
         table.setId(idTable);

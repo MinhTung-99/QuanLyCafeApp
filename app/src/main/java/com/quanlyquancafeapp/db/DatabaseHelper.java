@@ -15,6 +15,7 @@ import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.model.User;
+import com.quanlyquancafeapp.utils.Constance;
 
 import java.util.ArrayList;
 
@@ -92,6 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void addCustomer(Customer customer) throws Exception{
         SQLiteDatabase db = null;
+        Log.d("KMFG123", customer.getName()+" ==NAME");
         try{
             db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
@@ -386,7 +388,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(InvoiceDetailTable.KEY_ID_INVOICE,invoiceDetail.getIdInvoice());
             values.put(InvoiceDetailTable.KEY_ID_PRODUCT, invoiceDetail.getIdProduct());
             values.put(InvoiceDetailTable.KEY_COUNT,invoiceDetail.getCount());
-            values.put(InvoiceDetailTable.KEY_ID_CUSTOMER,getCustomers().get(size-1).getId());
+            if(Constance.TYPE_PAY.equals("SHELL")){
+                values.put(InvoiceDetailTable.KEY_ID_CUSTOMER,getCustomers().get(size-1).getId());
+            }
             values.put(InvoiceDetailTable.KEY_ID_TABLE, idTable);
             db.insert(InvoiceDetailTable.TABLE_NAME,"",values);
         }catch (Exception e){
@@ -405,11 +409,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
                 invoiceDetail.setCount(cursor.getInt(3));
-                //Log.d("KMFG","TYPE="+cursor.getColumnIndexOrThrow("type_pay"));
+                Log.d("KMFG","TYPE="+cursor.getColumnIndexOrThrow("type_pay"));
                 //Log.d("KMFG", cursor.getInt(3)+ " IDD===");
                 invoiceDetail.setId(cursor.getLong(5));
                 invoiceDetail.setIdTable(cursor.getLong(8));
-                //invoiceDetail.setTypePay(cursor.getString(11));
+                invoiceDetail.setTypePay(cursor.getString(13));
                 invoiceDetail.setIsPay(cursor.getInt(14));
                 invoiceDetails.add(invoiceDetail);
             } while(cursor.moveToNext());

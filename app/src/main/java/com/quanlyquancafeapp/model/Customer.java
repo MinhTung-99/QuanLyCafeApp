@@ -1,6 +1,8 @@
 package com.quanlyquancafeapp.model;
 
-public class Customer {
+import java.io.Serializable;
+
+public class Customer implements Serializable {
     private Long id;
     private String name;
     private int count;
