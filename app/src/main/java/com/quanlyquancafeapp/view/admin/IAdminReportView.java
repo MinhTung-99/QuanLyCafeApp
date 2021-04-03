@@ -9,4 +9,5 @@ public interface IAdminReportView {
     void showDatePickerDialog();
     void setBtnChooseDate();
     void hideAndShowAnyChartView(List<DataEntry> dataEntries);
+    void setTotalRevenueTextView(String date);
 }

@@ -72,8 +72,8 @@ public class AdminReportFragment extends Fragment implements IAdminReportView {
         binding.rlRevenue.setOnClickListener(v->{
             navigateToAdminReport();
         });
-        String setupMoney = PriceUtil.setupPrice(String.valueOf(presenter.getDetailInvoicesRevenueDetailTotalMoney()));
-        binding.txtTotalRevenue.setText(setupMoney);
+
+        setTotalRevenueTextView(binding.btnChooseDate.getText().toString());
     }
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -108,6 +108,8 @@ public class AdminReportFragment extends Fragment implements IAdminReportView {
                         ->{
                     binding.btnChooseDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
+                    setTotalRevenueTextView(binding.btnChooseDate.getText().toString());
+
                     pies = presenter.getDetailInvoicesRevenueDetailPie(binding.btnChooseDate.getText().toString());
                     List<DataEntry> dataEntries = new ArrayList<>();
                     for(int i = 0; i < pies.size(); i++){
@@ -133,5 +135,11 @@ public class AdminReportFragment extends Fragment implements IAdminReportView {
         }else {
             binding.anyChartView.setVisibility(View.VISIBLE);
         }
+    }
+    @Override
+    public void setTotalRevenueTextView(String date) {
+        String setupMoney = PriceUtil.setupPrice(
+                String.valueOf(presenter.getDetailInvoicesRevenueDetailTotalMoney(date)));
+        binding.txtTotalRevenue.setText(setupMoney);
     }
 }

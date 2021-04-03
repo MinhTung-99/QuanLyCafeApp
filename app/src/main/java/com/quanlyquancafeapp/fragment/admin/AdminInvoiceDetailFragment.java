@@ -17,13 +17,16 @@ import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.presenter.admin.AdminInvoiceDetailPresenter;
+import com.quanlyquancafeapp.utils.PriceUtil;
+import com.quanlyquancafeapp.view.admin.IAdminInvoiceDetailView;
 
 import java.util.ArrayList;
 
-public class AdminInvoiceDetailFragment extends Fragment {
+public class AdminInvoiceDetailFragment extends Fragment implements IAdminInvoiceDetailView {
     private FragmentAdminInvoiceDetailBinding binding;
     private AdminProductInvoiceAdapter adapter;
     private AdminInvoiceDetailPresenter presenter;
+    private ArrayList<InvoiceDetail> invoiceDetails;
 
     @Nullable
     @Override
@@ -34,14 +37,38 @@ public class AdminInvoiceDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         presenter = new AdminInvoiceDetailPresenter(getContext());
         Invoice invoice = (Invoice) getArguments().getSerializable("invoice");
-        ArrayList<InvoiceDetail> invoiceDetails = presenter.getDetailInvoicesById(invoice.getId());
+        invoiceDetails = presenter.getDetailInvoicesById(invoice.getId());
+
+        setAdapterProductInvoice();
+        setNameTableTxt();
+        setDateTxt();
+        setIdInvoiceTxt();
+        setTotalMoneyTxt(invoice);
+    }
+    @Override
+    public void setTotalMoneyTxt(Invoice invoice) {
+        float totalMoney = presenter.getDetailInvoicesByIdTotalMoney(invoice.getId());
+        String setupMoney = PriceUtil.setupPrice(String.valueOf(totalMoney));
+        binding.txtTotalMoney.setText(setupMoney);
+    }
+    @Override
+    public void setAdapterProductInvoice() {
         adapter = new AdminProductInvoiceAdapter(invoiceDetails);
         binding.rvProducts.setAdapter(adapter);
-
+    }
+    @Override
+    public void setNameTableTxt() {
         binding.txtNameTable.setText(invoiceDetails.get(0).getTable().getName());
+    }
+    @Override
+    public void setDateTxt() {
         binding.txtDate.setText(invoiceDetails.get(0).getDateBuy());
+    }
+    @Override
+    public void setIdInvoiceTxt() {
         binding.txtIdInvoice.setText(String.valueOf(invoiceDetails.get(0).getId()));
     }
 }

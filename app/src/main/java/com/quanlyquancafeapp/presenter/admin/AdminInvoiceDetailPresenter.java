@@ -16,4 +16,13 @@ public class AdminInvoiceDetailPresenter {
     public ArrayList<InvoiceDetail> getDetailInvoicesById(Long id){
         return db.getDetailInvoicesById(id);
     }
+    public float getDetailInvoicesByIdTotalMoney(Long id){
+        ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesById(id);
+        float totalMoney = 0;
+        for(InvoiceDetail invoiceDetail: invoiceDetails){
+            totalMoney += invoiceDetail.getCount()*invoiceDetail.getProduct().getPrice();
+        }
+
+        return totalMoney;
+    }
 }

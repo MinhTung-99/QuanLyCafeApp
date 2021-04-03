@@ -16,11 +16,13 @@ public class AdminReportPresenter {
     public AdminReportPresenter(Context context) {
         db = new DatabaseHelper(context);
     }
-    public float getDetailInvoicesRevenueDetailTotalMoney(){
+    public float getDetailInvoicesRevenueDetailTotalMoney(String date){
         ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesRevenueDetail();
         float totalRevenue = 0;
         for(InvoiceDetail invoiceDetail: invoiceDetails){
-            totalRevenue += invoiceDetail.getCount()*invoiceDetail.getProduct().getPrice();
+            if(invoiceDetail.getDateBuy().equals(date) && invoiceDetail.getIsPay() == 1){
+                totalRevenue += invoiceDetail.getCount()*invoiceDetail.getProduct().getPrice();
+            }
         }
         return totalRevenue;
     }
@@ -36,9 +38,8 @@ public class AdminReportPresenter {
             pie.setDrinks(product.getName());
 
             for (InvoiceDetail invoiceDetail: invoiceDetails){
-                if(invoiceDetail.getDateBuy().equals(date)){//???
+                if(invoiceDetail.getDateBuy().equals(date) && invoiceDetail.getIsPay() == 1){
                     isDate = true;
-                    Log.d("KMFG33", invoiceDetail.getDateBuy()+" == "+date+ " =="+count);
                     if(invoiceDetail.getProduct().getName().equals(product.getName())){
                         count += invoiceDetail.getCount();
                     }
