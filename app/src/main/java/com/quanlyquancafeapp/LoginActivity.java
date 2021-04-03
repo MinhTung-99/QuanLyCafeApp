@@ -75,9 +75,9 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.TOP, 0 , 0);
         toast.setDuration(Toast.LENGTH_SHORT);
-        View view = getLayoutInflater().inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.root));
+        View view = getLayoutInflater().inflate(R.layout.custom_toast, null);
         TextView txtToast = view.findViewById(R.id.txt_toast);
-        txtToast.setText("Tài khoản hoặc mật khẩu không đúng!!!");
+        txtToast.setText("Tài khoản hoặc mật khẩu không đúng");
         toast.setView(view);
         toast.show();
     }
