@@ -2,6 +2,7 @@ package com.quanlyquancafeapp.fragment.admin;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,9 +35,8 @@ import java.util.List;
 public class AdminReportFragment extends Fragment implements IAdminReportView {
     private FragmentAdminReportBinding binding;
     private AdminReportPresenter presenter;
-    String[] drinks = {"Cafe sữa","Cafe đá","7 up", "Coca","abc"};
-    int[] earning = {500,800,2000,600,100};
     private ArrayList<PieChartView> pies;
+    private Pie pie;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -55,8 +55,10 @@ public class AdminReportFragment extends Fragment implements IAdminReportView {
         super.onViewCreated(view, savedInstanceState);
         presenter = new AdminReportPresenter(getContext());
 
-        Pie pie = AnyChart.pie();
-        pies = presenter.getDetailInvoicesRevenueDetailPie();
+        setBtnChooseDate();
+
+        pie = AnyChart.pie();
+        pies = presenter.getDetailInvoicesRevenueDetailPie(binding.btnChooseDate.getText().toString());
         List<DataEntry> dataEntries = new ArrayList<>();
         for(int i = 0; i < pies.size(); i++){
             dataEntries.add(new ValueDataEntry(pies.get(i).getDrinks(), pies.get(i).getCount()));
@@ -64,7 +66,6 @@ public class AdminReportFragment extends Fragment implements IAdminReportView {
         pie.data(dataEntries);
         binding.anyChartView.setChart(pie);
 
-        setBtnChooseDate();
         binding.btnChooseDate.setOnClickListener(v->{
             showDatePickerDialog();
         });
@@ -104,7 +105,17 @@ public class AdminReportFragment extends Fragment implements IAdminReportView {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 (view1, year, monthOfYear, dayOfMonth)
-                        -> binding.btnChooseDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+                        ->{
+                    binding.btnChooseDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+
+                    pies = presenter.getDetailInvoicesRevenueDetailPie(binding.btnChooseDate.getText().toString());
+                    List<DataEntry> dataEntries = new ArrayList<>();
+                    for(int i = 0; i < pies.size(); i++){
+                        dataEntries.add(new ValueDataEntry(pies.get(i).getDrinks(), pies.get(i).getCount()));
+                    }
+                    pie.data(dataEntries);
+                    hideAndShowAnyChartView(dataEntries);
+                }
                 , mYear, mMonth, mDay);
         datePickerDialog.show();
     }
@@ -113,5 +124,14 @@ public class AdminReportFragment extends Fragment implements IAdminReportView {
         SimpleDateFormat getDate = new SimpleDateFormat("d/M/yyyy");
         Date date = new Date();
         binding.btnChooseDate.setText(getDate.format(date));
+    }
+
+    @Override
+    public void hideAndShowAnyChartView(List<DataEntry> dataEntries) {
+        if(dataEntries.size() == 0){
+            binding.anyChartView.setVisibility(View.GONE);
+        }else {
+            binding.anyChartView.setVisibility(View.VISIBLE);
+        }
     }
 }

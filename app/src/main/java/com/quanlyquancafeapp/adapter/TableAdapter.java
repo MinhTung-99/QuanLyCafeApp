@@ -56,6 +56,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
                 holder.tableBinding.rlBottom.setVisibility(View.GONE);
                 holder.tableBinding.imgEmployee.setVisibility(View.VISIBLE);
             }
+            Log.d("KMFG12", db.getDetailInvoicesCustomer().get(i).getIdTable()+ " ==0000");
         }
     }
     @Override

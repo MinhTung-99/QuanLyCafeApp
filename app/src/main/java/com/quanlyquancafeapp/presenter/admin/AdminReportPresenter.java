@@ -24,24 +24,32 @@ public class AdminReportPresenter {
         }
         return totalRevenue;
     }
-    public ArrayList<PieChartView> getDetailInvoicesRevenueDetailPie(){
+    public ArrayList<PieChartView> getDetailInvoicesRevenueDetailPie(String date){
         ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesRevenueDetail();
         ArrayList<Product> products = db.getProducts();
         ArrayList<PieChartView> pies = new ArrayList<>();
 
         Integer count = 0;
+        boolean isDate = false;
         for (Product product: products){
             PieChartView pie = new PieChartView();
             pie.setDrinks(product.getName());
 
             for (InvoiceDetail invoiceDetail: invoiceDetails){
-                if(invoiceDetail.getProduct().getName().equals(product.getName())){
-                    count += invoiceDetail.getCount();
+                if(invoiceDetail.getDateBuy().equals(date)){//???
+                    isDate = true;
+                    Log.d("KMFG33", invoiceDetail.getDateBuy()+" == "+date+ " =="+count);
+                    if(invoiceDetail.getProduct().getName().equals(product.getName())){
+                        count += invoiceDetail.getCount();
+                    }
                 }
             }
-            Log.d("KMFG12", count+" =="); //5 and 6 ???
             pie.setCount(count);
-            pies.add(pie);
+            if(isDate){
+                pies.add(pie);
+                isDate = false;
+            }
+            count = 0;
         }
         return pies;
     }
