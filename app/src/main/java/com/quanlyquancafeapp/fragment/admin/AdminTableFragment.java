@@ -2,6 +2,7 @@ package com.quanlyquancafeapp.fragment.admin;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,14 +62,17 @@ public class AdminTableFragment extends Fragment implements IAdminTableView, Adm
         dialogAddTableBinding.btnYes.setOnClickListener(v->{
             Table table = new Table();
             table.setName(dialogAddTableBinding.edtTableName.getText().toString());
+            table.setCountPeople(Integer.parseInt(dialogAddTableBinding.edtTableCountPeople.getText().toString()));
             adminTablePresenter.addTable(table);
             updateTableAdapter();
             alertDialogAdd.dismiss();
             dialogAddTableBinding.edtTableName.setText("");
+            dialogAddTableBinding.edtTableCountPeople.setText("");
         });
     }
     private void updateTableAdapter(){
         tables = adminTablePresenter.getTables();
+        Log.d("KMFG23", tables.get(0).getName()+" ==123");
         adapter.updateTableAdmin(tables);
         fragmentAdminTableBinding.rvTable.setAdapter(adapter);
     }

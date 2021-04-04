@@ -25,7 +25,7 @@ public class TotalMoneyPresenter {
         db = new DatabaseHelper(context);
         idCurrentInvoiceDetail = new long[30];
     }
-    public float handleTotalMoney(Table table, ArrayList<InvoiceDetail> invoicesNotPay){
+    public float handleTotalMoney(Table table, ArrayList<InvoiceDetail> invoicesNotPay, Long idCustomer){
         this.invoicesNotPay = invoicesNotPay;
         totalMoney = 0;
         products = db.getProducts();
@@ -36,7 +36,8 @@ public class TotalMoneyPresenter {
                     intoMoney = 0;
                     if(table.getId() != null && invoiceDetails.get(i).getIdTable() != null){
                         if(invoiceDetails.get(i).getIdProduct() == products.get(j).getId() &&
-                                invoiceDetails.get(i).getIdTable() == table.getId()){
+                                invoiceDetails.get(i).getIdTable() == table.getId() &&
+                                invoiceDetails.get(i).getCustomer().getId() == idCustomer){
                             handleTotalAndIntoMoneyPay(i,j);
                             setCurrentIdInvoiceDetail(i);
                         }

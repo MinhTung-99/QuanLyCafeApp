@@ -134,6 +134,12 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
                     Customer customer = (Customer) getArguments().getSerializable("customer");
                     productPresenter.addCustomer(customer);
                     productPresenter.addInvoice(productsCafe, productsDrink, "SHELL", table);
+                    if(table.getCountCurrentPeople() == 0){
+                        table.setCountCurrentPeople(customer.getCount());
+                    }else {
+                        table.setCountCurrentPeople(table.getCountCurrentPeople() + customer.getCount());
+                    }
+                    productPresenter.updateTable(table);
                     Navigation.findNavController(getView()).popBackStack();
                 }else {
                     Constance.TYPE_PAY = "";

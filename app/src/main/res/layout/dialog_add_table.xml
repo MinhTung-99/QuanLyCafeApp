@@ -30,6 +30,14 @@
             android:textColorHint="@color/silver"
             android:hint="Tên bàn"
             android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/edt_table_count_people"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:textColorHint="@color/silver"
+            android:hint="Số lượng người"
+            android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

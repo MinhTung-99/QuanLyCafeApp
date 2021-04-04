@@ -95,10 +95,9 @@ public class ProductPresenter {
         }
     }
     private void setInvoice(Table table, String typePay){
-        if(table != null)
+        if(table != null){
             invoice = new Invoice(db.getUsers().get(1).getId(),table.getId(), 0,0,"","3h50",typePay,0);
-        else{
-            Log.d("KMFG123", "ELSE");
+        } else{
             invoice = new Invoice(db.getUsers().get(1).getId(),0L, 0,0,"","",typePay,0);
         }
         try {
@@ -122,5 +121,9 @@ public class ProductPresenter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateTable(Table table){
+        db.updateTable(table);
     }
 }

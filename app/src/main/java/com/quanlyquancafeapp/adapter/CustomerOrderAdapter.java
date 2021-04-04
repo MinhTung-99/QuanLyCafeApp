@@ -42,7 +42,7 @@ public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdap
                 recyclerViewItemOnClick.onClick(invoiceDetails.get(position).getCustomer().getId());
                 return false;
             });
-            holder.binding.btnTotalMoney.setOnClickListener(v->recyclerViewItemOnClick.btnTotalMoney(invoiceDetails.get(position).getIdTable()));
+            holder.binding.btnTotalMoney.setOnClickListener(v->recyclerViewItemOnClick.btnTotalMoney(invoiceDetails.get(position)));
         }else {
             holder.binding.txtNameCustomer.setText(invoiceDetails.get(position).getCustomer().getName());
             holder.binding.txtTime.setText(invoiceDetails.get(position).getTime());
@@ -63,6 +63,6 @@ public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdap
     }
     public interface IRecyclerViewItemOnClick{
         void onClick(Long idCustomer);
-        void btnTotalMoney(Long idTable);
+        void btnTotalMoney(InvoiceDetail invoiceDetail);
     }
 }

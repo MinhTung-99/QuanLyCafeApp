@@ -29,7 +29,8 @@ public class AdminTableAdapter extends RecyclerSwipeAdapter<AdminTableAdapter.Ta
     }
     @Override
     public void onBindViewHolder(@NonNull TableAdminViewHolder holder, int position) {
-        holder.binding.txtName.setText(tables.get(position).getName());
+        holder.binding.txtName.setText(tables.get(position).getName()+"----"+tables.get(position).getCountPeople()+" người");
+
         mItemManger.bindView(holder.itemView, position);// open one item in swipe
         holder.binding.btnDelete.setOnClickListener(v->recyclerViewItemOnClick.btnDeleteOnClick(tables.get(position)));
         holder.binding.getRoot().setOnLongClickListener(v -> {

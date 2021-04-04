@@ -43,20 +43,18 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
     @Override
     public void onBindViewHolder(@NonNull TableViewHolder holder, int position) {
         holder.tableBinding.txtTableName.setText(tables.get(position).getName());
-        holder.itemView.setOnClickListener(v -> recyclerViewItemOnClick.onClick(position));
-
-        holder.tableBinding.rlTop.setVisibility(View.GONE);
-        holder.tableBinding.rlBottom.setVisibility(View.VISIBLE);
-        holder.tableBinding.imgEmployee.setVisibility(View.GONE);
-
-        DatabaseHelper db = new DatabaseHelper(context);
-        for(int i = 0; i < db.getDetailInvoicesCustomer().size(); i++){
-            if(db.getDetailInvoicesCustomer().get(i).getIdTable() == tables.get(position).getId()){
-                holder.tableBinding.rlTop.setVisibility(View.VISIBLE);
-                holder.tableBinding.rlBottom.setVisibility(View.GONE);
-                holder.tableBinding.imgEmployee.setVisibility(View.VISIBLE);
+        holder.itemView.setOnClickListener(v ->{
+            if(tables.get(position).getCountCurrentPeople() != tables.get(position).getCountPeople()){
+                recyclerViewItemOnClick.onClick(position);
             }
-            Log.d("KMFG12", db.getDetailInvoicesCustomer().get(i).getIdTable()+ " ==0000");
+        });
+        if(tables.get(position).getCountCurrentPeople() == 0){
+            holder.tableBinding.txtCountCurrentPeople.setText("0/"+tables.get(position).getCountPeople());
+        }else if(tables.get(position).getCountCurrentPeople() == tables.get(position).getCountPeople()){
+            holder.tableBinding.txtCountCurrentPeople.setText("FULL");
+            holder.tableBinding.rlBottom.setBackground(context.getDrawable(R.drawable.rounded_red));
+        } else {
+            holder.tableBinding.txtCountCurrentPeople.setText(tables.get(position).getCountCurrentPeople()+"/"+tables.get(position).getCountPeople());
         }
     }
     @Override

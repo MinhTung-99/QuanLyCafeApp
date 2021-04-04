@@ -29,6 +29,9 @@ public class TotalMoneyFragment extends Fragment implements ITotalMoneyView {
     private ArrayList<InvoiceDetail> invoicesNotPay;
     private FragmentTotalMoneyBinding totalMoneyBinding;
 
+    private Long idCustomer;
+    private Table table;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,9 +42,10 @@ public class TotalMoneyFragment extends Fragment implements ITotalMoneyView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        Table table = (Table) getArguments().getSerializable("table");
+        table = (Table) getArguments().getSerializable("table");
+        idCustomer = getArguments().getLong("idCustomer");
         float totalMoney;
-        totalMoney = totalMoneyPresenter.handleTotalMoney(table, invoicesNotPay);
+        totalMoney = totalMoneyPresenter.handleTotalMoney(table, invoicesNotPay, idCustomer);
 
         String setupMoney = PriceUtil.setupPrice(String.valueOf(totalMoney));
         totalMoneyBinding.btnTotalMoney.setText(setupMoney);
@@ -64,6 +68,10 @@ public class TotalMoneyFragment extends Fragment implements ITotalMoneyView {
         Bundle bundle = new Bundle();
         bundle.putFloat("totalMoney", totalMoney);
         bundle.putLongArray("idInvoiceDetail", totalMoneyPresenter.getCurrentIdInvoiceDetail());
+        bundle.putLong("idCustomer", idCustomer);
+        if(table != null){
+            bundle.putLong("idTable", table.getId());
+        }
         Navigation.findNavController(getView()).navigate(R.id.payFragment, bundle);
     }
 }

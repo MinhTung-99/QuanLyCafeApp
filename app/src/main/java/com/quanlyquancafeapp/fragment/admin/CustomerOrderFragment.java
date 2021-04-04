@@ -48,12 +48,13 @@ public class CustomerOrderFragment extends Fragment implements CustomerOrderAdap
         navigateToCustomerOrderBottomSheetFragment(idCustomer);
     }
     @Override
-    public void btnTotalMoney(Long idTable) {
+    public void btnTotalMoney(InvoiceDetail invoiceDetail) {
         Constance.TYPE_PAY = "SHELL";
         Bundle bundle = new Bundle();
         Table table = new Table();
-        table.setId(idTable);
+        table.setId(invoiceDetail.getIdTable());
         bundle.putSerializable("table",table);
+        bundle.putLong("idCustomer", invoiceDetail.getCustomer().getId());
         Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
     }
     @Override

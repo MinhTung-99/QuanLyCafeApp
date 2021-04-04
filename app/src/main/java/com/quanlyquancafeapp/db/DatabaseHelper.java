@@ -41,6 +41,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String CREATE_TABLES_FURNITURE = "CREATE TABLE " + FurnitureTable.TABLE_NAME + " (" +
                 FurnitureTable.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                FurnitureTable.KEY_COUNT_PEOPLE + " INTEGER," +
+                FurnitureTable.KEY_COUNT_CURRENT_PEOPLE + " INTEGER," +
                 FurnitureTable.KEY_NAME + " TEXT)";
         db.execSQL(CREATE_TABLES_FURNITURE);
 
@@ -114,13 +116,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + CustomerTable.TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
+        //Log.d("KMFG77",cursor.getColumnIndexOrThrow("name_person")+" ===");
         if(cursor.moveToFirst()){
             do{
                 Customer customer = new Customer();
                 customer.setId(cursor.getLong(0));
-                customer.setName(cursor.getString(1));
-                customer.setCount(cursor.getInt(2));
-                customer.setDone(cursor.getInt(3));
+                customer.setName(cursor.getString(3));
+                customer.setCount(cursor.getInt(1));
+                //customer.setDone(cursor.getInt(3));
                 customers.add(customer);
             } while(cursor.moveToNext());
         }
@@ -228,12 +231,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ProductTable.KEY_ID+"=?",
                 new String[]{String.valueOf(id)});
     }
-    public void addTable(Table table) throws Exception{
+    public void addTable(Table table) throws Exception {
         SQLiteDatabase db = null;
         try{
             db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(FurnitureTable.KEY_NAME,table.getName());
+            values.put(FurnitureTable.KEY_COUNT_PEOPLE,table.getCountPeople());
+            values.put(FurnitureTable.KEY_COUNT_CURRENT_PEOPLE, table.getCountCurrentPeople());
             db.insert(FurnitureTable.TABLE_NAME,"",values);
         }catch (Exception e){
             throw new Exception(e.getMessage());
@@ -248,9 +253,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
             do{
+                Log.d("KMFG","TYPE="+cursor.getColumnIndexOrThrow("count_people"));
                 Table table = new Table();
                 table.setId(cursor.getLong(0));
-                table.setName(cursor.getString(1));
+                table.setName(cursor.getString(3));
+                table.setCountPeople(cursor.getInt(1));
+                table.setCountCurrentPeople(cursor.getInt(2));
                 tables.add(table);
             } while(cursor.moveToNext());
         }
@@ -260,6 +268,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(FurnitureTable.KEY_NAME,table.getName());
+        values.put(FurnitureTable.KEY_COUNT_PEOPLE,table.getCountPeople());
+        values.put(FurnitureTable.KEY_COUNT_CURRENT_PEOPLE, table.getCountCurrentPeople());
         return db.update(FurnitureTable.TABLE_NAME,
                 values,
                 FurnitureTable.KEY_ID+"=?",
@@ -409,12 +419,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
                 invoiceDetail.setCount(cursor.getInt(3));
-                Log.d("KMFG","TYPE="+cursor.getColumnIndexOrThrow("type_pay"));
+                Log.d("KMFG","TYPE="+cursor.getColumnIndexOrThrow("id_customer"));
                 //Log.d("KMFG", cursor.getInt(3)+ " IDD===");
                 invoiceDetail.setId(cursor.getLong(5));
                 invoiceDetail.setIdTable(cursor.getLong(8));
                 invoiceDetail.setTypePay(cursor.getString(13));
                 invoiceDetail.setIsPay(cursor.getInt(14));
+                invoiceDetail.getCustomer().setId(cursor.getLong(4));
                 invoiceDetails.add(invoiceDetail);
             } while(cursor.moveToNext());
         }
@@ -470,7 +481,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
                 invoiceDetail.setCount(cursor.getInt(3));
-                Log.d("KMFG55",cursor.getColumnIndexOrThrow("sale")+" ===ABC");
+                //Log.d("KMFG55",cursor.getColumnIndexOrThrow("sale")+" ===ABC");
                 //Log.d("KMFG", cursor.getString(14)+ " IDD===");
 
                 invoiceDetail.setId(cursor.getLong(5));
@@ -504,9 +515,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
                 invoiceDetail.setCount(cursor.getInt(3));
-                invoiceDetail.setTime(cursor.getString(18));
-                invoiceDetail.setIsPay(cursor.getInt(20));
-                invoiceDetail.setId(cursor.getLong(11));
+                invoiceDetail.setTime(cursor.getString(20));
+                invoiceDetail.setIsPay(cursor.getInt(22));
 //                Log.d("KMFG",cursor.getColumnIndexOrThrow("id_invoice")+" =COLUM");
 //                Log.d("KMFG", cursor.getLong(11)+ " =000");
 
@@ -518,11 +528,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 invoiceDetail.setCustomer(customer);
 
                 Product product = new Product();
-                product.setName(cursor.getString(22));
-                product.setImageByteArr(cursor.getBlob(23));
+                product.setName(cursor.getString(24));
+                product.setImageByteArr(cursor.getBlob(25));
                 invoiceDetail.setProduct(product);
 
-                invoiceDetail.setIdTable(cursor.getLong(14));
+                invoiceDetail.setIdTable(cursor.getLong(16));
                 invoiceDetails.add(0,invoiceDetail);
             } while(cursor.moveToNext());
         }
