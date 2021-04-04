@@ -421,7 +421,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return invoiceDetails;
     }
 
-    public ArrayList<InvoiceDetail> getDetailInvoicesById(Long id){
+    /*public ArrayList<InvoiceDetail> getDetailInvoicesById(Long id){
         ArrayList<InvoiceDetail> invoiceDetails = new ArrayList<>();
         String selectQuery = "SELECT * FROM detail_invoice INNER JOIN invoice ON detail_invoice.id_invoice = invoice.id_invoice "
                 + "INNER JOIN product ON product.id = detail_invoice.id_product "
@@ -433,7 +433,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
                 invoiceDetail.setCount(cursor.getInt(3));
-                Log.d("KMFG",cursor.getColumnIndexOrThrow("date")+" ===ABC");
+                //Log.d("KMFG",cursor.getColumnIndexOrThrow("date")+" ===ABC");
                 //Log.d("KMFG", cursor.getString(14)+ " IDD===");
 
                 invoiceDetail.setId(cursor.getLong(5));
@@ -452,6 +452,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Table table = new Table();
                 table.setName(cursor.getString(25));
                 invoiceDetail.setTable(table);
+
+                invoiceDetails.add(invoiceDetail);
+            } while(cursor.moveToNext());
+        }
+        return invoiceDetails;
+    }*/
+
+    public ArrayList<InvoiceDetail> getDetailInvoicesNotTableById(Long id){
+        ArrayList<InvoiceDetail> invoiceDetails = new ArrayList<>();
+        String selectQuery = "SELECT * FROM detail_invoice INNER JOIN invoice ON detail_invoice.id_invoice = invoice.id_invoice "
+                + "INNER JOIN product ON product.id = detail_invoice.id_product " +
+                "WHERE invoice.id_invoice=?";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(id)});
+        if(cursor.moveToFirst()){
+            do{
+                InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
+                invoiceDetail.setCount(cursor.getInt(3));
+                Log.d("KMFG55",cursor.getColumnIndexOrThrow("sale")+" ===ABC");
+                //Log.d("KMFG", cursor.getString(14)+ " IDD===");
+
+                invoiceDetail.setId(cursor.getLong(5));
+                invoiceDetail.setIdProduct(cursor.getLong(7));
+                invoiceDetail.setDateBuy(cursor.getString(11));
+//                invoiceDetail.setTypePay(cursor.getString(11));
+                invoiceDetail.setIsPay(cursor.getInt(14));
+
+                Product product = new Product();
+                product.setName(cursor.getString(16));
+                product.setPrice(cursor.getFloat(19));
+                product.setSale(cursor.getString(20));
+                invoiceDetail.setProduct(product);
 
                 invoiceDetails.add(invoiceDetail);
             } while(cursor.moveToNext());

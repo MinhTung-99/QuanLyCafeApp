@@ -40,17 +40,17 @@ public class AdminInvoiceDetailFragment extends Fragment implements IAdminInvoic
 
         presenter = new AdminInvoiceDetailPresenter(getContext());
         Invoice invoice = (Invoice) getArguments().getSerializable("invoice");
-        invoiceDetails = presenter.getDetailInvoicesById(invoice.getId());
+        Log.d("KMFG55", invoice.getTypePay()+ " ===000");
+        invoiceDetails = presenter.getDetailInvoicesNotTableById(invoice.getId());
 
         setAdapterProductInvoice();
-        setNameTableTxt();
         setDateTxt();
         setIdInvoiceTxt();
         setTotalMoneyTxt(invoice);
     }
     @Override
     public void setTotalMoneyTxt(Invoice invoice) {
-        float totalMoney = presenter.getDetailInvoicesByIdTotalMoney(invoice.getId());
+        float totalMoney = presenter.getDetailInvoicesNotTableByIdTotalMoney(invoice.getId());
         String setupMoney = PriceUtil.setupPrice(String.valueOf(totalMoney));
         binding.txtTotalMoney.setText(setupMoney);
     }
@@ -58,10 +58,6 @@ public class AdminInvoiceDetailFragment extends Fragment implements IAdminInvoic
     public void setAdapterProductInvoice() {
         adapter = new AdminProductInvoiceAdapter(invoiceDetails);
         binding.rvProducts.setAdapter(adapter);
-    }
-    @Override
-    public void setNameTableTxt() {
-        binding.txtNameTable.setText(invoiceDetails.get(0).getTable().getName());
     }
     @Override
     public void setDateTxt() {
