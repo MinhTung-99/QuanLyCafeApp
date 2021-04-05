@@ -51,6 +51,7 @@ public class CafeFragment extends Fragment implements AdminProductAdapter.Recycl
     }
     private void setCafeAdapter(){
         adapter = new AdminProductAdapter(productCafe, this);
+        adapter.setContext(getContext());
         binding.rvCafe.setAdapter(adapter);
     }
     @Override

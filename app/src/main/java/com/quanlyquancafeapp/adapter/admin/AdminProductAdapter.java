@@ -1,14 +1,22 @@
 package com.quanlyquancafeapp.adapter.admin;
 
+import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
+import com.quanlyquancafeapp.databinding.CustomPopupMenuBinding;
 import com.quanlyquancafeapp.databinding.ItemProductAdminBinding;
 import com.quanlyquancafeapp.model.Product;
 
@@ -18,26 +26,46 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
     private ArrayList<Product> products;
     private ItemProductAdminBinding binding;
     private RecyclerViewItemOnclick recyclerViewItemOnclick;
+    private Context context;
+    //POPUP MENU
+    private PopupWindow popupWindow;
+    private CustomPopupMenuBinding menuBinding;
+
     public AdminProductAdapter(ArrayList<Product> products, RecyclerViewItemOnclick recyclerViewItemOnclick) {
         this.products = products;
         this.recyclerViewItemOnclick = recyclerViewItemOnclick;
     }
-
+    public void setContext(Context context) {
+        this.context = context;
+    }
     @NonNull
     @Override
     public ProductAdminViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        menuBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.custom_popup_menu, parent, false);
+        popupWindow = new PopupWindow(menuBinding.getRoot(), 300, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+
         binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_product_admin, parent, false);
         return new ProductAdminViewHolder(binding);
     }
     @Override
     public void onBindViewHolder(@NonNull ProductAdminViewHolder holder, int position) {
         holder.binding.setProduct(products.get(position));
-        holder.binding.txtCount.setVisibility(View.GONE);
-        holder.binding.btnDelete.setOnClickListener(v->recyclerViewItemOnclick.btnDelete(products.get(position)));
-        holder.binding.btnUpdate.setOnClickListener(v->recyclerViewItemOnclick.btnUpdate(products.get(position)));
+
+        holder.binding.txtThreeDots.setOnClickListener(v->{
+            popupWindow.showAsDropDown(v,-153,0);
+        });
         holder.itemView.setOnLongClickListener(v->{
             recyclerViewItemOnclick.onLongClick(products.get(position));
             return false;
+        });
+
+        menuBinding.rlDelete.setOnClickListener(v->{
+            popupWindow.dismiss();
+            recyclerViewItemOnclick.btnDelete(products.get(position));
+        });
+        menuBinding.rlUpdate.setOnClickListener(v->{
+            popupWindow.dismiss();
+            recyclerViewItemOnclick.btnUpdate(products.get(position));
         });
     }
     public void updateProduct(ArrayList<Product> products){
