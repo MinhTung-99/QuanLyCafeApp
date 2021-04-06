@@ -34,7 +34,7 @@ public class TotalMoneyPresenter {
             if(invoiceDetails.get(i).getIsPay() == 0 && invoiceDetails.get(i).getTypePay().equals(Constance.TYPE_PAY)){
                 for (int j = 0; j < products.size(); j++){
                     intoMoney = 0;
-                    if(table.getId() != null && invoiceDetails.get(i).getIdTable() != null){
+                    if(table != null && invoiceDetails.get(i).getIdTable() != null){
                         if(invoiceDetails.get(i).getIdProduct() == products.get(j).getId() &&
                                 invoiceDetails.get(i).getIdTable() == table.getId() &&
                                 invoiceDetails.get(i).getCustomer().getId() == idCustomer){

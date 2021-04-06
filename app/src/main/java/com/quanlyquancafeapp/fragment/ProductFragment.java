@@ -82,9 +82,9 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
         productsDrink = productPresenter.getProductsDrink();
     }
     private void setFirstBackgroundButton() {
-        setBackgroundBtn(binding.btnCafe, R.color.blue);
+        setBackgroundBtn(binding.btnCafe, R.color.forest_green);
         setBackgroundBtn(binding.btnDrink, R.color.brown);
-        setBackgroundBtn(binding.btnStore, R.color.blue);
+        setBackgroundBtn(binding.btnStore, R.color.forest_green);
     }
     private void setAdapter() {
         adapter = new ProductAdapter(productsCafe, this);
@@ -117,14 +117,14 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_cafe:
-                setBackgroundBtn(binding.btnCafe, R.color.blue);
+                setBackgroundBtn(binding.btnCafe, R.color.forest_green);
                 setBackgroundBtn(binding.btnDrink, R.color.brown);
                 adapter.updateProduct(productsCafe);
                 isCafe = true;
                 break;
             case R.id.btn_drink:
                 setBackgroundBtn(binding.btnCafe, R.color.brown);
-                setBackgroundBtn(binding.btnDrink, R.color.blue);
+                setBackgroundBtn(binding.btnDrink, R.color.forest_green);
                 adapter.updateProduct(productsDrink);
                 isCafe = false;
                 break;
@@ -145,7 +145,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
                     Constance.TYPE_PAY = "";
                     productPresenter.addInvoice(productsCafe, productsDrink, "", table);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("table", new Table());
+                    bundle.putSerializable("table", null);
                     Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
                 }
                 break;

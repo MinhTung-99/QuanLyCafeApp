@@ -5,22 +5,7 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
-        android:background="@color/white">
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/blue">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Product"
-                    android:layout_centerHorizontal="true"
-                    android:textSize="20sp"/>
-            </RelativeLayout>
-        </androidx.appcompat.widget.Toolbar>
+        android:background="#8fbc8f">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,35 +27,48 @@
                 android:src="@drawable/ic_qr_code"
                 android:layout_marginRight="20dp"
                 android:layout_alignParentRight="true"/>
+            <RelativeLayout
+                android:id="@+id/rl_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edt_search"
+                android:layout_centerHorizontal="true">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_cafe"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:text="Cafe"
+                    android:textColor="@color/black"
+                    android:layout_marginRight="10dp"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_drink"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:text="Đồ uống"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/btn_cafe" />
+            </RelativeLayout>
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/rl_menu"
+                android:layout_marginTop="10dp"
+                android:background="@color/black"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_product"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/btn_cafe"
-                android:layout_below="@id/edt_search"
+                android:layout_below="@id/view"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-            <Button
-                android:id="@+id/btn_cafe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/edt_search"
-                android:text="Cafe" />
-            <Button
-                android:id="@+id/btn_drink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đồ uống"
-                android:layout_marginTop="15dp"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/btn_cafe"/>
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_store"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lưu"
-                android:backgroundTint="@null"
-                android:background="@color/blue"
+                android:textColor="@color/black"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"/>

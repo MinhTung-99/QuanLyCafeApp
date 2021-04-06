@@ -20,11 +20,9 @@ public class CustomerOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_customer_order);
 
-        binding.btnLogin.setBackground(getDrawable(R.drawable.rounded_white));
         binding.btnRegister.setBackground(getDrawable(R.drawable.rounded_white_state_enable_btn));
         binding.btnRegister.setEnabled(false);
 
-        DatabaseHelper db = new DatabaseHelper(this);
         binding.btnRegister.setOnClickListener(v->{
             Customer customer = new Customer();
             customer.setName(binding.edtName.getText().toString());

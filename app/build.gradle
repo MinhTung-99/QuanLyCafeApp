@@ -53,4 +53,6 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9'
     //beep
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
+    //circle image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
