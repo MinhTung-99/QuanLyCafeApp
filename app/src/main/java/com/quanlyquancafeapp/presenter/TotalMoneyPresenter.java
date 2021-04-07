@@ -68,6 +68,7 @@ public class TotalMoneyPresenter {
             }
         }
         int sale = Integer.parseInt(saleStr);
+        Log.d("KMFG55",sale+"=====");
         float sum = (products.get(j).getPrice() * invoiceDetails.get(i).getCount() * (100-sale)/(float)100);
         intoMoney += sum;
         totalMoney += sum;
