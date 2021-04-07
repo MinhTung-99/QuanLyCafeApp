@@ -10,4 +10,5 @@ public class UserTable {
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_TYPE_USER = "type_user";
+    public static final String KEY_PROFILE = "profile";
 }

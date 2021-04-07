@@ -1,7 +1,9 @@
 package com.quanlyquancafeapp.adapter.admin;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -13,14 +15,12 @@ import com.quanlyquancafeapp.model.User;
 
 import java.util.ArrayList;
 
-public class AdminUserAdapter extends RecyclerSwipeAdapter<AdminUserAdapter.UserViewHolder>{
+public class AdminUserAdapter extends RecyclerView.Adapter<AdminUserAdapter.UserViewHolder>{
     private ArrayList<User> users;
-    private Context context;
     private IRecyclerViewOnClick recyclerViewOnClick;
 
-    public AdminUserAdapter(ArrayList<User> users, Context context, IRecyclerViewOnClick recyclerViewOnClick) {
+    public AdminUserAdapter(ArrayList<User> users, IRecyclerViewOnClick recyclerViewOnClick) {
         this.users = users;
-        this.context = context;
         this.recyclerViewOnClick = recyclerViewOnClick;
     }
     @NonNull
@@ -32,29 +32,20 @@ public class AdminUserAdapter extends RecyclerSwipeAdapter<AdminUserAdapter.User
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.binding.setUser(users.get(position));
-        holder.binding.btnDelete.setOnClickListener(v->{
-            recyclerViewOnClick.btnDeleteOnClick(users.get(position));
-        });
+        holder.binding.imgProfile.setImageBitmap(BitmapFactory.decodeFile(users.get(position).getFilePath()));
+        holder.binding.btnDelete.setOnClickListener(v-> recyclerViewOnClick.btnDeleteOnClick(users.get(position)) );
         holder.binding.getRoot().setOnLongClickListener(v -> {
             recyclerViewOnClick.onItemLongClick(users.get(position));
             return false;
         });
-        mItemManger.bindView(holder.itemView, position);// open one item in swipe
     }
     public void updateUser(ArrayList<User> users){
         this.users = users;
         notifyDataSetChanged();
     }
-    public void closeSwipe(){
-        mItemManger.closeAllItems();
-    }
     @Override
     public int getItemCount() {
         return users.size();
-    }
-    @Override
-    public int getSwipeLayoutResourceId(int position) {
-        return R.id.swipe;
     }
     class UserViewHolder extends RecyclerView.ViewHolder{
         private ItemAdminUserBinding binding;

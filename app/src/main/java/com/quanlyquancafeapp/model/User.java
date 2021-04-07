@@ -9,6 +9,7 @@ public class User {
     private String userName;
     private String password;
     private String typeUser;
+    private String filePath;
 
     public User() {
     }
@@ -41,64 +42,55 @@ public class User {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getNameStore() {
         return nameStore;
     }
-
     public void setNameStore(String nameStore) {
         this.nameStore = nameStore;
     }
-
     public String getAddress() {
         return address;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
     public String getGender() {
         return gender;
     }
-
     public void setGender(String gender) {
         this.gender = gender;
     }
-
     public String getUserName() {
         return userName;
     }
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
-
     public String getTypeUser() {
         return typeUser;
     }
-
     public void setTypeUser(String typeUser) {
         this.typeUser = typeUser;
+    }
+    public String getFilePath() {
+        return filePath;
+    }
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

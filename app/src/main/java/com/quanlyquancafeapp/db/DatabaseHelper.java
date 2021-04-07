@@ -36,6 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 UserTable.KEY_GENDER + " TEXT," +
                 UserTable.KEY_USERNAME + " TEXT," +
                 UserTable.KEY_PASSWORD + " TEXT," +
+                UserTable.KEY_PROFILE + " TEXT," +
                 UserTable.KEY_TYPE_USER + " TEXT)";
         db.execSQL(CREATE_USER_TABLE);
 
@@ -95,7 +96,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void addCustomer(Customer customer) throws Exception{
         SQLiteDatabase db = null;
-        Log.d("KMFG123", customer.getName()+" ==NAME");
         try{
             db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
@@ -142,6 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(UserTable.KEY_USERNAME, user.getUserName());
             values.put(UserTable.KEY_PASSWORD, user.getPassword());
             values.put(UserTable.KEY_TYPE_USER, user.getTypeUser());
+            values.put(UserTable.KEY_PROFILE, user.getFilePath());
             db.insert(UserTable.TABLE_NAME,"",values);
         }catch (Exception e){
             throw new Exception(e.getMessage());
@@ -157,6 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
             do{
+                //Log.d("KMFG58",cursor.getColumnIndexOrThrow("type_user")+" ===ABC");
                 User user = new User();
                 user.setId(cursor.getLong(0));
                 user.setNameStore(cursor.getString(1));
@@ -165,7 +167,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 user.setGender(cursor.getString(4));
                 user.setUserName(cursor.getString(5));
                 user.setPassword(cursor.getString(6));
-                user.setTypeUser(cursor.getString(7));
+                user.setTypeUser(cursor.getString(8));
+                user.setFilePath(cursor.getString(7));
                 users.add(user);
             } while(cursor.moveToNext());
         }
@@ -198,6 +201,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(UserTable.KEY_PHONE_NUMBER,user.getPhoneNumber());
         values.put(UserTable.KEY_GENDER,user.getGender());
         values.put(UserTable.KEY_PASSWORD,user.getPassword());
+        values.put(UserTable.KEY_PROFILE, user.getFilePath());
         return db.update(UserTable.TABLE_NAME,
                 values,
                 UserTable.KEY_ID+"=?",

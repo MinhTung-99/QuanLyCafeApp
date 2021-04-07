@@ -9,4 +9,5 @@ public interface IAdminUserView {
     void setHintEdtDialogAdd();
     void setTextEdtDialogUpdate(User user);
     void setRadioDialogUpdate(User user);
+    void emptyDialogAdd();
 }
