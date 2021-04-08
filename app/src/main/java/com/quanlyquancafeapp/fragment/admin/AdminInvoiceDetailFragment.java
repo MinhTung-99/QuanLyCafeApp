@@ -40,7 +40,6 @@ public class AdminInvoiceDetailFragment extends Fragment implements IAdminInvoic
 
         presenter = new AdminInvoiceDetailPresenter(getContext());
         Invoice invoice = (Invoice) getArguments().getSerializable("invoice");
-        Log.d("KMFG55", invoice.getTypePay()+ " ===000");
         invoiceDetails = presenter.getDetailInvoicesNotTableById(invoice.getId());
 
         setAdapterProductInvoice();
@@ -56,7 +55,7 @@ public class AdminInvoiceDetailFragment extends Fragment implements IAdminInvoic
     }
     @Override
     public void setAdapterProductInvoice() {
-        adapter = new AdminProductInvoiceAdapter(invoiceDetails);
+        adapter = new AdminProductInvoiceAdapter(invoiceDetails, presenter.getTotalMoney());
         binding.rvProducts.setAdapter(adapter);
     }
     @Override

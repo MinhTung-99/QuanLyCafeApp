@@ -6,6 +6,7 @@ public class InvoiceDetail extends Invoice{
     private Long idInvoice;
     private Long idProduct;
     private Integer count;
+    private String sale;
 
     private Customer customer;
     private Product product;
@@ -61,5 +62,11 @@ public class InvoiceDetail extends Invoice{
     }
     public void setTable(Table table) {
         this.table = table;
+    }
+    public String getSale() {
+        return sale;
+    }
+    public void setSale(String sale) {
+        this.sale = sale;
     }
 }

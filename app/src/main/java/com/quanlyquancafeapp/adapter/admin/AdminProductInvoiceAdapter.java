@@ -14,8 +14,11 @@ import java.util.ArrayList;
 
 public class AdminProductInvoiceAdapter extends RecyclerView.Adapter<AdminProductInvoiceAdapter.AdminProductInvoiceHolder>{
     private ArrayList<InvoiceDetail> invoiceDetails;
-    public AdminProductInvoiceAdapter(ArrayList<InvoiceDetail> invoiceDetails) {
+    private ArrayList<Float> totalMoney;
+
+    public AdminProductInvoiceAdapter(ArrayList<InvoiceDetail> invoiceDetails, ArrayList<Float> totalMoney) {
         this.invoiceDetails = invoiceDetails;
+        this.totalMoney = totalMoney;
     }
 
     @NonNull
@@ -27,7 +30,7 @@ public class AdminProductInvoiceAdapter extends RecyclerView.Adapter<AdminProduc
     @Override
     public void onBindViewHolder(@NonNull AdminProductInvoiceHolder holder, int position) {
         holder.binding.txtName.setText(invoiceDetails.get(position).getProduct().getName());
-        holder.binding.txtPrice.setText(PriceUtil.setupPrice(String.valueOf(invoiceDetails.get(position).getProduct().getPrice())));
+        holder.binding.txtPrice.setText(PriceUtil.setupPrice(String.valueOf(totalMoney.get(position))));
         holder.binding.txtCount.setText(String.valueOf(invoiceDetails.get(position).getCount()));
     }
     @Override

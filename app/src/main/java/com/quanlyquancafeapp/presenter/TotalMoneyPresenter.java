@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
@@ -59,16 +60,9 @@ public class TotalMoneyPresenter {
     public long[] getCurrentIdInvoiceDetail(){
         return idCurrentInvoiceDetail;
     }
+
     private void handleTotalAndIntoMoneyPay(int i, int j){
-        String saleStr = "";
-        for(int s = 0; s < products.get(j).getSale().length(); s++){
-            saleStr+=s;
-            if(products.get(j).getSale().charAt(s) == '%'){
-                break;
-            }
-        }
-        int sale = Integer.parseInt(saleStr);
-        Log.d("KMFG55",sale+"=====");
+        int sale = Integer.parseInt(products.get(j).getSale());
         float sum = (products.get(j).getPrice() * invoiceDetails.get(i).getCount() * (100-sale)/(float)100);
         intoMoney += sum;
         totalMoney += sum;

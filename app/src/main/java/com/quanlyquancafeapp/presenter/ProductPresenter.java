@@ -112,6 +112,8 @@ public class ProductPresenter {
         invoiceDetail.setIdInvoice(db.getInvoices().get(sizeInvoice-1).getId());
         invoiceDetail.setIdProduct(products.get(position).getId());
         invoiceDetail.setCount(products.get(position).getCount());
+        invoiceDetail.setSale(products.get(position).getSale());
+        Log.d("KMFG", products.get(position).getSale()+" =0000=");
         return invoiceDetail;
     }
 
