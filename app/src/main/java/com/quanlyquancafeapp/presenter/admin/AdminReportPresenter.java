@@ -19,10 +19,13 @@ public class AdminReportPresenter {
     public float getDetailInvoicesRevenueDetailTotalMoney(String date){
         ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesRevenueDetail();
         float totalRevenue = 0;
+        int position = 0;
         for(InvoiceDetail invoiceDetail: invoiceDetails){
+            int sale = Integer.parseInt(invoiceDetails.get(position).getSale());
             if(invoiceDetail.getDateBuy().equals(date) && invoiceDetail.getIsPay() == 1){
-                totalRevenue += invoiceDetail.getCount()*invoiceDetail.getProduct().getPrice();
+                totalRevenue += invoiceDetail.getProduct().getPrice() * invoiceDetails.get(position).getCount() * (100-sale)/(float)100;
             }
+            position++;
         }
         return totalRevenue;
     }

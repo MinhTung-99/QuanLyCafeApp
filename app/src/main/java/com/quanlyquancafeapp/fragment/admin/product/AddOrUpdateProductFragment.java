@@ -107,6 +107,7 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
         binding.edtName.setText(product.getName());
         binding.edtUnit.setText(product.getUnit());
         binding.edtPrice.setText(String.valueOf(product.getPrice()));
+        binding.edtSale.setText(String.valueOf(product.getSale()));
         binding.edtAvailableQuantity.setText(String.valueOf(product.getAvailableQuantity()));
         binding.edtBarcode.setText(String.valueOf(product.getBarcode()));
         binding.txtUnit.setText(product.getUnit());

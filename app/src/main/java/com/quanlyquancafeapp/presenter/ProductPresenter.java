@@ -78,6 +78,12 @@ public class ProductPresenter {
                         db.idTable = table.getId();
                     }
                     db.addDetailInvoice(invoiceDetail);
+
+                    Product product = productsCafe.get(i);
+                    int count = getProductsCafe().get(i).getAvailableQuantity() - product.getCount();
+                    product.setAvailableQuantity(count);
+                    db.updateProduct(product);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -88,6 +94,11 @@ public class ProductPresenter {
                 try {
                     InvoiceDetail invoiceDetail = setInvoiceDetail(productsDrink, i);
                     db.addDetailInvoice(invoiceDetail);
+
+                    Product product = productsDrink.get(i);
+                    int count = getProductsDrink().get(i).getAvailableQuantity() - product.getCount();
+                    product.setAvailableQuantity(count);
+                    db.updateProduct(product);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

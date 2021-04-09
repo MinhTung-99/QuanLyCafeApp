@@ -215,6 +215,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(id)});
     }
     public int updateProduct(Product product){
+        Log.d("KMFG123", product.getId()+" ========");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ProductTable.KEY_NAME,product.getName());
@@ -554,11 +555,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "INNER JOIN product ON product.id = detail_invoice.id_product";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        //Log.d("KMFG123",cursor.getColumnIndexOrThrow("date")+" =COLUM");
+        Log.d("KMFG123",cursor.getColumnIndexOrThrow("sale_product")+" =COLUM");
         if(cursor.moveToFirst()){
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
                 invoiceDetail.setCount(cursor.getInt(3));
+                invoiceDetail.setSale(cursor.getString(5));
                 invoiceDetail.setDateBuy(cursor.getString(12));
                 invoiceDetail.setTime(cursor.getString(13));
                 invoiceDetail.setIsPay(cursor.getInt(15));
