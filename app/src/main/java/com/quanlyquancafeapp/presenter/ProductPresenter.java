@@ -2,6 +2,7 @@ package com.quanlyquancafeapp.presenter;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Button;
 
 import com.quanlyquancafeapp.adapter.ProductAdapter;
 import com.quanlyquancafeapp.db.DatabaseHelper;
@@ -19,9 +20,11 @@ public class ProductPresenter {
     private DatabaseHelper db;
     private int sizeInvoice;
     private Invoice invoice;
+    private IProductView productView;
 
-    public ProductPresenter(Context context) {
+    public ProductPresenter(Context context, IProductView productView) {
         db = new DatabaseHelper(context);
+        this.productView = productView;
     }
     public ArrayList<Product> getProductsCafe(){
         ArrayList<Product> products = db.getProducts();
@@ -45,8 +48,9 @@ public class ProductPresenter {
     }
     public void handleCount(String typeClick, int position, ArrayList<Product> productsCafe,
                             ArrayList<Product> productsDrink, boolean isCafe, ProductAdapter adapter){
+        int count = 0;
         if(isCafe){
-            int count = productsCafe.get(position).getCount();
+            count = productsCafe.get(position).getCount();
             if(typeClick.equals(Constance.recyclerviewItem)){
                 count++;
             }else if(typeClick.equals(Constance.reductionBtn)){
@@ -55,7 +59,7 @@ public class ProductPresenter {
             productsCafe.get(position).setCount(count);
             adapter.updateProduct(productsCafe);
         }else{
-            int count = productsDrink.get(position).getCount();
+            count = productsDrink.get(position).getCount();
             if(typeClick.equals(Constance.recyclerviewItem)){
                 count++;
             }else if(typeClick.equals(Constance.reductionBtn)){
@@ -63,6 +67,12 @@ public class ProductPresenter {
             }
             productsDrink.get(position).setCount(count);
             adapter.updateProduct(productsDrink);
+        }
+
+        if(count > 0){
+            productView.isEnableBtn(true);
+        }else {
+            productView.isEnableBtn(false);
         }
     }
     public void addInvoice(ArrayList<Product> productsCafe, ArrayList<Product> productsDrink, String typePay, Table table){

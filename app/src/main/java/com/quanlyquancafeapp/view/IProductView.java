@@ -6,4 +6,5 @@ public interface IProductView {
     void navigateToScanCodeActivity();
     void setBackgroundBtn(Button button, int color);
     void navigateToTotalMoneyFragment();
+    void isEnableBtn(boolean isEnable);
 }

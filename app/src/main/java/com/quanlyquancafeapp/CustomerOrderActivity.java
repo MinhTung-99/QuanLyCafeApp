@@ -20,9 +20,6 @@ public class CustomerOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_customer_order);
 
-        DatabaseHelper db = new DatabaseHelper(this);
-        db.getDetailInvoicesRevenueDetail();
-
         binding.btnRegister.setBackground(getDrawable(R.drawable.rounded_white_state_enable_btn));
         binding.btnRegister.setEnabled(false);
 
@@ -91,5 +88,12 @@ public class CustomerOrderActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.edtName.setText("");
+        binding.edtCount.setText("");
     }
 }

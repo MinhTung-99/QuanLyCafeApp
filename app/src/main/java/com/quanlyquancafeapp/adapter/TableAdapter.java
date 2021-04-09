@@ -1,23 +1,16 @@
 package com.quanlyquancafeapp.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.ItemTableBinding;
-import com.quanlyquancafeapp.db.DatabaseHelper;
-import com.quanlyquancafeapp.fragment.TableFragment;
 import com.quanlyquancafeapp.model.Table;
-import com.quanlyquancafeapp.utils.DataFake;
-import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
+
 import java.util.ArrayList;
 
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHolder>{

@@ -422,7 +422,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM detail_invoice INNER JOIN invoice ON detail_invoice.id_invoice = invoice.id_invoice";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
-        Log.d("KMFG","TYPE="+cursor.getColumnIndexOrThrow("sale_product"));
+        //Log.d("KMFG","TYPE="+cursor.getColumnIndexOrThrow("sale_product"));
         if(cursor.moveToFirst()){
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
@@ -519,14 +519,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "INNER JOIN product ON product.id = detail_invoice.id_product";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
+        Log.d("KMFG",cursor.getColumnIndexOrThrow("id_invoice")+" =COLUM");
         if(cursor.moveToFirst()){
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
+                invoiceDetail.setId(cursor.getLong(14));
                 invoiceDetail.setCount(cursor.getInt(3));
                 invoiceDetail.setTime(cursor.getString(21));
+                invoiceDetail.setTypePay(cursor.getString(22));
                 invoiceDetail.setIsPay(cursor.getInt(23));
-//                Log.d("KMFG",cursor.getColumnIndexOrThrow("id_invoice")+" =COLUM");
 //                Log.d("KMFG", cursor.getLong(11)+ " =000");
 
                 Customer customer = new Customer();

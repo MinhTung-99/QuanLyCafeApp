@@ -1,43 +1,30 @@
 package com.quanlyquancafeapp.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.quanlyquancafeapp.CustomerOrderActivity;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.ScanCodeActivity;
 import com.quanlyquancafeapp.adapter.ProductAdapter;
 import com.quanlyquancafeapp.databinding.FragmentProductBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Customer;
-import com.quanlyquancafeapp.model.Invoice;
-import com.quanlyquancafeapp.model.Order;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.presenter.ProductPresenter;
 import com.quanlyquancafeapp.utils.Constance;
-import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 import com.quanlyquancafeapp.view.IProductView;
 
@@ -77,14 +64,13 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
         binding.imgQrCode.setOnClickListener(this);
     }
     private void init() {
-        productPresenter = new ProductPresenter(getContext());
+        productPresenter = new ProductPresenter(getContext(), this);
         productsCafe = productPresenter.getProductsCafe();
         productsDrink = productPresenter.getProductsDrink();
     }
     private void setFirstBackgroundButton() {
         setBackgroundBtn(binding.btnCafe, R.color.forest_green);
         setBackgroundBtn(binding.btnDrink, R.color.brown);
-        setBackgroundBtn(binding.btnStore, R.color.forest_green);
     }
     private void setAdapter() {
         adapter = new ProductAdapter(productsCafe, this);
@@ -96,7 +82,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
     }
     @Override
     public void reductionBtn(int position) {
-        productPresenter.handleCount(Constance.recyclerviewItem, (int) position, productsCafe, productsDrink, isCafe, adapter);
+        productPresenter.handleCount(Constance.reductionBtn, position, productsCafe, productsDrink, isCafe, adapter);
     }
     @Override
     public void navigateToScanCodeActivity() {
@@ -113,6 +99,17 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
         bundle.putSerializable("table", null);
         Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
     }
+    @Override
+    public void isEnableBtn(boolean isEnable) {
+        binding.btnStore.setEnabled(isEnable);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("kMFG123","ABBCBC");
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){

@@ -3,11 +3,9 @@ package com.quanlyquancafeapp.fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +17,6 @@ import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.FragmentPayBinding;
 import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.presenter.PayPresenter;
-import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.PriceUtil;
 
 import java.text.SimpleDateFormat;

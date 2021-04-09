@@ -30,7 +30,11 @@ public class TotalMoneyPresenter {
         this.invoicesNotPay = invoicesNotPay;
         totalMoney = 0;
         products = db.getProducts();
-        invoiceDetails = db.getDetailInvoices();
+        if(Constance.TYPE_PAY.equals("SHELL")){
+            invoiceDetails = db.getDetailInvoicesCustomer();
+        }else {
+            invoiceDetails = db.getDetailInvoices();
+        }
         for(int i = 0; i < invoiceDetails.size(); i++){
             if(invoiceDetails.get(i).getIsPay() == 0 && invoiceDetails.get(i).getTypePay().equals(Constance.TYPE_PAY)){
                 for (int j = 0; j < products.size(); j++){

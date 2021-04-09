@@ -1,24 +1,18 @@
 package com.quanlyquancafeapp.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.db.DatabaseHelper;
-import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.InvoiceDetail;
-import com.quanlyquancafeapp.model.Order;
 import com.quanlyquancafeapp.model.Product;
-import com.quanlyquancafeapp.utils.Constance;
-import com.quanlyquancafeapp.utils.DataFake;
 import com.quanlyquancafeapp.utils.PriceUtil;
 
 import java.util.ArrayList;

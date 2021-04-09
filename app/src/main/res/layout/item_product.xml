@@ -20,7 +20,7 @@
                 android:layout_centerHorizontal="true"/>
             <Button
                 android:id="@+id/txt_count"
-                android:layout_width="40dp"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textColor="#FF001D"
@@ -30,7 +30,7 @@
                 android:textSize="20sp"/>
             <Button
                 android:id="@+id/btn_reduction"
-                android:layout_width="40dp"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="90dp"
                 android:textColor="#FF001D"
