@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,6 +60,7 @@ public class CafeFragment extends Fragment implements AdminProductAdapter.Recycl
         Bundle bundle = new Bundle();
         product.setAdd(false);
         bundle.putSerializable("product", product);
+        Toast.makeText(getContext(), product.getName(),Toast.LENGTH_SHORT).show();
         Navigation.findNavController(getView()).navigate(R.id.addOrUpdateProductFragment, bundle);
     }
     @Override

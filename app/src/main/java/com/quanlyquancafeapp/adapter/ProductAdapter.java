@@ -42,10 +42,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         convertImageByteArrToBitmap(position);
         holder.binding.imgProduct.setImageBitmap(products.get(position).getImageBitmap());
         holder.binding.txtName.setText(products.get(position).getName() + " - ");
+
         String setupPrice = PriceUtil.setupPrice(String.valueOf(products.get(position).getPrice()));
         String setupPriceByComma = PriceUtil.getPriceByComma(setupPrice);
         holder.binding.txtPrice.setText(setupPriceByComma+"k");
+
         holder.binding.txtCount.setText(String.valueOf(products.get(position).getCount()));
+
+        if(products.get(position).getAvailableQuantity() == 0 ||
+                products.get(position).getCount() > products.get(position).getAvailableQuantity()){
+            holder.binding.txtAvailable.setText("hết hàng");
+            holder.binding.txtAvailable.setVisibility(View.VISIBLE);
+            products.get(position).setCount(0);
+        }else {
+            holder.binding.txtAvailable.setVisibility(View.INVISIBLE);
+        }
 
         holder.itemView.setOnClickListener(v->holder.recyclerViewOnItemClick.onClick(position));
         holder.binding.btnReduction.setOnClickListener(v->holder.recyclerViewOnItemClick.reductionBtn(position));

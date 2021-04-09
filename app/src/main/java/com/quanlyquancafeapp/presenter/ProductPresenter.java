@@ -46,35 +46,51 @@ public class ProductPresenter {
         }
         return productsDrink;
     }
+
+    private int countCafe = 0;
+    private int countDrink = 0;
     public void handleCount(String typeClick, int position, ArrayList<Product> productsCafe,
                             ArrayList<Product> productsDrink, boolean isCafe, ProductAdapter adapter){
-        int count = 0;
         if(isCafe){
-            count = productsCafe.get(position).getCount();
+            countCafe = productsCafe.get(position).getCount();
             if(typeClick.equals(Constance.recyclerviewItem)){
-                count++;
+                countCafe++;
             }else if(typeClick.equals(Constance.reductionBtn)){
-                count--;
+                countCafe--;
             }
-            productsCafe.get(position).setCount(count);
+
+            checkAvailableQuantity(productsCafe, position);
+
+            productsCafe.get(position).setCount(countCafe);
             adapter.updateProduct(productsCafe);
         }else{
-            count = productsDrink.get(position).getCount();
+            countDrink = productsDrink.get(position).getCount();
             if(typeClick.equals(Constance.recyclerviewItem)){
-                count++;
+                countDrink++;
             }else if(typeClick.equals(Constance.reductionBtn)){
-                count--;
+                countDrink--;
             }
-            productsDrink.get(position).setCount(count);
+
+            checkAvailableQuantity(productsDrink, position);
+
+            productsDrink.get(position).setCount(countDrink);
             adapter.updateProduct(productsDrink);
         }
-
-        if(count > 0){
-            productView.isEnableBtn(true);
+    }
+    private void checkAvailableQuantity(ArrayList<Product> products, int position){
+        if(countCafe <= products.get(position).getAvailableQuantity()){
+            if(countCafe > 0){
+                productView.isEnableBtn(true);
+            }else {
+                if(countDrink == 0)
+                    productView.isEnableBtn(false);
+            }
         }else {
-            productView.isEnableBtn(false);
+            if(countDrink == 0)
+                productView.isEnableBtn(false);
         }
     }
+
     public void addInvoice(ArrayList<Product> productsCafe, ArrayList<Product> productsDrink, String typePay, Table table){
         sizeInvoice = 0;
         setInvoice(table, typePay);

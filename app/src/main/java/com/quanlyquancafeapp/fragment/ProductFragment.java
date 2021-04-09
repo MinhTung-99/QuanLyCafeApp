@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +39,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
     private boolean isCafe = true;
     private ProductPresenter productPresenter;
     private Table table;
-    DatabaseHelper db;
 
     @Nullable
     @Override
@@ -51,7 +51,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         table = (Table) getArguments().getSerializable("table");
-        db = new DatabaseHelper(getContext());
         init();
         initAction();
         setFirstBackgroundButton();
@@ -102,12 +101,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
     @Override
     public void isEnableBtn(boolean isEnable) {
         binding.btnStore.setEnabled(isEnable);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("kMFG123","ABBCBC");
     }
 
     @Override

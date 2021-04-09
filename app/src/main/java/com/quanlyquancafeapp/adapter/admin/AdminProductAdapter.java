@@ -1,6 +1,7 @@
 package com.quanlyquancafeapp.adapter.admin;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,19 +54,19 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
 
         holder.binding.txtThreeDots.setOnClickListener(v->{
             popupWindow.showAsDropDown(v,-153,0);
+
+            menuBinding.rlDelete.setOnClickListener(view->{
+                popupWindow.dismiss();
+                recyclerViewItemOnclick.btnDelete(products.get(position));
+            });
+            menuBinding.rlUpdate.setOnClickListener(view->{
+                popupWindow.dismiss();
+                recyclerViewItemOnclick.btnUpdate(products.get(position));
+            });
         });
         holder.itemView.setOnLongClickListener(v->{
             recyclerViewItemOnclick.onLongClick(products.get(position));
             return false;
-        });
-
-        menuBinding.rlDelete.setOnClickListener(v->{
-            popupWindow.dismiss();
-            recyclerViewItemOnclick.btnDelete(products.get(position));
-        });
-        menuBinding.rlUpdate.setOnClickListener(v->{
-            popupWindow.dismiss();
-            recyclerViewItemOnclick.btnUpdate(products.get(position));
         });
     }
     public void updateProduct(ArrayList<Product> products){
