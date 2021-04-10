@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         tools:context=".RegisterActivity"
         android:orientation="vertical"
-        android:background="@drawable/ic_background">
+        android:background="@color/ghost_white">
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -30,14 +30,15 @@
                     android:textSize="20sp"/>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
-        <EditText
-            android:id="@+id/edt_phone_number"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/txt_phone_number"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Số điện thoại"
-            android:backgroundTint="@color/black"
-            android:textColorHint="#FFFFFF"
-            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:layout_marginHorizontal="20sp"/>
         <EditText
             android:id="@+id/edt_name_store"
@@ -45,53 +46,60 @@
             android:layout_height="wrap_content"
             android:hint="Tên quán"
             android:backgroundTint="@color/black"
-            android:textColorHint="#FFFFFF"
+            android:textColorHint="@color/silver"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/color_cursor_edt"
             android:layout_marginHorizontal="20sp"/>
         <EditText
             android:id="@+id/edt_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Địa chỉ"
+            android:textColor="@color/black"
+            android:textCursorDrawable="@drawable/color_cursor_edt"
             android:backgroundTint="@color/black"
-            android:textColorHint="#FFFFFF"
+            android:textColorHint="@color/silver"
             android:layout_marginHorizontal="20sp"/>
         <EditText
             android:id="@+id/edt_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Tên tài khoản"
+            android:textCursorDrawable="@drawable/color_cursor_edt"
+            android:textColor="@color/black"
             android:backgroundTint="@color/black"
-            android:textColorHint="#FFFFFF"
+            android:textColorHint="@color/silver"
             android:layout_marginHorizontal="20sp"/>
         <EditText
             android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Mật khẩu"
+            android:textColor="@color/black"
             android:inputType="textPassword"
             android:backgroundTint="@color/black"
-            android:textColorHint="#FFFFFF"
+            android:textCursorDrawable="@drawable/color_cursor_edt"
+            android:textColorHint="@color/silver"
             android:layout_marginHorizontal="20sp"/>
         <EditText
             android:id="@+id/edt_password_again"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nhập lại mật khẩu"
+            android:textColor="@color/black"
             android:inputType="textPassword"
+            android:textCursorDrawable="@drawable/color_cursor_edt"
             android:backgroundTint="@color/black"
-            android:textColorHint="#FFFFFF"
+            android:textColorHint="@color/silver"
             android:layout_marginHorizontal="20sp"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/btn_register"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:text=" Đăng ký "
-                app:backgroundTint="@null" />
-        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:text=" Đăng ký "
+            android:layout_marginTop="30dp"
+            app:backgroundTint="@null" />
     </LinearLayout>
 </layout>

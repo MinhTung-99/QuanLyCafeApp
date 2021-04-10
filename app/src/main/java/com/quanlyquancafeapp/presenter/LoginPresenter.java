@@ -10,19 +10,18 @@ import java.util.ArrayList;
 
 public class LoginPresenter {
     private ILoginView loginView;
-    public LoginPresenter(ILoginView signInView) {
+    private DatabaseHelper db;
+
+    public LoginPresenter(ILoginView signInView, Context context) {
         this.loginView = signInView;
+        db = new DatabaseHelper(context);
     }
+
     public void navigateToHomeActivity(){
         loginView.navigateToHomeActivity();
     }
-    public void navigateToRegisterActivity(){
-        loginView.navigateToRegisterActivity();
-    }
-    public void navigateToForgotPasswordActivity(){
-        loginView.navigateToForgotPasswordActivity();
-    }
     public void navigateToLogInToHomeAdminActivity(){loginView.navigateToHomeAdminActivity();}
+
     public String handleLogin(Context context,String userName, String password){
         DatabaseHelper db = new DatabaseHelper(context);
         ArrayList<User> users = db.getUsers();
@@ -34,17 +33,7 @@ public class LoginPresenter {
         loginView.loginFail();
         return "NULL";
     }
-    public void visibilityView(Context context){
-        DatabaseHelper db = new DatabaseHelper(context);
-        ArrayList<User> users = db.getUsers();
-        if(users.size() > 0){
-            for(User user: users){
-                if(user.getTypeUser().equals("ADMIN")){
-                    loginView.hideView();
-                }
-            }
-        }else {
-            loginView.showView();
-        }
+    public int getSizeUser(){
+        return db.getUsers().size();
     }
 }

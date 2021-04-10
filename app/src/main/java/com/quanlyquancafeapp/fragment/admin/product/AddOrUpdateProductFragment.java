@@ -15,6 +15,7 @@ import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.FragmentAddOrUpdateProductBinding;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.presenter.admin.product.AddOrUpdateProductPresenter;
+import com.quanlyquancafeapp.utils.KeyboardUtils;
 import com.quanlyquancafeapp.view.admin.IAddOrUpdateView;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -132,6 +133,7 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
             case R.id.btn_add_or_update:
                 addOrUpdateProduct();
                 Navigation.findNavController(v).popBackStack();
+                KeyboardUtils.hideKeyboard(getActivity());
                 break;
             case R.id.img_product:
                 takePhoto();

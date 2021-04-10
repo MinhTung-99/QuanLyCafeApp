@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "928695802177",
+    "project_id": "usercafeapp",
+    "storage_bucket": "usercafeapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928695802177:android:7c68a84f24868c6f7929c0",
+        "android_client_info": {
+          "package_name": "com.quanlyquancafeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928695802177-99jt762kg2bjf3v0dquo9mae5jb99gpg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOxdX9PbvvK88HjDvZTboEo1GbqnOKdTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928695802177-99jt762kg2bjf3v0dquo9mae5jb99gpg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

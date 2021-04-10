@@ -30,36 +30,33 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        loginPresenter = new LoginPresenter(this);
-        setBackgroundButton();
-        binding.btnRegister.setOnClickListener(v -> loginPresenter.navigateToRegisterActivity());
-        binding.txtForgotPassword.setOnClickListener(v -> loginPresenter.navigateToForgotPasswordActivity());
-        binding.btnLogin.setOnClickListener(v -> {
-            String typeUser = loginPresenter.handleLogin(this,
-                    binding.edtAccount.getText().toString(), binding.edtPassword.getText().toString());
-            if(typeUser.equals("ADMIN")){
-                loginPresenter.navigateToLogInToHomeAdminActivity();
-                finish();
-            }else if(typeUser.equals("USER")){
-                loginPresenter.navigateToHomeActivity();
-                finish();
+        loginPresenter = new LoginPresenter(this, this);
+
+        binding.txtForgotPassword.setOnClickListener(v -> navigateToSendOTPActivity());
+
+        binding.btnRegisterLogin.setOnClickListener(v -> {
+            if(loginPresenter.getSizeUser() > 0){
+                String typeUser = loginPresenter.handleLogin(this,
+                        binding.edtAccount.getText().toString(), binding.edtPassword.getText().toString());
+                if(typeUser.equals("ADMIN")){
+                    loginPresenter.navigateToLogInToHomeAdminActivity();
+                    finish();
+                }else if(typeUser.equals("USER")){
+                    loginPresenter.navigateToHomeActivity();
+                    finish();
+                }
+            }else {
+                navigateToSendOTPActivity();
             }
         });
     }
-    private void setBackgroundButton() {
-        binding.btnLogin.setBackgroundResource(R.drawable.rounded_white);
-        binding.btnRegister.setBackgroundResource(R.drawable.rounded_white);
-    }
+
     @Override
-    public void navigateToRegisterActivity() {
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+    public void navigateToSendOTPActivity() {
+        Intent intent = new Intent(LoginActivity.this, SendOTPActivity.class);
         startActivity(intent);
     }
-    @Override
-    public void navigateToForgotPasswordActivity() {
-        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-        startActivity(intent);
-    }
+
     @Override
     public void navigateToHomeActivity() {
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
@@ -81,17 +78,21 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         toast.setView(view);
         toast.show();
     }
+
     @Override
-    public void hideView() {
-        binding.btnRegister.setVisibility(View.GONE);
+    public void setTextBtn(String text) {
+        binding.btnRegisterLogin.setText(text);
     }
-    @Override
-    public void showView() {
-        binding.btnRegister.setVisibility(View.VISIBLE);
-    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        loginPresenter.visibilityView(this);
+        if(loginPresenter.getSizeUser() > 0){
+            setTextBtn("Đăng nhập");
+            binding.txtForgotPassword.setVisibility(View.VISIBLE);
+        }else {
+            setTextBtn("Đăng ký");
+            binding.txtForgotPassword.setVisibility(View.INVISIBLE);
+        }
     }
 }

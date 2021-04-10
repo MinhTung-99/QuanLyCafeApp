@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.InvoiceDetail;
+import com.quanlyquancafeapp.model.User;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ public class CustomerOrderPresenter {
     public CustomerOrderPresenter(Context context) {
         db = new DatabaseHelper(context);
     }
+
     public ArrayList<InvoiceDetail> getDetailInvoicesCustomer(){
         ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesCustomer();
 
@@ -24,5 +26,20 @@ public class CustomerOrderPresenter {
         }
         invoiceDetailArrayList.add(invoiceDetails.get(invoiceDetails.size()-1));
         return invoiceDetailArrayList;
+    }
+
+    public int getSizeUser(){
+        return db.getUsers().size();
+    }
+    public User getUserAdmin(){
+        ArrayList<User> users = db.getUsers();
+        User user = null;
+        for(User u: users){
+            if(u.getTypeUser().equals("ADMIN")){
+                user = u;
+                break;
+            }
+        }
+        return user;
     }
 }

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.camera" />
     <uses-permission android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyQuanCafeApp">
+        <activity android:name=".VerifyOTPActivity"></activity>
+        <activity android:name=".SendOTPActivity" />
         <activity android:name=".CustomerOrderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,13 +25,11 @@
         </activity>
         <activity android:name=".ScanCodeActivity" />
         <activity android:name=".NewPasswordActivity" />
-        <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomeActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".HomeAdminActivity" />
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
