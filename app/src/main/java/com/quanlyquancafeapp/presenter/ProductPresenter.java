@@ -14,7 +14,9 @@ import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.utils.Constance;
 import com.quanlyquancafeapp.view.IProductView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ProductPresenter {
     private DatabaseHelper db;
@@ -138,7 +140,9 @@ public class ProductPresenter {
     }
     private void setInvoice(Table table, String typePay){
         if(table != null){
-            invoice = new Invoice(db.getUsers().get(1).getId(),table.getId(), 0,0,"","3h50",typePay,0);
+            SimpleDateFormat getTime = new SimpleDateFormat("HH:mm");
+            Date date = new Date();
+            invoice = new Invoice(db.getUsers().get(1).getId(),table.getId(), 0,0,"",getTime.format(date),typePay,0);
         } else{
             invoice = new Invoice(db.getUsers().get(1).getId(),0L, 0,0,"","",typePay,0);
         }
@@ -155,7 +159,6 @@ public class ProductPresenter {
         invoiceDetail.setIdProduct(products.get(position).getId());
         invoiceDetail.setCount(products.get(position).getCount());
         invoiceDetail.setSale(products.get(position).getSale());
-        Log.d("KMFG", products.get(position).getSale()+" =0000=");
         return invoiceDetail;
     }
 
