@@ -17,14 +17,15 @@ public class CustomerOrderPresenter {
 
     public ArrayList<InvoiceDetail> getDetailInvoicesCustomer(){
         ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesCustomer();
-
         ArrayList<InvoiceDetail> invoiceDetailArrayList = new ArrayList<>();
-        for(int i = 0; i < invoiceDetails.size()-1; i++){
-            if(invoiceDetails.get(i).getCustomer().getId() != invoiceDetails.get(i+1).getCustomer().getId()){
-                invoiceDetailArrayList.add(invoiceDetails.get(i));
+        if(invoiceDetails.size() > 0){
+            for(int i = 0; i < invoiceDetails.size()-1; i++){
+                if(invoiceDetails.get(i).getCustomer().getId() != invoiceDetails.get(i+1).getCustomer().getId()){
+                    invoiceDetailArrayList.add(invoiceDetails.get(i));
+                }
             }
+            invoiceDetailArrayList.add(invoiceDetails.get(invoiceDetails.size()-1));
         }
-        invoiceDetailArrayList.add(invoiceDetails.get(invoiceDetails.size()-1));
         return invoiceDetailArrayList;
     }
 

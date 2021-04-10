@@ -519,7 +519,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "INNER JOIN product ON product.id = detail_invoice.id_product";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        Log.d("KMFG",cursor.getColumnIndexOrThrow("id_invoice")+" =COLUM");
+        //Log.d("KMFG",cursor.getColumnIndexOrThrow("id_invoice")+" =COLUM");
         if(cursor.moveToFirst()){
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));

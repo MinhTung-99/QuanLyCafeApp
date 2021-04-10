@@ -79,7 +79,7 @@ public class ProductPresenter {
     }
     private void checkAvailableQuantity(ArrayList<Product> products, int position){
         if(countCafe <= products.get(position).getAvailableQuantity()){
-            if(countCafe > 0){
+            if(countCafe > 0 || countDrink > 0){
                 productView.isEnableBtn(true);
             }else {
                 if(countDrink == 0)
@@ -119,6 +119,11 @@ public class ProductPresenter {
             if(productsDrink.get(i).getCount() > 0){
                 try {
                     InvoiceDetail invoiceDetail = setInvoiceDetail(productsDrink, i);
+                    if(table == null){
+                        db.idTable = 0L;
+                    } else {
+                        db.idTable = table.getId();
+                    }
                     db.addDetailInvoice(invoiceDetail);
 
                     Product product = productsDrink.get(i);
