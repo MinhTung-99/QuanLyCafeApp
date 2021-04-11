@@ -22,10 +22,13 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "cafeManage";
+    public static DatabaseHelper context;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        DatabaseHelper.context = this;
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USER_TABLE = "CREATE TABLE " + UserTable.TABLE_NAME + " (" +
@@ -40,12 +43,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 UserTable.KEY_TYPE_USER + " TEXT)";
         db.execSQL(CREATE_USER_TABLE);
 
+        String CREATE_USER_TIME_TABLE = "CREATE TABLE " + UserTimeTable.TABLE_NAME + " (" +
+                UserTimeTable.KEY_ID_USER + " INTEGER," +
+                UserTimeTable.KEY_TIME_WORK + " TEXT," +
+                " FOREIGN KEY ("+ UserTimeTable.KEY_ID_USER+") REFERENCES "+UserTable.TABLE_NAME+"("+UserTable.KEY_ID+"));";
+        db.execSQL(CREATE_USER_TIME_TABLE);
+
+        String CREATE_USER_WORKING_TABLE = "CREATE TABLE " + UserWorkingTable.TABLE_NAME + " (" +
+                UserWorkingTable.KEY_ID_USER + " INTEGER," +
+                UserWorkingTable.KEY_DATE + " TEXT," +
+                UserWorkingTable.KEY_TIME_START + " TEXT," +
+                UserWorkingTable.KEY_TIME_END + " TEXT," +
+                UserWorkingTable.KEY_REASON_EXIT + " TEXT," +
+                UserWorkingTable.KEY_DONE + " INTEGER," +
+                " FOREIGN KEY ("+ UserWorkingTable.KEY_ID_USER+") REFERENCES "+UserTable.TABLE_NAME+"("+UserTable.KEY_ID+"));";
+        db.execSQL(CREATE_USER_WORKING_TABLE);
+
         String CREATE_TABLES_FURNITURE = "CREATE TABLE " + FurnitureTable.TABLE_NAME + " (" +
                 FurnitureTable.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 FurnitureTable.KEY_COUNT_PEOPLE + " INTEGER," +
                 FurnitureTable.KEY_COUNT_CURRENT_PEOPLE + " INTEGER," +
                 FurnitureTable.KEY_NAME + " TEXT)";
         db.execSQL(CREATE_TABLES_FURNITURE);
+
+        String CREATE_TIME_WORK_TABLE = "CREATE TABLE " + TimeWorkTable.TABLE_NAME + " (" +
+                TimeWorkTable.KEY_ID_TIME_WORK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                TimeWorkTable.KEY_TIME_START + " TEXT," +
+                TimeWorkTable.KEY_TIME_END + " TEXT)";
+        db.execSQL(CREATE_TIME_WORK_TABLE);
 
         String CREATE_PRODUCT_TABLE = "CREATE TABLE " + ProductTable.TABLE_NAME + " (" +
                 ProductTable.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +

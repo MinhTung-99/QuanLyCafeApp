@@ -3,4 +3,5 @@
     <string name="_0987654321">0987654321</string>
     <string name="re_send_otp">Thử lại</string>
     <string name="dont_otp">Không có mã OTP?</string>
+    <string name="time_work">Thời gian làm việc</string>
 </resources>
