@@ -89,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 InvoiceDetailTable.KEY_COUNT + " INTEGER,"+
                 InvoiceDetailTable.KEY_ID_CUSTOMER + " INTEGER," +
                 InvoiceDetailTable.KEY_SALE + " TEXT," +
+                InvoiceDetailTable.KEY_DESCRIPTION+ " TEXT," +
                 " FOREIGN KEY ("+ InvoiceDetailTable.KEY_ID_INVOICE+") REFERENCES "+InvoiceTable.TABLE_NAME+"("+InvoiceTable.KEY_ID+"),"
                 + " FOREIGN KEY ("+ InvoiceDetailTable.KEY_ID_TABLE+") REFERENCES "+FurnitureTable.TABLE_NAME+"("+FurnitureTable.KEY_ID+"),"
                 + " FOREIGN KEY ("+ InvoiceDetailTable.KEY_ID_CUSTOMER+") REFERENCES "+CustomerTable.TABLE_NAME+"("+CustomerTable.KEY_ID+"),"
@@ -351,10 +352,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM invoice";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
+        //Log.d("KMFG99",cursor.getColumnIndexOrThrow("payed")+" ===");
         if(cursor.moveToFirst()){
             do{
                 Invoice invoice = new Invoice();
-                //Log.d("KMFG",cursor.getColumnIndexOrThrow("time")+" ===");
                 //Log.d("KMFG", cursor.getString(6)+ " IDD===");
                 invoice.setId(cursor.getLong(0));
                 invoice.setIdAccount(cursor.getLong(1));
@@ -405,6 +406,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(InvoiceDetailTable.KEY_ID_PRODUCT, invoiceDetail.getIdProduct());
             values.put(InvoiceDetailTable.KEY_COUNT,invoiceDetail.getCount());
             values.put(InvoiceDetailTable.KEY_SALE, invoiceDetail.getSale());
+            values.put(InvoiceDetailTable.KEY_DESCRIPTION, invoiceDetail.getDescription());
             if(Constance.TYPE_PAY.equals("SHELL")){
                 values.put(InvoiceDetailTable.KEY_ID_CUSTOMER,getCustomers().get(size-1).getId());
             }
@@ -422,17 +424,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM detail_invoice INNER JOIN invoice ON detail_invoice.id_invoice = invoice.id_invoice";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
-        //Log.d("KMFG","TYPE="+cursor.getColumnIndexOrThrow("sale_product"));
+        //Log.d("KMFG99","TYPE="+cursor.getColumnIndexOrThrow("type_pay"));
         if(cursor.moveToFirst()){
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
                 invoiceDetail.setCount(cursor.getInt(3));
                 //Log.d("KMFG", cursor.getInt(3)+ " IDD===");
                 invoiceDetail.setSale(cursor.getString(5));
-                invoiceDetail.setId(cursor.getLong(6));
+                invoiceDetail.setId(cursor.getLong(7));
                 //invoiceDetail.setIdTable(cursor.getLong(8));
-                invoiceDetail.setTypePay(cursor.getString(14));
-                invoiceDetail.setIsPay(cursor.getInt(15));
+                invoiceDetail.setTypePay(cursor.getString(15));
+                invoiceDetail.setIsPay(cursor.getInt(16));
                 invoiceDetail.getCustomer().setId(cursor.getLong(4));
                 invoiceDetails.add(invoiceDetail);
             } while(cursor.moveToNext());
@@ -485,7 +487,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "WHERE invoice.id_invoice=?";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(id)});
-        //Log.d("KMFG55",cursor.getColumnIndexOrThrow("sale_product")+" ===ABC");
+        //Log.d("KMFG55",cursor.getColumnIndexOrThrow("price")+" ===ABC");
         if(cursor.moveToFirst()){
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
@@ -493,16 +495,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 //Log.d("KMFG55", cursor.getString(21)+ " IDD===");
 
                 invoiceDetail.setSale(cursor.getString(5));
-                invoiceDetail.setId(cursor.getLong(6));
-                invoiceDetail.setIdProduct(cursor.getLong(8));
-                invoiceDetail.setDateBuy(cursor.getString(12));
+                invoiceDetail.setId(cursor.getLong(7));
+                invoiceDetail.setIdProduct(cursor.getLong(9));
+                invoiceDetail.setDateBuy(cursor.getString(13));
 //                invoiceDetail.setTypePay(cursor.getString(11));
-                invoiceDetail.setIsPay(cursor.getInt(15));
+                invoiceDetail.setIsPay(cursor.getInt(16));
 
                 Product product = new Product();
-                product.setName(cursor.getString(17));
-                product.setPrice(cursor.getFloat(20));
-                product.setSale(cursor.getString(21));
+                product.setName(cursor.getString(18));
+                product.setPrice(cursor.getFloat(21));
+                product.setSale(cursor.getString(22));
                 invoiceDetail.setProduct(product);
 
                 invoiceDetails.add(invoiceDetail);
@@ -519,30 +521,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "INNER JOIN product ON product.id = detail_invoice.id_product";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        //Log.d("KMFG",cursor.getColumnIndexOrThrow("id_invoice")+" =COLUM");
+        //Log.d("KMFG55",cursor.getColumnIndexOrThrow("description")+" =COLUM");
         if(cursor.moveToFirst()){
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
-                invoiceDetail.setId(cursor.getLong(14));
+                invoiceDetail.setId(cursor.getLong(15));
                 invoiceDetail.setCount(cursor.getInt(3));
-                invoiceDetail.setTime(cursor.getString(21));
-                invoiceDetail.setTypePay(cursor.getString(22));
-                invoiceDetail.setIsPay(cursor.getInt(23));
+                invoiceDetail.setTime(cursor.getString(22));
+                invoiceDetail.setTypePay(cursor.getString(23));
+                invoiceDetail.setIsPay(cursor.getInt(24));
+                invoiceDetail.setDescription(cursor.getString(6));
 //                Log.d("KMFG", cursor.getLong(11)+ " =000");
 
                 Customer customer = new Customer();
-                customer.setId(cursor.getLong(6));
-                customer.setCount(cursor.getInt(7));
-                customer.setDone(cursor.getInt(8));
-                customer.setName(cursor.getString(9));
+                customer.setId(cursor.getLong(7));
+                customer.setCount(cursor.getInt(8));
+                customer.setDone(cursor.getInt(9));
+                customer.setName(cursor.getString(10));
                 invoiceDetail.setCustomer(customer);
 
                 Product product = new Product();
-                product.setName(cursor.getString(25));
-                product.setImageByteArr(cursor.getBlob(26));
+                product.setName(cursor.getString(26));
+                product.setImageByteArr(cursor.getBlob(27));
                 invoiceDetail.setProduct(product);
 
-                invoiceDetail.setIdTable(cursor.getLong(17));
+                invoiceDetail.setIdTable(cursor.getLong(18));
                 invoiceDetails.add(0,invoiceDetail);
             } while(cursor.moveToNext());
         }
@@ -556,22 +559,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "INNER JOIN product ON product.id = detail_invoice.id_product";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        Log.d("KMFG123",cursor.getColumnIndexOrThrow("sale_product")+" =COLUM");
+        Log.d("KMFG55",cursor.getColumnIndexOrThrow("date")+" =COLUM");
         if(cursor.moveToFirst()){
             do{
                 InvoiceDetail invoiceDetail = new InvoiceDetail(cursor.getLong(0), cursor.getLong(1));
                 invoiceDetail.setCount(cursor.getInt(3));
                 invoiceDetail.setSale(cursor.getString(5));
-                invoiceDetail.setDateBuy(cursor.getString(12));
-                invoiceDetail.setTime(cursor.getString(13));
-                invoiceDetail.setIsPay(cursor.getInt(15));
+                invoiceDetail.setDateBuy(cursor.getString(13));
+                invoiceDetail.setTime(cursor.getString(14));
+                invoiceDetail.setIsPay(cursor.getInt(16));
 //                invoiceDetail.setId(cursor.getLong(11));
                // Log.d("KMFG123", cursor.getLong(11)+ " =000");
 
                 Product product = new Product();
-                product.setName(cursor.getString(17));
-                product.setImageByteArr(cursor.getBlob(18));
-                product.setPrice(cursor.getFloat(20));
+                product.setName(cursor.getString(18));
+                product.setImageByteArr(cursor.getBlob(19));
+                product.setPrice(cursor.getFloat(21));
                 invoiceDetail.setProduct(product);
 
                 invoiceDetails.add(invoiceDetail);

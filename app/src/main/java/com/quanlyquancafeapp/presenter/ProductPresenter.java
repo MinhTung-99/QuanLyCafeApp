@@ -142,9 +142,9 @@ public class ProductPresenter {
         if(table != null){
             SimpleDateFormat getTime = new SimpleDateFormat("HH:mm");
             Date date = new Date();
-            invoice = new Invoice(db.getUsers().get(1).getId(),table.getId(), 0,0,"",getTime.format(date),typePay,0);
+            invoice = new Invoice(db.getUsers().get(0).getId(),table.getId(), 0,0,"",getTime.format(date),typePay,0);
         } else{
-            invoice = new Invoice(db.getUsers().get(1).getId(),0L, 0,0,"","",typePay,0);
+            invoice = new Invoice(db.getUsers().get(0).getId(),0L, 0,0,"","",typePay,0);
         }
         try {
             db.addInvoice(invoice);
@@ -159,6 +159,7 @@ public class ProductPresenter {
         invoiceDetail.setIdProduct(products.get(position).getId());
         invoiceDetail.setCount(products.get(position).getCount());
         invoiceDetail.setSale(products.get(position).getSale());
+        invoiceDetail.setDescription(products.get(position).getDescription());
         return invoiceDetail;
     }
 

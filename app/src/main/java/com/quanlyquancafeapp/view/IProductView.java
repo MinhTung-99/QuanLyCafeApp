@@ -7,4 +7,5 @@ public interface IProductView {
     void setBackgroundBtn(Button button, int color);
     void navigateToTotalMoneyFragment();
     void isEnableBtn(boolean isEnable);
+    void initDialogDescription();
 }

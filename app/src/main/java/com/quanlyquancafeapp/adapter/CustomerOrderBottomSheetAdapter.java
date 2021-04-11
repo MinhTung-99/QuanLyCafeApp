@@ -37,6 +37,8 @@ public class CustomerOrderBottomSheetAdapter extends RecyclerView.Adapter<Custom
         holder.binding.imgProduct.setImageBitmap(invoiceDetails.get(position).getProduct().getImageBitmap());
         holder.binding.txtNameAndCountProduct.setText(invoiceDetails.get(position).getProduct().getName() + " ----- " +
                 invoiceDetails.get(position).getCount() + " cốc");
+        holder.binding.txtDescription.setText(invoiceDetails.get(position).getDescription());
+
     }
     private void convertImageByteArrToBitmap(int position){
         Bitmap bitmap = BitmapFactory.decodeByteArray(invoiceDetails.get(position).getProduct().getImageByteArr(), 0, invoiceDetails.get(position).getProduct().getImageByteArr().length);

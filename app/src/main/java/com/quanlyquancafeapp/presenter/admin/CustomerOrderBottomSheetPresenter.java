@@ -1,6 +1,7 @@
 package com.quanlyquancafeapp.presenter.admin;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.InvoiceDetail;

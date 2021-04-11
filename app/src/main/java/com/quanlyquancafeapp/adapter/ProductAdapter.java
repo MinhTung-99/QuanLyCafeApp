@@ -5,15 +5,12 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.ItemProductBinding;
 import com.quanlyquancafeapp.model.Product;
-import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 import com.quanlyquancafeapp.utils.PriceUtil;
 
 import java.util.ArrayList;
@@ -21,9 +18,9 @@ import java.util.ArrayList;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
 
     private ArrayList<Product> products;
-    private IRecyclerViewOnItemClick recyclerViewOnItemClick;
+    private IRecyclerViewItemOnClick recyclerViewOnItemClick;
 
-    public ProductAdapter(ArrayList<Product> products, IRecyclerViewOnItemClick recyclerViewOnItemClick) {
+    public ProductAdapter(ArrayList<Product> products, IRecyclerViewItemOnClick recyclerViewOnItemClick) {
         this.products = products;
         this.recyclerViewOnItemClick = recyclerViewOnItemClick;
     }
@@ -60,6 +57,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         holder.itemView.setOnClickListener(v->holder.recyclerViewOnItemClick.onClick(position));
         holder.binding.btnReduction.setOnClickListener(v->holder.recyclerViewOnItemClick.reductionBtn(position));
+        holder.binding.btnDescription.setOnClickListener(v->holder.recyclerViewOnItemClick.descriptionBtn(position));
 
         if(products.get(position).getCount() == 0){
             hideOrShowView(holder, View.GONE);
@@ -81,11 +79,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
     class ProductViewHolder extends RecyclerView.ViewHolder{
         private ItemProductBinding binding;
-        private IRecyclerViewOnItemClick recyclerViewOnItemClick;
-        public ProductViewHolder(@NonNull ItemProductBinding itemView, IRecyclerViewOnItemClick recyclerViewOnItemClick) {
+        private IRecyclerViewItemOnClick recyclerViewOnItemClick;
+        public ProductViewHolder(@NonNull ItemProductBinding itemView, IRecyclerViewItemOnClick recyclerViewOnItemClick) {
             super(itemView.getRoot());
             this.binding = itemView;
             this.recyclerViewOnItemClick = recyclerViewOnItemClick;
         }
+    }
+    public interface IRecyclerViewItemOnClick{
+        void onClick(int position);
+        void reductionBtn(int position);
+        void descriptionBtn(int position);
     }
 }

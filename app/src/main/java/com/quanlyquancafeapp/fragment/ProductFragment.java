@@ -1,6 +1,7 @@
 package com.quanlyquancafeapp.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import androidx.navigation.Navigation;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.ScanCodeActivity;
 import com.quanlyquancafeapp.adapter.ProductAdapter;
+import com.quanlyquancafeapp.databinding.DialogDescriptionBinding;
 import com.quanlyquancafeapp.databinding.FragmentProductBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.Customer;
@@ -31,7 +33,7 @@ import com.quanlyquancafeapp.view.IProductView;
 
 import java.util.ArrayList;
 
-public class ProductFragment extends Fragment implements View.OnClickListener, IRecyclerViewOnItemClick, IProductView {
+public class ProductFragment extends Fragment implements View.OnClickListener, ProductAdapter.IRecyclerViewItemOnClick, IProductView {
     private FragmentProductBinding binding;
     private ProductAdapter adapter;
     private ArrayList<Product> productsCafe;
@@ -39,10 +41,14 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
     private boolean isCafe = true;
     private ProductPresenter productPresenter;
     private Table table;
+    //Dialog
+    private DialogDescriptionBinding dialogDescriptionBinding;
+    private AlertDialog alertDialogDescription;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        dialogDescriptionBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_description, container, false);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false);
         return binding.getRoot();
     }
@@ -52,9 +58,12 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
         super.onViewCreated(view, savedInstanceState);
         table = (Table) getArguments().getSerializable("table");
         init();
+        initDialogDescription();
         initAction();
         setFirstBackgroundButton();
         setAdapter();
+
+        dialogDescriptionBinding.btnCancel.setOnClickListener(v->alertDialogDescription.cancel());
     }
     private void initAction() {
         binding.btnCafe.setOnClickListener(this);
@@ -75,14 +84,25 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
         adapter = new ProductAdapter(productsCafe, this);
         binding.rvProduct.setAdapter(adapter);
     }
+
     @Override
-    public void onClick(Object position) {
-        productPresenter.handleCount(Constance.recyclerviewItem, (int) position, productsCafe, productsDrink, isCafe, adapter);
+    public void onClick(int position) {
+        productPresenter.handleCount(Constance.recyclerviewItem, position, productsCafe, productsDrink, isCafe, adapter);
     }
     @Override
     public void reductionBtn(int position) {
         productPresenter.handleCount(Constance.reductionBtn, position, productsCafe, productsDrink, isCafe, adapter);
     }
+    @Override
+    public void descriptionBtn(int position) {
+        dialogDescriptionBinding.txtNameProduct.setText(productsCafe.get(position).getName());
+        alertDialogDescription.show();
+        dialogDescriptionBinding.btnYes.setOnClickListener(v->{
+            productsCafe.get(position).setDescription(dialogDescriptionBinding.edtDescription.getText().toString());
+            alertDialogDescription.cancel();
+        });
+    }
+
     @Override
     public void navigateToScanCodeActivity() {
         Intent intent = new Intent(getActivity(), ScanCodeActivity.class);
@@ -101,6 +121,13 @@ public class ProductFragment extends Fragment implements View.OnClickListener, I
     @Override
     public void isEnableBtn(boolean isEnable) {
         binding.btnStore.setEnabled(isEnable);
+    }
+    @Override
+    public void initDialogDescription() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+        dialogBuilder.setView(dialogDescriptionBinding.getRoot());
+        alertDialogDescription = dialogBuilder.create();
+        alertDialogDescription.setCancelable(false);
     }
 
     @Override

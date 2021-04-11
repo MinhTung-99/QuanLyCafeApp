@@ -17,6 +17,7 @@ public class Product implements Serializable {
     private int count;
     private int barcode;
     private boolean isAdd; //check add or update product
+    private String description; //save local
 
     public Product() {
     }
@@ -110,5 +111,11 @@ public class Product implements Serializable {
     }
     public void setAdd(boolean add) {
         isAdd = add;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

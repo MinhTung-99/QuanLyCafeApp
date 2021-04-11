@@ -26,6 +26,9 @@ public class CustomerOrderActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_customer_order);
         presenter = new CustomerOrderPresenter(this);
 
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.getDetailInvoicesCustomer();
+
         binding.btnRegister.setBackground(getDrawable(R.drawable.rounded_white_state_enable_btn));
         binding.btnRegister.setEnabled(false);
 
