@@ -6,10 +6,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/white">
+
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/teal_200">
+            android:background="@color/red">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -19,25 +20,59 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:textSize="20sp"
-                    android:text="Cập nhập bàn"/>
+                    android:text="Cập nhập thời gian làm việc"/>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
-        <EditText
-            android:id="@+id/edt_table_name"
-            android:layout_width="match_parent"
-            android:textColorHint="@color/silver"
-            android:backgroundTint="@color/black"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"/>
-        <EditText
-            android:id="@+id/edt_table_count_people"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/black"
-            android:textColorHint="@color/silver"
-            android:hint="Số lượng người"
-            android:textColor="@color/black"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <EditText
+                android:id="@+id/edt_time_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/black"
+                android:textColorHint="@color/silver"
+                android:hint="Thời gian bắt đầu"
+                android:textColor="@color/black"
+                android:inputType="number"
+                android:maxLines="1"
+                android:gravity="center"
+                android:layout_marginRight="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="h"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <EditText
+                android:id="@+id/edt_time_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/black"
+                android:textColorHint="@color/silver"
+                android:hint="Thời gian kết thúc"
+                android:inputType="number"
+                android:maxLines="1"
+                android:gravity="center"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="h"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:text="Đồng ý"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/teal_200"
+                android:backgroundTint="@color/red"
                 android:layout_marginRight="20dp"/>
             <Button
                 android:id="@+id/btn_cancel"

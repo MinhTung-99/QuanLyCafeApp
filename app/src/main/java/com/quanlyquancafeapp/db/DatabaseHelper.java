@@ -14,6 +14,7 @@ import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
+import com.quanlyquancafeapp.model.TimeWork;
 import com.quanlyquancafeapp.model.User;
 import com.quanlyquancafeapp.utils.Constance;
 
@@ -121,6 +122,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " FOREIGN KEY ("+ InvoiceDetailTable.KEY_ID_PRODUCT+") REFERENCES "+ProductTable.TABLE_NAME+"("+ProductTable.KEY_ID+"));";
         db.execSQL(CREATE_TABLES_DETAIL_INVOICE);
     }
+
     public void addCustomer(Customer customer) throws Exception{
         SQLiteDatabase db = null;
         try{

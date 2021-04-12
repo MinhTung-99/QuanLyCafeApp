@@ -72,7 +72,6 @@ public class AdminTableFragment extends Fragment implements IAdminTableView, Adm
     }
     private void updateTableAdapter(){
         tables = adminTablePresenter.getTables();
-        Log.d("KMFG23", tables.get(0).getName()+" ==123");
         adapter.updateTableAdmin(tables);
         fragmentAdminTableBinding.rvTable.setAdapter(adapter);
     }
@@ -87,12 +86,17 @@ public class AdminTableFragment extends Fragment implements IAdminTableView, Adm
     @Override
     public void onItemLongClick(Table table) {
         dialogUpdateTableBinding.edtTableName.setText(table.getName());
+        dialogUpdateTableBinding.edtTableCountPeople.setText(String.valueOf(table.getCountPeople()));
+
         alertDialogUpdate.show();
+
         dialogUpdateTableBinding.btnCancel.setOnClickListener(v->{
             alertDialogUpdate.dismiss();
         });
+
         dialogUpdateTableBinding.btnYes.setOnClickListener(v->{
             table.setName(dialogUpdateTableBinding.edtTableName.getText().toString());
+            table.setCountPeople(Integer.parseInt(dialogUpdateTableBinding.edtTableCountPeople.getText().toString()));
             adminTablePresenter.updateTable(table);
             updateTableAdapter();
             dialogUpdateTableBinding.edtTableName.setText("");
@@ -103,9 +107,11 @@ public class AdminTableFragment extends Fragment implements IAdminTableView, Adm
     @Override
     public void btnDeleteOnClick(Table table) {
         alertDialogDelete.show();
+
         dialogDeleteTableBinding.btnCancel.setOnClickListener(v->{
             alertDialogDelete.dismiss();
         });
+
         dialogDeleteTableBinding.btnYes.setOnClickListener(v->{
             adminTablePresenter.deleteTable(table.getId());
             updateTableAdapter();
