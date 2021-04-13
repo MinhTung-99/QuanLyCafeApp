@@ -8,7 +8,7 @@
         <RelativeLayout
             android:layout_width="80dp"
             android:layout_height="50dp"
-            android:background="@color/teal_200">
+            android:background="@color/blue">
             <ImageView
                 android:id="@+id/btn_delete"
                 android:layout_width="30dp"

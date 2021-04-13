@@ -36,7 +36,10 @@ public class AdminProductFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         adapter = new ViewpagerAdapter(this);
         fragmentAdminProductBinding.viewpager2.setAdapter(adapter);
+        fragmentAdminProductBinding.viewpager2.setUserInputEnabled(false);//turn off viewpager2
+
         adminStorePresenter = new AdminProductPresenter(getContext());
+
         new TabLayoutMediator(fragmentAdminProductBinding.tabLayout, fragmentAdminProductBinding.viewpager2,
                 (tab, position) -> tab.setText("OBJECT " + (position + 1))
         ).attach();

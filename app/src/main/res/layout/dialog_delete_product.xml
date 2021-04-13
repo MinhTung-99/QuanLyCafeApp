@@ -6,10 +6,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/white">
+
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/orange">
+            android:background="@color/blue">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -18,9 +19,12 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="Xoá sản phẩm"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:textSize="20sp"/>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="Đồng ý"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/orange"
+                android:backgroundTint="@color/blue"
                 android:layout_marginRight="20dp"/>
             <Button
                 android:id="@+id/btn_cancel"

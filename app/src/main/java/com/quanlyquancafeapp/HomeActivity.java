@@ -20,8 +20,8 @@ public class HomeActivity extends AppCompatActivity implements IHomeView {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         homePresenter = new HomePresenter(this);
-        binding.llSell.setOnClickListener(v->homePresenter.sell());
-        binding.llPayment.setOnClickListener(v->homePresenter.payment());
+        binding.btnShell.setOnClickListener(v->homePresenter.sell());
+        binding.btnPay.setOnClickListener(v->homePresenter.payment());
     }
     @Override
     public void navigateToTableFragment() {

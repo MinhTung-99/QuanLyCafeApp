@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <LinearLayout
+    <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".HomeAdminActivity"
-        android:background="@drawable/ic_background"
-        android:orientation="vertical">
+        android:background="#f0f8ff">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#B1A6A6">
+            android:background="@color/black">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -25,10 +25,27 @@
                     android:textSize="20sp"/>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/ic_background"
+            android:layout_below="@+id/toolbar">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome Tung"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:layout_marginTop="50dp"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/alex_brush"/>
+        </RelativeLayout>
+
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="200dp"
             android:id="@+id/rv_admin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

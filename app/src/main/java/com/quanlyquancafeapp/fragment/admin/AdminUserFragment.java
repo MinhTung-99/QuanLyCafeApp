@@ -217,7 +217,7 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
         if (requestCode == MY_CAMERA_PERMISSION_CODE)
         {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), "camera permission granted", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "camera permission granted", Toast.LENGTH_LONG).show();
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
             } else {

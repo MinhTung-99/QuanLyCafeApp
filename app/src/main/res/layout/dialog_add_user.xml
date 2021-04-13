@@ -6,6 +6,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/white">
+
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -18,9 +19,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:textColor="@color/white"
                     android:textSize="20sp"/>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
+
         <EditText
             android:id="@+id/edt_user_name"
             android:layout_width="match_parent"

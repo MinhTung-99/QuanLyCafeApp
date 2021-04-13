@@ -1,68 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".HomeActivity"
+        android:orientation="vertical"
         android:background="@drawable/ic_background">
-        <LinearLayout
-            android:id="@+id/ll_sell"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Danh sách"
+            android:fontFamily="@font/alex_brush"
+            android:textSize="60sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"/>
+
+        <Button
+            android:id="@+id/btn_shell"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="50dp"
-            android:orientation="horizontal"
+            android:layout_height="80dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:layout_marginHorizontal="20dp"
-            android:background="@drawable/rounded_blue">
-            <ImageView
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:src="@drawable/ic_book"
-                android:layout_gravity="center_vertical"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Danh sách khách hàng"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_payment"
+            android:text="Danh sách khách hàng"/>
+
+        <Button
+            android:id="@+id/btn_pay"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="50dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
+            android:layout_height="80dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:layout_marginHorizontal="20dp"
-            android:background="@drawable/rounded_green">
-            <ImageView
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:src="@drawable/ic_dollar"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center_vertical"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="T.TOÁN TẠI QUẦY"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
-        </LinearLayout>
-    </RelativeLayout>
+            android:layout_marginTop="30dp"
+            android:text="T.TOÁN TẠI QUẦY"/>
+
+    </LinearLayout>
 </layout>
