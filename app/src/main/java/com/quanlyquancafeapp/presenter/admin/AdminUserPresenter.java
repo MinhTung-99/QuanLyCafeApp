@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.db.UserTimeTable;
 import com.quanlyquancafeapp.model.User;
 import com.quanlyquancafeapp.view.admin.IAdminUserView;
 
@@ -39,5 +40,8 @@ public class AdminUserPresenter {
     }
     public void deleteUserDB(Long id){
         db.deleteUser(id);
+    }
+    public void deleteUserTimeByIdUser(Long isUser){
+        UserTimeTable.deleteUserTimeByIdUser(isUser);
     }
 }

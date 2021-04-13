@@ -16,19 +16,21 @@ import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.CustomPopupMenuBinding;
 import com.quanlyquancafeapp.databinding.ItemTimeWorkBinding;
 import com.quanlyquancafeapp.model.TimeWork;
+import com.quanlyquancafeapp.model.User;
+import com.quanlyquancafeapp.model.UserTime;
 
 import java.util.ArrayList;
 
 public class AdminTimeWorkAdapter extends RecyclerView.Adapter<AdminTimeWorkAdapter.AdminTimeWorkViewHolder>{
 
-    private ArrayList<TimeWork> timeWorks;
+    private ArrayList<UserTime> userTimes;
     private IRecyclerViewItemOnclick recyclerViewItemOnclick;
     //MENU
     private PopupWindow popupWindow;
     private CustomPopupMenuBinding menuBinding;
 
-    public AdminTimeWorkAdapter(ArrayList<TimeWork> timeWorks, IRecyclerViewItemOnclick recyclerViewItemOnclick) {
-        this.timeWorks = timeWorks;
+    public AdminTimeWorkAdapter(ArrayList<UserTime> userTimes, IRecyclerViewItemOnclick recyclerViewItemOnclick) {
+        this.userTimes = userTimes;
         this.recyclerViewItemOnclick = recyclerViewItemOnclick;
     }
 
@@ -43,18 +45,18 @@ public class AdminTimeWorkAdapter extends RecyclerView.Adapter<AdminTimeWorkAdap
 
     @Override
     public void onBindViewHolder(@NonNull AdminTimeWorkViewHolder holder, int position) {
-        holder.binding.txtTimeStart.setText(timeWorks.get(position).getTimeStart()+"h");
-        holder.binding.txtTimeEnd.setText(timeWorks.get(position).getTimeEnd()+"h");
+        holder.binding.txtTimeStart.setText(userTimes.get(position).getTimeStart()+"h");
+        holder.binding.txtTimeEnd.setText(userTimes.get(position).getTimeEnd()+"h");
 
         holder.binding.txtThreeDots.setOnClickListener(v->{
             popupWindow.showAsDropDown(v,-153,0);
 
             menuBinding.rlDelete.setOnClickListener(view->{
-                recyclerViewItemOnclick.menuDelete(timeWorks.get(position));
+                recyclerViewItemOnclick.menuDelete(userTimes.get(position));
                 popupWindow.dismiss();
             });
             menuBinding.rlUpdate.setOnClickListener(view->{
-                recyclerViewItemOnclick.menuUpdate(timeWorks.get(position));
+                recyclerViewItemOnclick.menuUpdate(userTimes.get(position));
                 popupWindow.dismiss();
             });
         });
@@ -62,11 +64,11 @@ public class AdminTimeWorkAdapter extends RecyclerView.Adapter<AdminTimeWorkAdap
 
     @Override
     public int getItemCount() {
-        return timeWorks.size();
+        return userTimes.size();
     }
 
-    public void updateTimeWork(ArrayList<TimeWork> timeWorks){
-        this.timeWorks = timeWorks;
+    public void updateTimeWork(ArrayList<UserTime> userTimes){
+        this.userTimes = userTimes;
         notifyDataSetChanged();
     }
 
@@ -79,7 +81,7 @@ public class AdminTimeWorkAdapter extends RecyclerView.Adapter<AdminTimeWorkAdap
     }
 
     public interface IRecyclerViewItemOnclick{
-        void menuUpdate(TimeWork timeWork);
-        void menuDelete(TimeWork timeWork);
+        void menuUpdate(UserTime userTime);
+        void menuDelete(UserTime userTime);
     }
 }

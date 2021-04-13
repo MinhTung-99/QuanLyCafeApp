@@ -6,5 +6,13 @@
     <fragment
         android:id="@+id/userFragment"
         android:name="com.quanlyquancafeapp.fragment.admin.AdminUserFragment"
-        android:label="UserFragment" />
+        android:label="UserFragment" >
+        <action
+            android:id="@+id/action_userFragment_to_adminTimeWorkFragment"
+            app:destination="@id/adminTimeWorkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminTimeWorkFragment"
+        android:name="com.quanlyquancafeapp.fragment.admin.AdminTimeWorkFragment"
+        android:label="AdminTimeWorkFragment" />
 </navigation>

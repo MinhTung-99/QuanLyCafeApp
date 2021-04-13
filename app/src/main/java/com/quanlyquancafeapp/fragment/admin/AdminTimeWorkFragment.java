@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,13 +12,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.admin.AdminTimeWorkAdapter;
-import com.quanlyquancafeapp.databinding.CustomPopupMenuBinding;
 import com.quanlyquancafeapp.databinding.DialogAddTimeWorkBinding;
 import com.quanlyquancafeapp.databinding.DialogDeleteTimeWorkBinding;
 import com.quanlyquancafeapp.databinding.DialogUpdateTimeWorkBinding;
 import com.quanlyquancafeapp.databinding.FragmentAdminTimeWorkBinding;
 import com.quanlyquancafeapp.model.TimeWork;
-import com.quanlyquancafeapp.presenter.admin.AdminTablePresenter;
+import com.quanlyquancafeapp.model.User;
+import com.quanlyquancafeapp.model.UserTime;
 import com.quanlyquancafeapp.presenter.admin.AdminTimeWorkPresenter;
 import com.quanlyquancafeapp.view.admin.IAdminTimeWorkView;
 
@@ -35,6 +32,7 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
     private AlertDialog alertDialogDelete;
     private AdminTimeWorkPresenter presenter;
     private AdminTimeWorkAdapter adapter;
+    private User user;
 
     @Nullable
     @Override
@@ -50,8 +48,10 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        user = (User) getArguments().getSerializable("user");
+
         presenter = new AdminTimeWorkPresenter(getContext());
-        adapter = new AdminTimeWorkAdapter(presenter.getTimeWork(), this);
+        adapter = new AdminTimeWorkAdapter(presenter.getUserTime(user.getId()), this);
         binding.rvTimeWork.setAdapter(adapter);
 
         initDialogAdd();
@@ -64,11 +64,12 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
 
         dialogAddTimeWorkBinding.btnCancel.setOnClickListener(v->alertDialogAdd.cancel());
         dialogAddTimeWorkBinding.btnYes.setOnClickListener(v->{
-            TimeWork timeWork = new TimeWork();
-            timeWork.setTimeStart(dialogAddTimeWorkBinding.edtTimeStart.getText().toString());
-            timeWork.setTimeEnd(dialogAddTimeWorkBinding.edtTimeEnd.getText().toString());
-            presenter.addTimeWork(timeWork);
-            adapter.updateTimeWork(presenter.getTimeWork());
+            UserTime userTime = new UserTime();
+            userTime.setId(user.getId());
+            userTime.setTimeStart(dialogAddTimeWorkBinding.edtTimeStart.getText().toString());
+            userTime.setTimeEnd(dialogAddTimeWorkBinding.edtTimeEnd.getText().toString());
+            presenter.addTimeWork(userTime);
+            adapter.updateTimeWork(presenter.getUserTime(user.getId()));
             alertDialogAdd.cancel();
         });
 
@@ -100,28 +101,28 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
     }
 
     @Override
-    public void menuUpdate(TimeWork timeWork) {
-        dialogUpdateTimeWorkBinding.edtTimeStart.setText(timeWork.getTimeStart());
-        dialogUpdateTimeWorkBinding.edtTimeEnd.setText(timeWork.getTimeEnd());
+    public void menuUpdate(UserTime userTime) {
+        dialogUpdateTimeWorkBinding.edtTimeStart.setText(userTime.getTimeStart());
+        dialogUpdateTimeWorkBinding.edtTimeEnd.setText(userTime.getTimeEnd());
 
         alertDialogUpdate.show();
 
         dialogUpdateTimeWorkBinding.btnYes.setOnClickListener(v->{
-            timeWork.setTimeStart(dialogUpdateTimeWorkBinding.edtTimeStart.getText().toString());
-            timeWork.setTimeEnd(dialogUpdateTimeWorkBinding.edtTimeEnd.getText().toString());
-            presenter.updateTimeWork(timeWork);
-            adapter.updateTimeWork(presenter.getTimeWork());
+            userTime.setTimeStart(dialogUpdateTimeWorkBinding.edtTimeStart.getText().toString());
+            userTime.setTimeEnd(dialogUpdateTimeWorkBinding.edtTimeEnd.getText().toString());
+            presenter.updateUserTime(userTime);
+            adapter.updateTimeWork(presenter.getUserTime(user.getId()));
             alertDialogUpdate.cancel();
         });
     }
 
     @Override
-    public void menuDelete(TimeWork timeWork) {
+    public void menuDelete(UserTime userTime) {
         alertDialogDelete.show();
 
         dialogDeleteTimeWorkBinding.btnYes.setOnClickListener(v->{
-            presenter.deleteTimeWork(timeWork.getIdTimeWork());
-            adapter.updateTimeWork(presenter.getTimeWork());
+            presenter.deleteTimeWork(userTime.getIdUserTime());
+            adapter.updateTimeWork(presenter.getUserTime(user.getId()));
             alertDialogDelete.cancel();
         });
     }

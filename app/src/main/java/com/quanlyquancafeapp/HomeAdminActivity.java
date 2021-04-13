@@ -31,7 +31,7 @@ public class HomeAdminActivity extends AppCompatActivity implements IRecyclerVie
         admins.add(new Admin(R.drawable.rounded_teal_200,R.drawable.ic_chair,"Bàn"));
         admins.add(new Admin(R.drawable.rounded_blue,R.drawable.ic_user,"Nhân viên"));
         admins.add(new Admin(R.drawable.rounded_orange,R.drawable.ic_store,"Kho"));
-        admins.add(new Admin(R.drawable.rounded_red,R.drawable.ic_time,"Thời gian"));
+
         adapter = new AdminAdapter(admins, this);
         binding.rvAdmin.setLayoutManager(new GridLayoutManager(this, 2));
         binding.rvAdmin.setAdapter(adapter);

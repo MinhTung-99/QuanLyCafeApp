@@ -21,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.adapter.admin.AdminUserAdapter;
 import com.quanlyquancafeapp.databinding.DialogAddUserBinding;
@@ -279,12 +281,24 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
     @Override
     public void btnDeleteOnClick(User user) {
         alertDialogDelete.show();
+
         dialogDeleteUserBinding.txtToolbar.setText("Xoá nhân viên");
+
         dialogDeleteUserBinding.btnYes.setOnClickListener(v1->{
             adminUserPresenter.deleteUserDB(user.getId());
+            adminUserPresenter.deleteUserTimeByIdUser(user.getId());
             alertDialogDelete.dismiss();
             adapter.updateUser(adminUserPresenter.getUsersDB());
         });
+
         dialogDeleteUserBinding.btnCancel.setOnClickListener(v->alertDialogDelete.cancel());
+    }
+
+    @Override
+    public void btnTimerOnClick(User user) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        //Toast.makeText(getContext(), user.getUserName(), Toast.LENGTH_SHORT).show();
+        Navigation.findNavController(getView()).navigate(R.id.adminTimeWorkFragment, bundle);
     }
 }

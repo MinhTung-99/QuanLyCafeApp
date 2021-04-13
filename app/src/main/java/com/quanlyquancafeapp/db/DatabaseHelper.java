@@ -16,6 +16,7 @@ import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.model.TimeWork;
 import com.quanlyquancafeapp.model.User;
+import com.quanlyquancafeapp.model.UserTime;
 import com.quanlyquancafeapp.utils.Constance;
 
 import java.util.ArrayList;
@@ -45,8 +46,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_USER_TABLE);
 
         String CREATE_USER_TIME_TABLE = "CREATE TABLE " + UserTimeTable.TABLE_NAME + " (" +
+                UserTimeTable.KEY_ID_USER_TIME+ " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 UserTimeTable.KEY_ID_USER + " INTEGER," +
-                UserTimeTable.KEY_TIME_WORK + " TEXT," +
+                UserTimeTable.KEY_TIME_START + " TEXT," +
+                UserTimeTable.KEY_TIME_END + " TEXT," +
                 " FOREIGN KEY ("+ UserTimeTable.KEY_ID_USER+") REFERENCES "+UserTable.TABLE_NAME+"("+UserTable.KEY_ID+"));";
         db.execSQL(CREATE_USER_TIME_TABLE);
 
@@ -66,12 +69,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 FurnitureTable.KEY_COUNT_CURRENT_PEOPLE + " INTEGER," +
                 FurnitureTable.KEY_NAME + " TEXT)";
         db.execSQL(CREATE_TABLES_FURNITURE);
-
-        String CREATE_TIME_WORK_TABLE = "CREATE TABLE " + TimeWorkTable.TABLE_NAME + " (" +
-                TimeWorkTable.KEY_ID_TIME_WORK + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                TimeWorkTable.KEY_TIME_START + " TEXT," +
-                TimeWorkTable.KEY_TIME_END + " TEXT)";
-        db.execSQL(CREATE_TIME_WORK_TABLE);
 
         String CREATE_PRODUCT_TABLE = "CREATE TABLE " + ProductTable.TABLE_NAME + " (" +
                 ProductTable.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +

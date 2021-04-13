@@ -33,11 +33,15 @@ public class AdminUserAdapter extends RecyclerView.Adapter<AdminUserAdapter.User
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.binding.setUser(users.get(position));
         holder.binding.imgProfile.setImageBitmap(BitmapFactory.decodeFile(users.get(position).getFilePath()));
+
         holder.binding.btnDelete.setOnClickListener(v-> recyclerViewOnClick.btnDeleteOnClick(users.get(position)) );
+
         holder.binding.getRoot().setOnLongClickListener(v -> {
             recyclerViewOnClick.onItemLongClick(users.get(position));
             return false;
         });
+
+        holder.binding.btnTimer.setOnClickListener(v->recyclerViewOnClick.btnTimerOnClick(users.get(position)));
     }
     public void updateUser(ArrayList<User> users){
         this.users = users;
@@ -57,5 +61,6 @@ public class AdminUserAdapter extends RecyclerView.Adapter<AdminUserAdapter.User
     public interface IRecyclerViewOnClick{
         void onItemLongClick(User user);
         void btnDeleteOnClick(User user);
+        void btnTimerOnClick(User user);
     }
 }

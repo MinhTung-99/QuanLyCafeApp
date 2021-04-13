@@ -64,10 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 graph = navInflater.inflate(R.navigation.nav_customers);
                 navController.setGraph(graph);
                 break;
-            case "TIME":
-                graph = navInflater.inflate(R.navigation.nav_time);
-                navController.setGraph(graph);
-                break;
         }
     }
 }
