@@ -9,7 +9,7 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@color/blue">
+            android:background="@color/teal_200">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="Đồng ý"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/teal_200"
                 android:layout_marginRight="20dp"/>
             <Button
                 android:id="@+id/btn_cancel"

@@ -10,7 +10,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@color/blue">
+            android:background="@color/teal_200">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -32,15 +32,18 @@
             android:layout_below="@+id/toolbar"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-        <ImageView
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/img_add"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/white"
-            android:src="@drawable/ic_plus"/>
+            app:tint="@color/teal_200"
+            app:borderWidth="0dp"
+            android:src="@drawable/ic_plus"
+            android:paddingRight="10dp"/>
     </RelativeLayout>
 </layout>

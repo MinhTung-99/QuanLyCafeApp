@@ -12,7 +12,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/blue">
+                android:background="@color/orange">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
-                app:tabBackground="@color/blue"
+                app:tabBackground="@color/orange"
                 app:tabTextColor="@color/white"
                 app:tabSelectedTextColor="@color/black"
                 app:tabIndicatorColor="@android:color/black"/>
@@ -42,7 +42,7 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <ImageView
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/img_add"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -51,6 +51,8 @@
             android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:tint="@color/orange"
             android:src="@drawable/ic_plus"/>
     </RelativeLayout>
 </layout>
