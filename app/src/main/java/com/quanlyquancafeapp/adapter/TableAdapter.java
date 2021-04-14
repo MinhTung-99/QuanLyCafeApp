@@ -45,7 +45,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
             holder.tableBinding.txtCountCurrentPeople.setText("0/"+tables.get(position).getCountPeople());
         }else if(tables.get(position).getCountCurrentPeople() == tables.get(position).getCountPeople()){
             holder.tableBinding.txtCountCurrentPeople.setText("FULL");
-            holder.tableBinding.rlBottom.setBackground(context.getDrawable(R.drawable.rounded_red));
+            holder.tableBinding.txtCountCurrentPeople.setTextColor(context.getResources().getColor(R.color.red));
         } else {
             holder.tableBinding.txtCountCurrentPeople.setText(tables.get(position).getCountCurrentPeople()+"/"+tables.get(position).getCountPeople());
         }
