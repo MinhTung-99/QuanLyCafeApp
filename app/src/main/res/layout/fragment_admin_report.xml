@@ -18,16 +18,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Báo cáo"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:layout_centerHorizontal="true"
                     android:textSize="20sp"/>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_choose_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:background="@color/teal_700"/>
+        
         <RelativeLayout
             android:id="@+id/rl_revenue"
             android:layout_width="match_parent"

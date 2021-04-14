@@ -38,11 +38,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         convertImageByteArrToBitmap(position);
         holder.binding.imgProduct.setImageBitmap(products.get(position).getImageBitmap());
-        holder.binding.txtName.setText(products.get(position).getName() + " - ");
-
         String setupPrice = PriceUtil.setupPrice(String.valueOf(products.get(position).getPrice()));
         String setupPriceByComma = PriceUtil.getPriceByComma(setupPrice);
-        holder.binding.txtPrice.setText(setupPriceByComma+"k");
+        holder.binding.txtName.setText(products.get(position).getName() + " - "+setupPriceByComma+"k");
 
         holder.binding.txtCount.setText(String.valueOf(products.get(position).getCount()));
 
@@ -61,8 +59,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         if(products.get(position).getCount() == 0){
             hideOrShowView(holder, View.GONE);
+            holder.binding.btnDescription.setVisibility(View.GONE);
         }else {
             hideOrShowView(holder, View.VISIBLE);
+            if(products.get(position).getSpecies().equals("CAFE"))
+                holder.binding.btnDescription.setVisibility(View.VISIBLE);
         }
     }
     private void convertImageByteArrToBitmap(int position){

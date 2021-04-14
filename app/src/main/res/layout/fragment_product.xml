@@ -5,7 +5,7 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
-        android:background="#8fbc8f">
+        android:background="@color/ghost_white">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -60,20 +60,21 @@
                 android:id="@+id/rv_product"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@id/view"
+                android:layout_above="@+id/btn_store"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_store"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Lưu"
-                android:background="@drawable/rounded_green_state_enable_btn"
+                android:background="@color/white"
                 android:textColor="@color/black"
                 android:enabled="false"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"/>
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </LinearLayout>
 </layout>
