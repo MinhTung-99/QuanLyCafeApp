@@ -34,7 +34,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/ic_background"/>
+                android:src="@drawable/ic_cafe"/>
             <EditText
                 android:id="@+id/edt_name"
                 android:layout_width="match_parent"

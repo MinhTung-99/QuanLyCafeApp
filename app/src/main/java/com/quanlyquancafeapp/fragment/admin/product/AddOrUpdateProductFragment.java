@@ -37,6 +37,13 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
         super.onViewCreated(view, savedInstanceState);
         init();
         initAction();
+
+        if(this.product.getSpecies().equals("CAFE")){
+            binding.imgProduct.setImageResource(R.drawable.ic_cafe);
+        }else if(this.product.getSpecies().equals("DRINK")){
+            binding.imgProduct.setImageResource(R.drawable.ic_drink);
+        }
+
         if(!product.isAdd()){
             setTextEdt();
             setImgImageView();

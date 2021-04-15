@@ -55,10 +55,8 @@ public class AdminProductFragment extends Fragment {
             Product product = new Product();
             if(positionTab == 0){
                 product.setSpecies("CAFE");
-                //bundle.putString("species","CAFE");
             }else if(positionTab == 1) {
                 product.setSpecies("DRINK");
-                //bundle.putString("species","DRINK");
             }
             product.setAdd(true);
             bundle.putSerializable("product", product);
