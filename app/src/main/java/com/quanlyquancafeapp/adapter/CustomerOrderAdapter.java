@@ -44,25 +44,27 @@ public class CustomerOrderAdapter extends RecyclerSwipeAdapter<CustomerOrderAdap
         if(invoiceDetails.get(position).getIsPay() == 0){
             holder.binding.txtNameCustomer.setText(invoiceDetails.get(position).getCustomer().getName());
             holder.binding.txtTime.setText(invoiceDetails.get(position).getTime());
+
             holder.itemView.setOnLongClickListener(v->{
                 recyclerViewItemOnClick.onClick(invoiceDetails.get(position).getCustomer().getId());
                 return false;
             });
+
             holder.binding.btnTotalMoney.setOnClickListener(v->recyclerViewItemOnClick.btnTotalMoney(invoiceDetails.get(position)));
+
+            holder.binding.imgUpdate.setOnClickListener(v->{
+                recyclerViewItemOnClick.imgUpdate(
+                        invoiceDetails.get(position).getCustomer().getId(),
+                        invoiceDetails.get(position).getIdInvoice(),
+                        invoiceDetails.get(position).getIdTable()
+                );
+            });
         }else {
             holder.binding.txtNameCustomer.setText(invoiceDetails.get(position).getCustomer().getName());
             holder.binding.txtTime.setText(invoiceDetails.get(position).getTime());
             holder.binding.btnTotalMoney.setText("Đã thanh toán");
             holder.binding.btnTotalMoney.setEnabled(false);
         }
-
-        holder.binding.imgUpdate.setOnClickListener(v->{
-            recyclerViewItemOnClick.imgUpdate(
-                    invoiceDetails.get(position).getCustomer().getId(),
-                    invoiceDetails.get(position).getIdInvoice(),
-                    invoiceDetails.get(position).getIdTable()
-            );
-        });
     }
     @Override
     public int getItemCount() {

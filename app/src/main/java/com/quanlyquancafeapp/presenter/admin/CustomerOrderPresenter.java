@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerOrderPresenter {
-    DatabaseHelper db;
+    private DatabaseHelper db;
 
     public CustomerOrderPresenter(Context context) {
         db = new DatabaseHelper(context);
@@ -21,22 +21,21 @@ public class CustomerOrderPresenter {
         ArrayList<InvoiceDetail> invoiceDetails = db.getDetailInvoicesCustomer();
         ArrayList<InvoiceDetail> invoiceDetailArrayList = new ArrayList<>();
 
-        List<String> testName1 = new ArrayList<>();
-        List<String> testName2 = new ArrayList<>();
+        List<Long> idCustomerFull = new ArrayList<>();
+        List<Long> idCustomer = new ArrayList<>();
 
         if(invoiceDetails.size() > 0){
             for(int i = 0; i < invoiceDetails.size(); i++){
-                testName1.add(invoiceDetails.get(i).getCustomer().getName());
+                idCustomerFull.add(invoiceDetails.get(i).getCustomer().getId());
             }
         }
 
-        for (int i = 0; i < testName1.size(); i++){
-            if (!testName2.contains(testName1.get(i))) {
+        for (int i = 0; i < idCustomerFull.size(); i++){
+            if (!idCustomer.contains(idCustomerFull.get(i))) {
                 invoiceDetailArrayList.add(0,invoiceDetails.get(i));
-                testName2.add(testName1.get(i));
+                idCustomer.add(idCustomerFull.get(i));
             }
         }
-
 
         return invoiceDetailArrayList;
     }
