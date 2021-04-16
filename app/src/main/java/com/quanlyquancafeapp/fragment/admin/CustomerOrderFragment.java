@@ -57,6 +57,17 @@ public class CustomerOrderFragment extends Fragment implements CustomerOrderAdap
         bundle.putLong("idCustomer", invoiceDetail.getCustomer().getId());
         Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
     }
+
+    @Override
+    public void imgUpdate(Long idCustomer, Long idInvoice, Long idTable) {
+        Toast.makeText(getContext(), idInvoice+"===",Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        bundle.putLong("idCustomer", idCustomer);
+        bundle.putLong("idInvoice", idInvoice);
+        bundle.putLong("idTable", idTable);
+        Navigation.findNavController(getView()).navigate(R.id.action_customerOrderFragment_to_productFragment, bundle);
+    }
+
     @Override
     public void navigateToCustomerOrderBottomSheetFragment(Long idCustomer) {
         CustomerOrderBottomSheetFragment customerOrderBottomSheetFragment = new CustomerOrderBottomSheetFragment(idCustomer);

@@ -174,4 +174,51 @@ public class ProductPresenter {
     public void updateTable(Table table){
         db.updateTable(table);
     }
+
+    public void addInvoiceByID
+            (ArrayList<Product> productsCafe, ArrayList<Product> productsDrink, String typePay, Table table, Long idCustomer, Long idInvoice, Long idTable){
+
+        for(int i = 0; i < productsCafe.size(); i++){
+            if(productsCafe.get(i).getCount() > 0){
+                try {
+                    InvoiceDetail invoiceDetail = setInvoiceDetailByID(productsCafe, i, idInvoice, idCustomer, idTable);
+                    db.addDetailInvoiceById(invoiceDetail);
+
+                    Product product = productsCafe.get(i);
+                    int count = getProductsCafe().get(i).getAvailableQuantity() - product.getCount();
+                    product.setAvailableQuantity(count);
+                    db.updateProduct(product);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        for(int i = 0; i < productsDrink.size(); i++){
+            if(productsDrink.get(i).getCount() > 0){
+                try {
+                    InvoiceDetail invoiceDetail = setInvoiceDetailByID(productsDrink, i, idInvoice, idCustomer, idTable);
+                    db.addDetailInvoiceById(invoiceDetail);
+
+                    Product product = productsDrink.get(i);
+                    int count = getProductsDrink().get(i).getAvailableQuantity() - product.getCount();
+                    product.setAvailableQuantity(count);
+                    db.updateProduct(product);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    private InvoiceDetail setInvoiceDetailByID(ArrayList<Product> products, int position, Long idInvoice, Long idCustomer, Long idTable){
+        InvoiceDetail invoiceDetail = new InvoiceDetail();
+        invoiceDetail.setIdInvoice(idInvoice);
+        invoiceDetail.setIdProduct(products.get(position).getId());
+        invoiceDetail.setCount(products.get(position).getCount());
+        invoiceDetail.setSale(products.get(position).getSale());
+        invoiceDetail.setDescription(products.get(position).getDescription());
+        invoiceDetail.getCustomer().setId(idCustomer);
+        invoiceDetail.setIdTable(idTable);
+        return invoiceDetail;
+    }
 }

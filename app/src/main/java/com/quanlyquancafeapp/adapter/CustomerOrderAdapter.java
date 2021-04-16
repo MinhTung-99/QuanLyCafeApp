@@ -4,11 +4,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.ItemCustomerOrderBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
@@ -18,7 +21,7 @@ import com.quanlyquancafeapp.model.Table;
 
 import java.util.ArrayList;
 
-public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdapter.CustomerOrderViewHolder>{
+public class CustomerOrderAdapter extends RecyclerSwipeAdapter<CustomerOrderAdapter.CustomerOrderViewHolder> {
 
     private ArrayList<InvoiceDetail> invoiceDetails;
     private IRecyclerViewItemOnClick recyclerViewItemOnClick;
@@ -35,6 +38,9 @@ public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdap
     }
     @Override
     public void onBindViewHolder(@NonNull CustomerOrderViewHolder holder, int position) {
+
+        mItemManger.bindView(holder.itemView, position);
+
         if(invoiceDetails.get(position).getIsPay() == 0){
             holder.binding.txtNameCustomer.setText(invoiceDetails.get(position).getCustomer().getName());
             holder.binding.txtTime.setText(invoiceDetails.get(position).getTime());
@@ -49,11 +55,25 @@ public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdap
             holder.binding.btnTotalMoney.setText("Đã thanh toán");
             holder.binding.btnTotalMoney.setEnabled(false);
         }
+
+        holder.binding.imgUpdate.setOnClickListener(v->{
+            recyclerViewItemOnClick.imgUpdate(
+                    invoiceDetails.get(position).getCustomer().getId(),
+                    invoiceDetails.get(position).getIdInvoice(),
+                    invoiceDetails.get(position).getIdTable()
+            );
+        });
     }
     @Override
     public int getItemCount() {
         return invoiceDetails.size();
     }
+
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe;
+    }
+
     class CustomerOrderViewHolder extends RecyclerView.ViewHolder{
         ItemCustomerOrderBinding binding;
         public CustomerOrderViewHolder(@NonNull ItemCustomerOrderBinding itemView) {
@@ -64,5 +84,6 @@ public class CustomerOrderAdapter extends RecyclerView.Adapter<CustomerOrderAdap
     public interface IRecyclerViewItemOnClick{
         void onClick(Long idCustomer);
         void btnTotalMoney(InvoiceDetail invoiceDetail);
+        void imgUpdate(Long idCustomer, Long idInvoice, Long idTable);
     }
 }

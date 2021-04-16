@@ -40,7 +40,12 @@ public class ProductFragment extends Fragment implements View.OnClickListener, P
     private ArrayList<Product> productsDrink;
     private boolean isCafe = true;
     private ProductPresenter productPresenter;
+
     private Table table;
+    private Long idCustomer;
+    private Long idInvoice;
+    private Long idTable;
+
     //Dialog
     private DialogDescriptionBinding dialogDescriptionBinding;
     private AlertDialog alertDialogDescription;
@@ -56,7 +61,12 @@ public class ProductFragment extends Fragment implements View.OnClickListener, P
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         table = (Table) getArguments().getSerializable("table");
+        idCustomer = getArguments().getLong("idCustomer");
+        idInvoice = getArguments().getLong("idInvoice");
+        idTable = getArguments().getLong("idTable");
+
         init();
         initDialogDescription();
         initAction();
@@ -146,24 +156,30 @@ public class ProductFragment extends Fragment implements View.OnClickListener, P
                 isCafe = false;
                 break;
             case R.id.btn_store:
-                if(table != null){
-                    Constance.TYPE_PAY = "SHELL";
-                    Customer customer = (Customer) getArguments().getSerializable("customer");
-                    productPresenter.addCustomer(customer);
-                    productPresenter.addInvoice(productsCafe, productsDrink, "SHELL", table);
-                    if(table.getCountCurrentPeople() == 0){
-                        table.setCountCurrentPeople(customer.getCount());
+                if(idCustomer == null || idCustomer == 0){
+                    if(table != null){
+                        Constance.TYPE_PAY = "SHELL";
+                        Customer customer = (Customer) getArguments().getSerializable("customer");
+                        productPresenter.addCustomer(customer);
+                        productPresenter.addInvoice(productsCafe, productsDrink, "SHELL", table);
+                        if(table.getCountCurrentPeople() == 0){
+                            table.setCountCurrentPeople(customer.getCount());
+                        }else {
+                            table.setCountCurrentPeople(table.getCountCurrentPeople() + customer.getCount());
+                        }
+                        productPresenter.updateTable(table);
+                        Navigation.findNavController(getView()).popBackStack();
                     }else {
-                        table.setCountCurrentPeople(table.getCountCurrentPeople() + customer.getCount());
+                        Constance.TYPE_PAY = "";
+                        productPresenter.addInvoice(productsCafe, productsDrink, "", table);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("table", null);
+                        Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
                     }
-                    productPresenter.updateTable(table);
-                    Navigation.findNavController(getView()).popBackStack();
                 }else {
-                    Constance.TYPE_PAY = "";
-                    productPresenter.addInvoice(productsCafe, productsDrink, "", table);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("table", null);
-                    Navigation.findNavController(getView()).navigate(R.id.totalMoneyFragment, bundle);
+                    Constance.TYPE_PAY = "SHELL";
+                    productPresenter.addInvoiceByID(productsCafe, productsDrink,"SHELL", table, idCustomer, idInvoice, idTable);
+                    Navigation.findNavController(getView()).popBackStack();
                 }
                 break;
             case R.id.img_qr_code:
