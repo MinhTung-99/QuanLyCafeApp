@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Button;
+import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -16,7 +17,6 @@ import com.quanlyquancafeapp.databinding.DialogAddTimeWorkBinding;
 import com.quanlyquancafeapp.databinding.DialogDeleteTimeWorkBinding;
 import com.quanlyquancafeapp.databinding.DialogUpdateTimeWorkBinding;
 import com.quanlyquancafeapp.databinding.FragmentAdminTimeWorkBinding;
-import com.quanlyquancafeapp.model.TimeWork;
 import com.quanlyquancafeapp.model.User;
 import com.quanlyquancafeapp.model.UserTime;
 import com.quanlyquancafeapp.presenter.admin.AdminTimeWorkPresenter;
@@ -33,6 +33,16 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
     private AdminTimeWorkPresenter presenter;
     private AdminTimeWorkAdapter adapter;
     private User user;
+
+    private boolean isTimeStart = true;
+    private int clickBack = 0;
+    private int hourOfDayStart,hourOfDayEnd;
+    private int minuteStart, minuteEnd;
+
+    private final String ADD_TIME_START_STR = "Thêm thời gian bắt đầu";
+    private final String ADD_TIME_END_STR = "Thêm thời gian kết thúc";
+    private final String UPDATE_TIME_START_STR = "Cập nhập gian bắt đầu";
+    private final String UPDATE_TIME_END_STR = "Cập nhập thời gian kết thúc";
 
     @Nullable
     @Override
@@ -62,14 +72,57 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
             alertDialogAdd.show();
         });
 
+        dialogAddTimeWorkBinding.timePicker.setIs24HourView(true);
         dialogAddTimeWorkBinding.btnCancel.setOnClickListener(v->alertDialogAdd.cancel());
+        dialogAddTimeWorkBinding.timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                if(isTimeStart){
+                    hourOfDayStart = hourOfDay;
+                    minuteStart = minute;
+                }else {
+                    hourOfDayEnd = hourOfDay;
+                    minuteEnd = minute;
+                }
+            }
+        });
+        dialogAddTimeWorkBinding.btnAddTime.setOnClickListener(v -> {
+            isTimeStart = false;
+            clickBack++;
+
+            setTextBtn(dialogAddTimeWorkBinding.btnAddTime, ADD_TIME_END_STR);
+            visibilityView(dialogAddTimeWorkBinding.imgBack, View.VISIBLE);
+            if(clickBack == 2){
+                visibilityView(dialogAddTimeWorkBinding.btnYes, View.VISIBLE);
+                visibilityView(dialogAddTimeWorkBinding.btnAddTime, View.GONE);
+            }
+        });
+        dialogAddTimeWorkBinding.imgBack.setOnClickListener(v->{
+            if(clickBack == 1){
+                isTimeStart = true;
+                clickBack--;
+
+                visibilityView(dialogAddTimeWorkBinding.imgBack, View.GONE);
+                visibilityView(dialogAddTimeWorkBinding.btnAddTime, View.VISIBLE);
+                setTextBtn(dialogAddTimeWorkBinding.btnAddTime, ADD_TIME_START_STR);
+            }else if(clickBack == 2){
+                isTimeStart = false;
+                clickBack--;
+
+                visibilityView(dialogAddTimeWorkBinding.btnYes, View.GONE);
+                visibilityView(dialogAddTimeWorkBinding.btnAddTime, View.VISIBLE);
+                setTextBtn(dialogAddTimeWorkBinding.btnAddTime, ADD_TIME_END_STR);
+            }
+        });
         dialogAddTimeWorkBinding.btnYes.setOnClickListener(v->{
             UserTime userTime = new UserTime();
             userTime.setId(user.getId());
-            userTime.setTimeStart(dialogAddTimeWorkBinding.edtTimeStart.getText().toString());
-            userTime.setTimeEnd(dialogAddTimeWorkBinding.edtTimeEnd.getText().toString());
+            userTime.setTimeStart(hourOfDayStart + ":" + minuteStart);
+            userTime.setTimeEnd(hourOfDayEnd + ":" + minuteEnd);
             presenter.addTimeWork(userTime);
+
             adapter.updateTimeWork(presenter.getUserTime(user.getId()));
+
             alertDialogAdd.cancel();
         });
 
@@ -101,15 +154,70 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
     }
 
     @Override
-    public void menuUpdate(UserTime userTime) {
-        dialogUpdateTimeWorkBinding.edtTimeStart.setText(userTime.getTimeStart());
-        dialogUpdateTimeWorkBinding.edtTimeEnd.setText(userTime.getTimeEnd());
+    public void visibilityView(View view, int isVisibility) {
+        view.setVisibility(isVisibility);
+    }
 
+    @Override
+    public void setTextBtn(Button button, String text) {
+        button.setText(text);
+    }
+
+    @Override
+    public void menuUpdate(UserTime userTime) {
         alertDialogUpdate.show();
 
+        isTimeStart = true;
+        clickBack = 0;
+
+        dialogUpdateTimeWorkBinding.timePicker.setIs24HourView(true);
+        dialogUpdateTimeWorkBinding.btnCancel.setOnClickListener(v->alertDialogAdd.cancel());
+        dialogUpdateTimeWorkBinding.timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                if(isTimeStart){
+                    hourOfDayStart = hourOfDay;
+                    minuteStart = minute;
+                }else {
+                    hourOfDayEnd = hourOfDay;
+                    minuteEnd = minute;
+                }
+            }
+        });
+
+        dialogUpdateTimeWorkBinding.btnAddTime.setOnClickListener(v -> {
+            isTimeStart = false;
+            clickBack++;
+
+            setTextBtn(dialogUpdateTimeWorkBinding.btnAddTime, UPDATE_TIME_END_STR);
+            visibilityView(dialogUpdateTimeWorkBinding.imgBack, View.VISIBLE);
+            if(clickBack == 2){
+                visibilityView(dialogUpdateTimeWorkBinding.btnYes, View.VISIBLE);
+                visibilityView(dialogUpdateTimeWorkBinding.btnAddTime, View.GONE);
+            }
+        });
+
+        dialogUpdateTimeWorkBinding.imgBack.setOnClickListener(v->{
+            if(clickBack == 1){
+                isTimeStart = true;
+                clickBack--;
+
+                visibilityView(dialogUpdateTimeWorkBinding.imgBack, View.GONE);
+                visibilityView(dialogUpdateTimeWorkBinding.btnAddTime, View.VISIBLE);
+                setTextBtn(dialogUpdateTimeWorkBinding.btnAddTime, UPDATE_TIME_START_STR);
+            }else if(clickBack == 2){
+                isTimeStart = false;
+                clickBack--;
+
+                visibilityView(dialogUpdateTimeWorkBinding.btnYes, View.GONE);
+                visibilityView(dialogUpdateTimeWorkBinding.btnAddTime, View.VISIBLE);
+                setTextBtn(dialogUpdateTimeWorkBinding.btnAddTime, UPDATE_TIME_END_STR);
+            }
+        });
+
         dialogUpdateTimeWorkBinding.btnYes.setOnClickListener(v->{
-            userTime.setTimeStart(dialogUpdateTimeWorkBinding.edtTimeStart.getText().toString());
-            userTime.setTimeEnd(dialogUpdateTimeWorkBinding.edtTimeEnd.getText().toString());
+            userTime.setTimeStart(hourOfDayStart + ":" + minuteStart);
+            userTime.setTimeEnd(hourOfDayEnd + ":" + minuteEnd);
             presenter.updateUserTime(userTime);
             adapter.updateTimeWork(presenter.getUserTime(user.getId()));
             alertDialogUpdate.cancel();

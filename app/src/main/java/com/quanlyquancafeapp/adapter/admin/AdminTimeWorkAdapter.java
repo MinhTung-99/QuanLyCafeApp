@@ -1,12 +1,9 @@
 package com.quanlyquancafeapp.adapter.admin;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -15,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.CustomPopupMenuBinding;
 import com.quanlyquancafeapp.databinding.ItemTimeWorkBinding;
-import com.quanlyquancafeapp.model.TimeWork;
-import com.quanlyquancafeapp.model.User;
 import com.quanlyquancafeapp.model.UserTime;
 
 import java.util.ArrayList;
@@ -45,8 +40,8 @@ public class AdminTimeWorkAdapter extends RecyclerView.Adapter<AdminTimeWorkAdap
 
     @Override
     public void onBindViewHolder(@NonNull AdminTimeWorkViewHolder holder, int position) {
-        holder.binding.txtTimeStart.setText(userTimes.get(position).getTimeStart()+"h");
-        holder.binding.txtTimeEnd.setText(userTimes.get(position).getTimeEnd()+"h");
+        holder.binding.txtTimeStart.setText(userTimes.get(position).getTimeStart());
+        holder.binding.txtTimeEnd.setText(userTimes.get(position).getTimeEnd());
 
         holder.binding.txtThreeDots.setOnClickListener(v->{
             popupWindow.showAsDropDown(v,-153,0);

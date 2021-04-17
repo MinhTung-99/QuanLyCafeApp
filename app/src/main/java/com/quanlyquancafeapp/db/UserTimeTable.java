@@ -3,9 +3,7 @@ package com.quanlyquancafeapp.db;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.quanlyquancafeapp.model.TimeWork;
 import com.quanlyquancafeapp.model.UserTime;
 
 import java.util.ArrayList;

@@ -74,7 +74,9 @@ public class HomeAdminActivity extends AppCompatActivity implements IRecyclerVie
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_shell:
-                startActivity(new Intent(HomeAdminActivity.this, HomeActivity.class));
+                Intent intent = new Intent(HomeAdminActivity.this, HomeActivity.class);
+                intent.putExtra("user_name", "NULL");
+                startActivity(intent);
             break;
         }
         return super.onOptionsItemSelected(item);

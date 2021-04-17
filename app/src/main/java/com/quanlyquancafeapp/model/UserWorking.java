@@ -1,15 +1,22 @@
 package com.quanlyquancafeapp.model;
 
-public class TimeWork {
-    private Long idTimeWork;
+public class UserWorking {
+    private Long idUser;
+    private String date;
     private String timeStart;
     private String timeEnd;
 
-    public Long getIdTimeWork() {
-        return idTimeWork;
+    public Long getIdUser() {
+        return idUser;
     }
-    public void setIdTimeWork(Long idTimeWork) {
-        this.idTimeWork = idTimeWork;
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+    }
+    public String getDate() {
+        return date;
+    }
+    public void setDate(String date) {
+        this.date = date;
     }
     public String getTimeStart() {
         return timeStart;

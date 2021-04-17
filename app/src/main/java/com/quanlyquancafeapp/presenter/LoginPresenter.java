@@ -20,7 +20,9 @@ public class LoginPresenter {
     public void navigateToHomeActivity(){
         loginView.navigateToHomeActivity();
     }
-    public void navigateToLogInToHomeAdminActivity(){loginView.navigateToHomeAdminActivity();}
+    public void navigateToLogInToHomeAdminActivity(){
+        loginView.navigateToHomeAdminActivity();
+    }
 
     public String handleLogin(Context context,String userName, String password){
         DatabaseHelper db = new DatabaseHelper(context);

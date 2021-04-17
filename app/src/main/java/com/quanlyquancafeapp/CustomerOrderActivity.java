@@ -8,12 +8,17 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Toast;
 
 import com.quanlyquancafeapp.databinding.ActivityCustomerOrderBinding;
 import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.db.UserWorkingTable;
 import com.quanlyquancafeapp.model.Customer;
 import com.quanlyquancafeapp.model.User;
 import com.quanlyquancafeapp.presenter.admin.CustomerOrderPresenter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CustomerOrderActivity extends AppCompatActivity {
     private ActivityCustomerOrderBinding binding;
@@ -26,8 +31,14 @@ public class CustomerOrderActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_customer_order);
         presenter = new CustomerOrderPresenter(this);
 
-        DatabaseHelper db = new DatabaseHelper(this);
-        db.getDetailInvoicesCustomer();
+//        DatabaseHelper db = new DatabaseHelper(this);
+//        Toast.makeText(this, UserWorkingTable.getUserWorking().size()+"-----", Toast.LENGTH_SHORT).show();
+
+//        SimpleDateFormat getTime = new SimpleDateFormat("HH:mm");
+//        Date date = new Date();
+//        String test = getTime.format(date);
+//        String a = test.substring(0,2);
+//        String b = test.substring(3,5);
 
         binding.btnRegister.setBackground(getDrawable(R.drawable.rounded_white_state_enable_btn));
         binding.btnRegister.setEnabled(false);

@@ -14,9 +14,7 @@ import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.model.Table;
-import com.quanlyquancafeapp.model.TimeWork;
 import com.quanlyquancafeapp.model.User;
-import com.quanlyquancafeapp.model.UserTime;
 import com.quanlyquancafeapp.utils.Constance;
 
 import java.util.ArrayList;
@@ -58,8 +56,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 UserWorkingTable.KEY_DATE + " TEXT," +
                 UserWorkingTable.KEY_TIME_START + " TEXT," +
                 UserWorkingTable.KEY_TIME_END + " TEXT," +
-                UserWorkingTable.KEY_REASON_EXIT + " TEXT," +
-                UserWorkingTable.KEY_DONE + " INTEGER," +
                 " FOREIGN KEY ("+ UserWorkingTable.KEY_ID_USER+") REFERENCES "+UserTable.TABLE_NAME+"("+UserTable.KEY_ID+"));";
         db.execSQL(CREATE_USER_WORKING_TABLE);
 

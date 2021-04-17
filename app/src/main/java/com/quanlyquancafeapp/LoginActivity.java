@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @Override
     public void navigateToHomeActivity() {
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        intent.putExtra("user_name", binding.edtAccount.getText().toString());
         startActivity(intent);
     }
     @Override

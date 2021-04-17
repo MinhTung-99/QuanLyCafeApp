@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.db.UserTimeTable;
+import com.quanlyquancafeapp.model.User;
 import com.quanlyquancafeapp.model.UserTime;
 
 import java.util.ArrayList;
@@ -22,15 +23,12 @@ public class AdminTimeWorkPresenter {
             e.printStackTrace();
         }
     }
-
     public ArrayList<UserTime> getUserTime(Long idUser){
         return UserTimeTable.getUserTime(idUser);
     }
-
     public int updateUserTime(UserTime userTime){
         return UserTimeTable.updateUserTime(userTime);
     }
-
     public int deleteTimeWork(Long id){
         return UserTimeTable.deleteUserTime(id);
     }

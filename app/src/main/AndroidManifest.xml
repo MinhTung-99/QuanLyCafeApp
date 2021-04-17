@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyQuanCafeApp">
-        <activity android:name=".VerifyOTPActivity"></activity>
+        <activity android:name=".TimekeepingActivity"></activity>
+        <activity android:name=".VerifyOTPActivity" />
         <activity android:name=".SendOTPActivity" />
         <activity android:name=".CustomerOrderActivity">
             <intent-filter>
