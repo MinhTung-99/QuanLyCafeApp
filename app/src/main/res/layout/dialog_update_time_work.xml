@@ -43,6 +43,16 @@
             android:timePickerMode="spinner"
             android:textColorPrimary="@color/black"
             android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/txt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
         <Button
             android:id="@+id/btn_add_time"
             android:layout_width="match_parent"
