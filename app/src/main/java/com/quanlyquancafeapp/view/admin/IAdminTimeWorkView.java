@@ -11,4 +11,5 @@ public interface IAdminTimeWorkView {
     void visibilityView(View view, int isVisibility);
     void setTextBtn(Button button, String text);
     void visibilityTimePicker(TimePicker timePicker, int visibility);
+    void setTimePicker(TimePicker timePicker,Integer hourOfDay, Integer minute);
 }

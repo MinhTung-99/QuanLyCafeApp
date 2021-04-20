@@ -2,7 +2,6 @@ package com.quanlyquancafeapp.fragment.admin;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,8 +36,8 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
 
     private boolean isTimeStart = true;
     private int clickBack = 0;
-    private int hourOfDayStart,hourOfDayEnd;
-    private int minuteStart, minuteEnd;
+    private Integer hourOfDayStart,hourOfDayEnd;
+    private Integer minuteStart, minuteEnd;
 
     private final String ADD_TIME_START_STR = "Thêm thời gian bắt đầu";
     private final String ADD_TIME_END_STR = "Thêm thời gian kết thúc";
@@ -61,7 +60,7 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
 
         user = (User) getArguments().getSerializable("user");
 
-        presenter = new AdminTimeWorkPresenter(getContext());
+        presenter = new AdminTimeWorkPresenter(getContext(), this);
         adapter = new AdminTimeWorkAdapter(presenter.getUserTime(user.getId()), this);
         binding.rvTimeWork.setAdapter(adapter);
 
@@ -73,7 +72,14 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
             alertDialogAdd.show();
         });
 
-        dialogAddTimeWorkBinding.btnCancel.setOnClickListener(v->alertDialogAdd.cancel());
+        dialogAddTimeWorkBinding.btnCancel.setOnClickListener(v->{
+            isTimeStart = true;
+            clickBack = 0;
+            presenter.restartDialogAdd(dialogAddTimeWorkBinding, ADD_TIME_START_STR);
+            visibilityView(dialogAddTimeWorkBinding.imgBack, View.GONE);
+
+            alertDialogAdd.dismiss();
+        });
 
         dialogAddTimeWorkBinding.timePicker.setIs24HourView(true);
         dialogAddTimeWorkBinding.timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
@@ -120,31 +126,19 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
             UserTime userTime = new UserTime();
             userTime.setId(user.getId());
 
-            if(hourOfDayStart < 10 && minuteStart < 10){
-                userTime.setTimeStart("0"+hourOfDayStart + ":" + "0" + minuteStart);
-            }else if(hourOfDayStart < 10 && minuteStart > 10) {
-                userTime.setTimeStart("0"+hourOfDayStart + ":" + minuteStart);
-            }else if(hourOfDayStart > 10 && minuteStart < 10){
-                userTime.setTimeStart(hourOfDayStart + ":" + "0" + minuteStart);
-            }else {
-                userTime.setTimeStart(hourOfDayStart + ":" + minuteStart);
-            }
+            presenter.setUserTimeStart(hourOfDayStart, minuteStart, userTime);
+            presenter.setUserTimeEnd(hourOfDayEnd, minuteEnd, userTime);
 
-            if(hourOfDayEnd < 10 && minuteEnd < 10){
-                userTime.setTimeEnd("0"+hourOfDayEnd + ":" + "0" + minuteEnd);
-            }else if(hourOfDayEnd < 10 && minuteEnd > 10) {
-                userTime.setTimeEnd("0"+hourOfDayEnd + ":" + minuteEnd);
-            }else if(hourOfDayEnd > 10 && minuteEnd < 10){
-                userTime.setTimeEnd(hourOfDayEnd + ":" + "0" + minuteEnd);
-            }else {
-                userTime.setTimeEnd(hourOfDayEnd + ":" + minuteEnd);
-            }
+            isTimeStart = true;
+            clickBack = 0;
+            presenter.restartDialogUpdate(dialogUpdateTimeWorkBinding, ADD_TIME_START_STR, userTime);
+            visibilityView(dialogAddTimeWorkBinding.imgBack, View.GONE);
 
             presenter.addTimeWork(userTime);
 
             adapter.updateTimeWork(presenter.getUserTime(user.getId()));
 
-            alertDialogAdd.cancel();
+            alertDialogAdd.dismiss();
         });
 
         dialogDeleteTimeWorkBinding.btnCancel.setOnClickListener(v->alertDialogDelete.cancel());
@@ -188,9 +182,13 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
     }
 
     @Override
+    public void setTimePicker(TimePicker timePicker, Integer hourOfDay, Integer minute) {
+        timePicker.setHour(hourOfDay);
+        timePicker.setMinute(minute);
+    }
+
+    @Override
     public void menuUpdate(UserTime userTime) {
-        ViewGroup vGroup = (ViewGroup) dialogUpdateTimeWorkBinding.getRoot().getParent();
-        vGroup.removeView(dialogUpdateTimeWorkBinding.getRoot());
         alertDialogUpdate.show();
 
         isTimeStart = true;
@@ -255,6 +253,7 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
                 clickBack--;
 
                 visibilityView(dialogUpdateTimeWorkBinding.btnYes, View.GONE);
+                visibilityView(dialogUpdateTimeWorkBinding.txtTime, View.GONE);
                 visibilityView(dialogUpdateTimeWorkBinding.btnAddTime, View.VISIBLE);
                 setTextBtn(dialogUpdateTimeWorkBinding.btnAddTime, UPDATE_TIME_END_STR);
 
@@ -265,32 +264,28 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
 
         dialogUpdateTimeWorkBinding.btnYes.setOnClickListener(v->{
 
-            if(hourOfDayStart < 10 && minuteStart < 10){
-                userTime.setTimeStart("0"+hourOfDayStart + ":" + "0" + minuteStart);
-            }else if(hourOfDayStart < 10 && minuteStart > 10) {
-                userTime.setTimeStart("0"+hourOfDayStart + ":" + minuteStart);
-            }else if(hourOfDayStart > 10 && minuteStart < 10){
-                userTime.setTimeStart(hourOfDayStart + ":" + "0" + minuteStart);
-            }else {
-                userTime.setTimeStart(hourOfDayStart + ":" + minuteStart);
-            }
+            presenter.setUserTimeStart(hourOfDayStart, minuteStart, userTime);
+            presenter.setUserTimeEnd(hourOfDayEnd, minuteEnd, userTime);
 
-            if(hourOfDayEnd < 10 && minuteEnd < 10){
-                userTime.setTimeEnd("0"+hourOfDayEnd + ":" + "0" + minuteEnd);
-            }else if(hourOfDayEnd < 10 && minuteEnd > 10) {
-                userTime.setTimeEnd("0"+hourOfDayEnd + ":" + minuteEnd);
-            }else if(hourOfDayEnd > 10 && minuteEnd < 10){
-                userTime.setTimeEnd(hourOfDayEnd + ":" + "0" + minuteEnd);
-            }else {
-                userTime.setTimeEnd(hourOfDayEnd + ":" + minuteEnd);
-            }
+            isTimeStart = true;
+            clickBack = 0;
+            presenter.restartDialogUpdate(dialogUpdateTimeWorkBinding, UPDATE_TIME_START_STR, userTime);
+            visibilityView(dialogUpdateTimeWorkBinding.imgBack, View.GONE);
 
             presenter.updateUserTime(userTime);
             adapter.updateTimeWork(presenter.getUserTime(user.getId()));
-            alertDialogUpdate.cancel();
+
+            alertDialogUpdate.dismiss();
         });
 
-        dialogUpdateTimeWorkBinding.btnCancel.setOnClickListener(v->alertDialogUpdate.cancel());
+        dialogUpdateTimeWorkBinding.btnCancel.setOnClickListener(v->{
+            isTimeStart = true;
+            clickBack = 0;
+            presenter.restartDialogUpdate(dialogUpdateTimeWorkBinding, UPDATE_TIME_START_STR, userTime);
+            visibilityView(dialogUpdateTimeWorkBinding.imgBack, View.GONE);
+
+            alertDialogUpdate.dismiss();
+        });
     }
 
     @Override
