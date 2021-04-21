@@ -56,15 +56,16 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:visibility="gone"/>
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_add_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Thêm thời gian bắt đầu"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/red"
+                android:textColor="@color/black"
+                android:background="@drawable/red_state_enable_btn"
                 android:layout_marginHorizontal="30dp"
                 android:textSize="11sp"
+                android:enabled="false"
                 android:layout_gravity="center"/>
             <Button
                 android:id="@+id/btn_yes"
