@@ -4,24 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quanlyquancafeapp.databinding.ActivityLoginBinding;
-import com.quanlyquancafeapp.db.DatabaseHelper;
-import com.quanlyquancafeapp.model.Invoice;
-import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.presenter.LoginPresenter;
 import com.quanlyquancafeapp.view.ILoginView;
-
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity implements ILoginView {
     private ActivityLoginBinding binding;

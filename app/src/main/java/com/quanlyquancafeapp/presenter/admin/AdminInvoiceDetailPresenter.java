@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.InvoiceDetail;
+import com.quanlyquancafeapp.model.User;
+import com.quanlyquancafeapp.utils.Constance;
 
 import java.util.ArrayList;
 
@@ -47,5 +49,15 @@ public class AdminInvoiceDetailPresenter {
     }
     public ArrayList<InvoiceDetail> getDetailInvoicesNotTableById(Long id){
         return db.getDetailInvoicesNotTableById(id);
+    }
+
+    public User getUserAdmin(){
+        ArrayList<User> users = db.getUsers();
+        for(User u: users){
+            if(u.getTypeUser().equals("ADMIN")){
+                return u;
+            }
+        }
+        return null;
     }
 }

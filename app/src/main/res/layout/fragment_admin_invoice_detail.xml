@@ -42,9 +42,11 @@
             android:textColor="@color/black"
             android:layout_gravity="center"/>
         <TextView
+            android:id="@+id/txt_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Địa chỉ"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_gravity="center"
             android:textSize="17sp"/>
@@ -56,7 +58,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phiếu thanh toán: "
+                android:text="Mã phiếu: "
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_gravity="center"/>
             <TextView
@@ -64,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_gravity="center"/>
         </LinearLayout>
         <RelativeLayout
@@ -73,33 +77,125 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ngày:"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
                 android:textColor="@color/black"/>
             <TextView
                 android:id="@+id/txt_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:layout_alignParentRight="true"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thu ngân:"
-                android:textColor="@color/black"/>
-            <TextView
-                android:id="@+id/txt_name_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="EDF"
-                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginRight="20dp"
                 android:layout_alignParentRight="true"/>
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_numerical_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:text="TT"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/black"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_sale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/black"
+                    android:text="KM"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/black"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:text="Đồ uống"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/black"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/txt_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Số lượng"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/black"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Đơn giá"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/black"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/black"/>
         <androidx.recyclerview.widget.RecyclerView
@@ -115,12 +211,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tổng cộng:"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
                 android:textColor="@color/black"/>
             <TextView
                 android:id="@+id/txt_total_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="33000"
+                android:textStyle="bold"
+                android:layout_marginRight="20dp"
                 android:layout_alignParentRight="true"
                 android:textColor="@color/black"/>
         </RelativeLayout>
