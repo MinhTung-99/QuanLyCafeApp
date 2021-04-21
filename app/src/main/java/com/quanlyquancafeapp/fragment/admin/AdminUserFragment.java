@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.quanlyquancafeapp.R;
+import com.quanlyquancafeapp.TimekeepingActivity;
 import com.quanlyquancafeapp.adapter.admin.AdminUserAdapter;
 import com.quanlyquancafeapp.databinding.DialogAddUserBinding;
 import com.quanlyquancafeapp.databinding.DialogDeleteUserBinding;
@@ -300,5 +301,12 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
         bundle.putSerializable("user", user);
         //Toast.makeText(getContext(), user.getUserName(), Toast.LENGTH_SHORT).show();
         Navigation.findNavController(getView()).navigate(R.id.adminTimeWorkFragment, bundle);
+    }
+
+    @Override
+    public void imgEyeOnClick(User user) {
+        Intent intent = new Intent(getContext(), TimekeepingActivity.class);
+        intent.putExtra("user_name", user.getUserName());
+        getActivity().startActivity(intent);
     }
 }

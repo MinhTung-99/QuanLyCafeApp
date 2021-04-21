@@ -42,13 +42,15 @@ public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.
         holder.binding.txtTimeEnd.setText(userTimes.get(position).getTimeEnd()+"h");
 
         SimpleDateFormat getDate = new SimpleDateFormat("d/M/yyyy");
+        SimpleDateFormat getTime = new SimpleDateFormat("HH:mm");
         Date date = new Date();
 
         boolean isChecked = false;
         ArrayList<UserWorking> userWorkings = presenter.getUserWorking();
         for(UserWorking userWorking: userWorkings){
-            if(Integer.parseInt(userWorking.getTimeStart()) - Integer.parseInt(userTimes.get(position).getTimeStart()) == 0
-                && userWorking.getDate().equals(getDate.format(date))){
+            if(Integer.parseInt(userWorking.getTimeStart().substring(0,2)) - Integer.parseInt(userTimes.get(position).getTimeStart().substring(0,2)) <= 0
+                && userWorking.getDate().equals(getDate.format(date))
+                && Integer.parseInt(userWorking.getTimeStart().substring(3,5)) - Integer.parseInt(userTimes.get(position).getTimeStart().substring(3,5)) <= 15){
                 holder.binding.checkbox.setChecked(true);
                 isChecked = true;
                 break;
@@ -61,7 +63,7 @@ public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.
                 UserWorking userWorking = new UserWorking();
                 userWorking.setDate(getDate.format(date));
                 userWorking.setIdUser(userTimes.get(position).getIdUserTime());
-                userWorking.setTimeStart(userTimes.get(position).getTimeStart());
+                userWorking.setTimeStart(getTime.format(date));
                 userWorking.setTimeEnd(userTimes.get(position).getTimeEnd());
                 presenter.addUserTimeWorking(userWorking);
             }else {

@@ -2,6 +2,7 @@ package com.quanlyquancafeapp.adapter.admin;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ public class AdminUserAdapter extends RecyclerView.Adapter<AdminUserAdapter.User
         });
 
         holder.binding.btnTimer.setOnClickListener(v->recyclerViewOnClick.btnTimerOnClick(users.get(position)));
+
+        holder.binding.imgEye.setOnClickListener(v-> recyclerViewOnClick.imgEyeOnClick(users.get(position)));
     }
     public void updateUser(ArrayList<User> users){
         this.users = users;
@@ -62,5 +65,6 @@ public class AdminUserAdapter extends RecyclerView.Adapter<AdminUserAdapter.User
         void onItemLongClick(User user);
         void btnDeleteOnClick(User user);
         void btnTimerOnClick(User user);
+        void imgEyeOnClick(User user);
     }
 }
