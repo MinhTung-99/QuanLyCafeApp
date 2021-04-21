@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QuanLyQuanCafeApp</string>
+    <string name="app_name">CafeApp</string>
     <string name="_0987654321">0987654321</string>
     <string name="re_send_otp">Thử lại</string>
     <string name="dont_otp">Không có mã OTP?</string>
