@@ -299,7 +299,6 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
     public void btnTimerOnClick(User user) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("user", user);
-        //Toast.makeText(getContext(), user.getUserName(), Toast.LENGTH_SHORT).show();
         Navigation.findNavController(getView()).navigate(R.id.adminTimeWorkFragment, bundle);
     }
 
@@ -307,6 +306,7 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
     public void imgEyeOnClick(User user) {
         Intent intent = new Intent(getContext(), TimekeepingActivity.class);
         intent.putExtra("user_name", user.getUserName());
+        intent.putExtra("isAdmin", true);
         getActivity().startActivity(intent);
     }
 }

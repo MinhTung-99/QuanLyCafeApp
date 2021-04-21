@@ -23,9 +23,11 @@ import java.util.Date;
 public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.TimekeepingViewHolder>{
     private ArrayList<UserTime> userTimes;
     private TimekeepingPresenter presenter;
+    private String date;
 
-    public TimekeepingAdapter(ArrayList<UserTime> userTimes, Context context) {
+    public TimekeepingAdapter(ArrayList<UserTime> userTimes, String date,Context context) {
         this.userTimes = userTimes;
+        this.date = date;
         presenter = new TimekeepingPresenter(context);
     }
 
@@ -41,15 +43,14 @@ public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.
         holder.binding.txtTimeStart.setText(userTimes.get(position).getTimeStart()+"h");
         holder.binding.txtTimeEnd.setText(userTimes.get(position).getTimeEnd()+"h");
 
-        SimpleDateFormat getDate = new SimpleDateFormat("d/M/yyyy");
         SimpleDateFormat getTime = new SimpleDateFormat("HH:mm");
-        Date date = new Date();
+        Date time = new Date();
 
         boolean isChecked = false;
         ArrayList<UserWorking> userWorkings = presenter.getUserWorking();
         for(UserWorking userWorking: userWorkings){
             if(Integer.parseInt(userWorking.getTimeStart().substring(0,2)) - Integer.parseInt(userTimes.get(position).getTimeStart().substring(0,2)) <= 0
-                && userWorking.getDate().equals(getDate.format(date))
+                && userWorking.getDate().equals(date)
                 && Integer.parseInt(userWorking.getTimeStart().substring(3,5)) - Integer.parseInt(userTimes.get(position).getTimeStart().substring(3,5)) <= 15){
                 holder.binding.checkbox.setChecked(true);
                 isChecked = true;
@@ -61,9 +62,9 @@ public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.
         holder.binding.checkbox.setOnClickListener(v->{
             if(!finalIsChecked){
                 UserWorking userWorking = new UserWorking();
-                userWorking.setDate(getDate.format(date));
+                userWorking.setDate(date);
                 userWorking.setIdUser(userTimes.get(position).getIdUserTime());
-                userWorking.setTimeStart(getTime.format(date));
+                userWorking.setTimeStart(getTime.format(time));
                 userWorking.setTimeEnd(userTimes.get(position).getTimeEnd());
                 presenter.addUserTimeWorking(userWorking);
             }else {
