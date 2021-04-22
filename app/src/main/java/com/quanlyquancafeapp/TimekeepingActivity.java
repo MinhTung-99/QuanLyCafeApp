@@ -39,7 +39,7 @@ public class TimekeepingActivity extends AppCompatActivity {
         userName = getIntent().getExtras().getString("user_name");
         isAdmin = getIntent().getExtras().getBoolean("isAdmin");
 
-        adapter = new TimekeepingAdapter(presenter.getUserTime(userName), binding.txtDate.getText().toString(),this);
+        adapter = new TimekeepingAdapter(presenter.getUserTime(userName), binding.txtDate.getText().toString(),this, isAdmin);
         binding.rvUsrWorking.setAdapter(adapter);
 
         if(isAdmin){
@@ -59,7 +59,7 @@ public class TimekeepingActivity extends AppCompatActivity {
                 (view1, year, monthOfYear, dayOfMonth) ->{
                     binding.txtDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
-                    adapter = new TimekeepingAdapter(presenter.getUserTime(userName), binding.txtDate.getText().toString(),this);
+                    adapter = new TimekeepingAdapter(presenter.getUserTime(userName), binding.txtDate.getText().toString(),this, isAdmin);
                     binding.rvUsrWorking.setAdapter(adapter);
                 }
                 , mYear, mMonth, mDay);

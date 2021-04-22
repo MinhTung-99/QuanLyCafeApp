@@ -5,12 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.quanlyquancafeapp.R;
+import com.quanlyquancafeapp.TimekeepingActivity;
 import com.quanlyquancafeapp.databinding.ItemTimekeepingBinding;
 import com.quanlyquancafeapp.model.UserTime;
 import com.quanlyquancafeapp.model.UserWorking;
@@ -24,11 +26,13 @@ public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.
     private ArrayList<UserTime> userTimes;
     private TimekeepingPresenter presenter;
     private String date;
+    private boolean isAdmin;
 
-    public TimekeepingAdapter(ArrayList<UserTime> userTimes, String date,Context context) {
+    public TimekeepingAdapter(ArrayList<UserTime> userTimes, String date,Context context, boolean isAdmin) {
         this.userTimes = userTimes;
         this.date = date;
         presenter = new TimekeepingPresenter(context);
+        this.isAdmin = isAdmin;
     }
 
     @NonNull
@@ -61,16 +65,21 @@ public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.
         final boolean finalIsChecked = isChecked;
         holder.binding.checkbox.setOnClickListener(v->{
             if(!finalIsChecked){
-                UserWorking userWorking = new UserWorking();
-                userWorking.setDate(date);
-                userWorking.setIdUser(userTimes.get(position).getIdUserTime());
-                userWorking.setTimeStart(getTime.format(time));
-                userWorking.setTimeEnd(userTimes.get(position).getTimeEnd());
-                presenter.addUserTimeWorking(userWorking);
+                if(!isAdmin){
+                    UserWorking userWorking = new UserWorking();
+                    userWorking.setDate(date);
+                    userWorking.setIdUser(userTimes.get(position).getIdUserTime());
+                    userWorking.setTimeStart(getTime.format(time));
+                    userWorking.setTimeEnd(userTimes.get(position).getTimeEnd());
+                    presenter.addUserTimeWorking(userWorking);
+                }else {
+                    holder.binding.checkbox.setChecked(false);
+                }
             }else {
                 holder.binding.checkbox.setChecked(true);
             }
         });
+
     }
 
     @Override
