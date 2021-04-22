@@ -8,6 +8,7 @@ public class InvoiceDetail extends Invoice{
     private Integer count;
     private String sale;
     private String description;
+    private String nameProduct;
 
     private Customer customer;
     private Product product;
@@ -75,5 +76,11 @@ public class InvoiceDetail extends Invoice{
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public String getNameProduct() {
+        return nameProduct;
+    }
+    public void setNameProduct(String nameProduct) {
+        this.nameProduct = nameProduct;
     }
 }

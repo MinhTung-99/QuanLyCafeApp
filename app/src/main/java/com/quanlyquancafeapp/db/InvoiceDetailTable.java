@@ -9,4 +9,5 @@ public class InvoiceDetailTable {
     public static final String KEY_ID_CUSTOMER = "id_customer";
     public static final String KEY_SALE = "sale_product";
     public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_NAME_PRODUCT = "name_product_invoice";
 }

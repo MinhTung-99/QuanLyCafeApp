@@ -31,14 +31,8 @@ public class CustomerOrderActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_customer_order);
         presenter = new CustomerOrderPresenter(this);
 
-//        DatabaseHelper db = new DatabaseHelper(this);
-//        Toast.makeText(this, UserWorkingTable.getUserWorking().size()+"-----", Toast.LENGTH_SHORT).show();
-
-//        SimpleDateFormat getTime = new SimpleDateFormat("HH:mm");
-//        Date date = new Date();
-//        String test = getTime.format(date);
-//        String a = test.substring(0,2);
-//        String b = test.substring(3,5);
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.getDetailInvoices();
 
         binding.btnRegister.setBackground(getDrawable(R.drawable.rounded_white_state_enable_btn));
         binding.btnRegister.setEnabled(false);

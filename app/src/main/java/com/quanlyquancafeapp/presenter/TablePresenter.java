@@ -16,7 +16,7 @@ public class TablePresenter {
     public ArrayList<Table> getTables(){
         return db.getTables();
     }
-    public ArrayList<InvoiceDetail> getInvoicesDetail(){
-        return db.getDetailInvoices();
-    }
+//    public ArrayList<InvoiceDetail> getInvoicesDetail(){
+//        return db.getDetailInvoices();
+//    }
 }

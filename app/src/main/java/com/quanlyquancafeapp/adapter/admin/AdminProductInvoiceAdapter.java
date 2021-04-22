@@ -31,7 +31,7 @@ public class AdminProductInvoiceAdapter extends RecyclerView.Adapter<AdminProduc
     public void onBindViewHolder(@NonNull AdminProductInvoiceHolder holder, int position) {
         holder.binding.txtNumericalOrder.setText(String.valueOf(position+1));
         holder.binding.txtSale.setText(invoiceDetails.get(position).getSale()+"%");
-        holder.binding.txtName.setText(invoiceDetails.get(position).getProduct().getName());
+        holder.binding.txtName.setText(invoiceDetails.get(position).getNameProduct());
         holder.binding.txtPrice.setText(PriceUtil.setupPrice(String.valueOf(totalMoney.get(position))));
         holder.binding.txtCount.setText(String.valueOf(invoiceDetails.get(position).getCount()));
     }

@@ -160,6 +160,7 @@ public class ProductPresenter {
         invoiceDetail.setCount(products.get(position).getCount());
         invoiceDetail.setSale(products.get(position).getSale());
         invoiceDetail.setDescription(products.get(position).getDescription());
+        invoiceDetail.setNameProduct(products.get(position).getName());
         return invoiceDetail;
     }
 
