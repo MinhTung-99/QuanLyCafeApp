@@ -54,4 +54,23 @@ public class UserWorkingTable {
         }
         return userWorkings;
     }
+
+    public static ArrayList<UserWorking> getUserWorkingByIdUser(Long idUserName){
+        ArrayList<UserWorking> userWorkings = new ArrayList<>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_ID_USER +"=?";
+        SQLiteDatabase db = DatabaseHelper.context.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,new String[]{String.valueOf(idUserName)});
+        if(cursor.moveToFirst()){
+            do{
+                UserWorking userWorking = new UserWorking();
+                userWorking.setIdUser(cursor.getLong(0));
+                userWorking.setDate(cursor.getString(1));
+                userWorking.setTimeStart(cursor.getString(2));
+                userWorking.setTimeEnd(cursor.getString(3));
+                userWorkings.add(userWorking);
+            } while(cursor.moveToNext());
+        }
+        return userWorkings;
+    }
 }

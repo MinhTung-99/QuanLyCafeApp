@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.TimekeepingActivity;
 import com.quanlyquancafeapp.databinding.ItemTimekeepingBinding;
+import com.quanlyquancafeapp.model.Admin;
 import com.quanlyquancafeapp.model.UserTime;
 import com.quanlyquancafeapp.model.UserWorking;
 import com.quanlyquancafeapp.presenter.TimekeepingPresenter;
+import com.quanlyquancafeapp.presenter.admin.AdminTimeWorkPresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,13 +28,13 @@ public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.
     private ArrayList<UserTime> userTimes;
     private TimekeepingPresenter presenter;
     private String date;
-    private boolean isAdmin;
+    private AdminTimeWorkPresenter timeWorkPresenter;
 
     public TimekeepingAdapter(ArrayList<UserTime> userTimes, String date,Context context, boolean isAdmin) {
         this.userTimes = userTimes;
         this.date = date;
         presenter = new TimekeepingPresenter(context);
-        this.isAdmin = isAdmin;
+        timeWorkPresenter = new AdminTimeWorkPresenter();
     }
 
     @NonNull
@@ -53,10 +55,12 @@ public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.
         boolean isChecked = false;
         ArrayList<UserWorking> userWorkings = presenter.getUserWorking();
         for(UserWorking userWorking: userWorkings){
-            if(Integer.parseInt(userWorking.getTimeStart().substring(0,2)) - Integer.parseInt(userTimes.get(position).getTimeStart().substring(0,2)) <= 0
+            if(Integer.parseInt(userWorking.getTimeStart().substring(0,2)) - Integer.parseInt(userTimes.get(position).getTimeStart().substring(0,2)) == 0
                 && userWorking.getDate().equals(date)
+                && userWorking.getIdUser().equals(userTimes.get(position).getId())
                 && Integer.parseInt(userWorking.getTimeStart().substring(3,5)) - Integer.parseInt(userTimes.get(position).getTimeStart().substring(3,5)) <= 15){
                 holder.binding.checkbox.setChecked(true);
+
                 isChecked = true;
                 break;
             }
@@ -65,13 +69,19 @@ public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.
         final boolean finalIsChecked = isChecked;
         holder.binding.checkbox.setOnClickListener(v->{
             if(!finalIsChecked){
-                if(!isAdmin){
+
+                String[] myTime = getTime.format(time).split(":");
+
+                if(Integer.parseInt(myTime[0]) - Integer.parseInt(userTimes.get(position).getTimeStart().substring(0,2)) == 0
+                        && Integer.parseInt(myTime[1]) - Integer.parseInt(userTimes.get(position).getTimeStart().substring(3,5)) <= 15){
+
                     UserWorking userWorking = new UserWorking();
                     userWorking.setDate(date);
-                    userWorking.setIdUser(userTimes.get(position).getIdUserTime());
+                    userWorking.setIdUser(userTimes.get(position).getId());
                     userWorking.setTimeStart(getTime.format(time));
                     userWorking.setTimeEnd(userTimes.get(position).getTimeEnd());
                     presenter.addUserTimeWorking(userWorking);
+
                 }else {
                     holder.binding.checkbox.setChecked(false);
                 }

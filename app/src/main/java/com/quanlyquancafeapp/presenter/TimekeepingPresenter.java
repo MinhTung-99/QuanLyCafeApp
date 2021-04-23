@@ -42,4 +42,16 @@ public class TimekeepingPresenter {
     public ArrayList<UserWorking> getUserWorking(){
         return UserWorkingTable.getUserWorking();
     }
+
+    public ArrayList<UserWorking> getUserWorkingByIdUser(String userName){
+        ArrayList<User> users = db.getUsers();
+        Long idUser = 0L;
+        for(User user: users){
+            if(user.getUserName().equals(userName)){
+                idUser = user.getId();
+                break;
+            }
+        }
+        return UserWorkingTable.getUserWorkingByIdUser(idUser);
+    }
 }

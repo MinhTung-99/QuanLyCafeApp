@@ -23,6 +23,9 @@ public class AdminTimeWorkPresenter {
         this.iAdminTimeWorkView = iAdminTimeWorkView;
     }
 
+    public AdminTimeWorkPresenter() {
+    }
+
     public void addTimeWork(UserTime userTime){
         try {
             UserTimeTable.addUserTime(userTime);
@@ -68,9 +71,9 @@ public class AdminTimeWorkPresenter {
     public void setUserTimeStart(Integer hourOfDayStart, Integer minuteStart, UserTime userTime){
         if(hourOfDayStart < 10 && minuteStart < 10){
             userTime.setTimeStart("0"+hourOfDayStart + ":" + "0" + minuteStart);
-        }else if(hourOfDayStart < 10 && minuteStart > 10) {
+        }else if(hourOfDayStart < 10 && minuteStart >= 10) {
             userTime.setTimeStart("0"+hourOfDayStart + ":" + minuteStart);
-        }else if(hourOfDayStart > 10 && minuteStart < 10){
+        }else if(hourOfDayStart >= 10 && minuteStart < 10){
             userTime.setTimeStart(hourOfDayStart + ":" + "0" + minuteStart);
         }else {
             userTime.setTimeStart(hourOfDayStart + ":" + minuteStart);
@@ -80,9 +83,9 @@ public class AdminTimeWorkPresenter {
     public void setUserTimeEnd(Integer hourOfDayEnd, Integer minuteEnd, UserTime userTime){
         if(hourOfDayEnd < 10 && minuteEnd < 10){
             userTime.setTimeEnd("0"+hourOfDayEnd + ":" + "0" + minuteEnd);
-        }else if(hourOfDayEnd < 10 && minuteEnd > 10) {
+        }else if(hourOfDayEnd < 10 && minuteEnd >= 10) {
             userTime.setTimeEnd("0"+hourOfDayEnd + ":" + minuteEnd);
-        }else if(hourOfDayEnd > 10 && minuteEnd < 10){
+        }else if(hourOfDayEnd >= 10 && minuteEnd < 10){
             userTime.setTimeEnd(hourOfDayEnd + ":" + "0" + minuteEnd);
         }else {
             userTime.setTimeEnd(hourOfDayEnd + ":" + minuteEnd);

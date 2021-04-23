@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.quanlyquancafeapp.adapter.TimeKeepingDoneAdapter;
 import com.quanlyquancafeapp.adapter.TimekeepingAdapter;
 import com.quanlyquancafeapp.databinding.ActivityTimekeepingBinding;
 import com.quanlyquancafeapp.presenter.TimekeepingPresenter;
@@ -25,6 +26,7 @@ public class TimekeepingActivity extends AppCompatActivity {
     private boolean isAdmin;
     private TimekeepingPresenter presenter;
     private TimekeepingAdapter adapter;
+    private TimeKeepingDoneAdapter timeKeepingDoneAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +41,13 @@ public class TimekeepingActivity extends AppCompatActivity {
         userName = getIntent().getExtras().getString("user_name");
         isAdmin = getIntent().getExtras().getBoolean("isAdmin");
 
-        adapter = new TimekeepingAdapter(presenter.getUserTime(userName), binding.txtDate.getText().toString(),this, isAdmin);
-        binding.rvUsrWorking.setAdapter(adapter);
-
         if(isAdmin){
-            binding.toolbar.setOnClickListener(v->{
-                showDatePickerDialog();
-            });
+            binding.toolbar.setOnClickListener(v-> showDatePickerDialog() );
+            timeKeepingDoneAdapter = new TimeKeepingDoneAdapter(presenter.getUserWorkingByIdUser(userName), binding.txtDate.getText().toString(),this, isAdmin);
+            binding.rvUsrWorking.setAdapter(timeKeepingDoneAdapter);
+        }else {
+            adapter = new TimekeepingAdapter(presenter.getUserTime(userName), binding.txtDate.getText().toString(),this, isAdmin);
+            binding.rvUsrWorking.setAdapter(adapter);
         }
     }
 
@@ -59,8 +61,8 @@ public class TimekeepingActivity extends AppCompatActivity {
                 (view1, year, monthOfYear, dayOfMonth) ->{
                     binding.txtDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
-                    adapter = new TimekeepingAdapter(presenter.getUserTime(userName), binding.txtDate.getText().toString(),this, isAdmin);
-                    binding.rvUsrWorking.setAdapter(adapter);
+                    timeKeepingDoneAdapter = new TimeKeepingDoneAdapter(presenter.getUserWorkingByIdUser(userName), binding.txtDate.getText().toString(),this, isAdmin);
+                    binding.rvUsrWorking.setAdapter(timeKeepingDoneAdapter);
                 }
                 , mYear, mMonth, mDay);
         datePickerDialog.show();
