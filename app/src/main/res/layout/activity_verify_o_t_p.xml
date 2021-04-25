@@ -105,23 +105,23 @@
                     android:backgroundTint="@color/silver"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dont_otp"
-                    android:textColor="@color/black"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/re_send_otp"
-                    android:textSize="15sp"
-                    android:textColor="@color/red"
-                    android:textStyle="bold"/>
-            </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center">-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/dont_otp"-->
+<!--                    android:textColor="@color/black"/>-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/re_send_otp"-->
+<!--                    android:textSize="15sp"-->
+<!--                    android:textColor="@color/red"-->
+<!--                    android:textStyle="bold"/>-->
+<!--            </LinearLayout>-->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_verify"

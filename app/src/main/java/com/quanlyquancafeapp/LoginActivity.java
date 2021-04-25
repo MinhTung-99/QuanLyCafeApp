@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         loginPresenter = new LoginPresenter(this, this);
 
-        binding.txtForgotPassword.setOnClickListener(v -> navigateToSendOTPActivity());
+        binding.txtForgotPassword.setOnClickListener(v -> navigateToSendOTPActivity("Lấy mật khẩu"));
 
         binding.btnRegisterLogin.setOnClickListener(v -> {
             if(loginPresenter.getSizeUser() > 0){
@@ -36,14 +36,15 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
                     finish();
                 }
             }else {
-                navigateToSendOTPActivity();
+                navigateToSendOTPActivity("Đăng ký");
             }
         });
     }
 
     @Override
-    public void navigateToSendOTPActivity() {
+    public void navigateToSendOTPActivity(String data) {
         Intent intent = new Intent(LoginActivity.this, SendOTPActivity.class);
+        intent.putExtra("data", data);
         startActivity(intent);
     }
 

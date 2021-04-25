@@ -37,6 +37,9 @@ public class SendOTPActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_send_o_t_p);
 
+        String text = getIntent().getStringExtra("data");
+        binding.btnRegister.setText(text);
+
         binding.btnRegister.setOnClickListener(v->{
             verifyPhoneNumber(binding.txtCountry.getText().toString() + binding.edtPhoneNumber.getText().toString());
             //KeyboardUtils.hideKeyboard(this);

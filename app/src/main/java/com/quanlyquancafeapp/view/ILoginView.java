@@ -1,7 +1,7 @@
 package com.quanlyquancafeapp.view;
 
 public interface ILoginView {
-    void navigateToSendOTPActivity();
+    void navigateToSendOTPActivity(String data);
     void navigateToHomeActivity();
     void navigateToHomeAdminActivity();
     void loginFail();
