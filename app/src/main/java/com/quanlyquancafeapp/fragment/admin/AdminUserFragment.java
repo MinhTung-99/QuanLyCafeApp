@@ -12,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +61,8 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
     private User user;
     private OutputStream outputStream;
     private boolean isNewProfile;
+    private boolean isUserName, isPhoneNumber, isPassword;
+    private String gender;
 
     @Nullable
     @Override
@@ -78,6 +82,7 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
         initDiaLogUpdate();
         initDiaLogDelete();
         setAdapter();
+
         fragmentAdminUserBinding.imgAdd.setOnClickListener(v->{
             emptyDialogAdd();
             alertDialogAdd.show();
@@ -107,10 +112,12 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
                 }
             }
         });
+        listenEdt();
+        listenRadioButton();
     }
     private void onClickDialogAdd(){
         dialogAddUserBinding.btnYes.setOnClickListener(v->{
-            String gender = setGenderAdd();
+            gender = setGenderAdd();
             user.setUserName(dialogAddUserBinding.edtUserName.getText().toString());
             user.setPhoneNumber(dialogAddUserBinding.edtPhoneNumber.getText().toString());
             user.setPassword(dialogAddUserBinding.edtPassword.getText().toString());
@@ -122,6 +129,190 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
         });
         dialogAddUserBinding.btnCancel.setOnClickListener(v->{
             alertDialogAdd.cancel();
+        });
+    }
+    private void listenRadioButton(){
+        dialogAddUserBinding.radioMan.setOnClickListener(v -> {
+            gender = "Nam";
+            if(isUserName && isPhoneNumber && isPassword && gender != null && user.getFilePath() != null){
+                dialogAddUserBinding.btnYes.setEnabled(true);
+            }else {
+                dialogAddUserBinding.btnYes.setEnabled(false);
+            }
+        });
+        dialogAddUserBinding.radioWoman.setOnClickListener(v->{
+            gender = "Nữ";
+            if(isUserName && isPhoneNumber && isPassword && gender != null && user.getFilePath() != null){
+                dialogAddUserBinding.btnYes.setEnabled(true);
+            }else {
+                dialogAddUserBinding.btnYes.setEnabled(false);
+            }
+        });
+
+//=============UPDATE================
+        dialogUpdateUserBinding.radioMan.setOnClickListener(v -> {
+            gender = "Nam";
+            if(isUserName && isPhoneNumber && isPassword && gender != null && user.getFilePath() != null){
+                dialogUpdateUserBinding.btnYes.setEnabled(true);
+            }else {
+                dialogUpdateUserBinding.btnYes.setEnabled(false);
+            }
+        });
+        dialogUpdateUserBinding.radioWoman.setOnClickListener(v->{
+            gender = "Nữ";
+            if(isUserName && isPhoneNumber && isPassword && gender != null && user.getFilePath() != null){
+                dialogUpdateUserBinding.btnYes.setEnabled(true);
+            }else {
+                dialogUpdateUserBinding.btnYes.setEnabled(false);
+            }
+        });
+    }
+    private void listenEdt(){
+        dialogAddUserBinding.edtUserName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isUserName = true;
+                }else {
+                    isUserName = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isUserName && isPhoneNumber && isPassword && gender != null && user.getFilePath() != null){
+                    dialogAddUserBinding.btnYes.setEnabled(true);
+                }else {
+                    dialogAddUserBinding.btnYes.setEnabled(false);
+                }
+            }
+        });
+        dialogAddUserBinding.edtPhoneNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() == 10){
+                    isPhoneNumber = true;
+                }else {
+                    isPhoneNumber = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isUserName && isPhoneNumber && isPassword && gender != null && user.getFilePath() != null){
+                    dialogAddUserBinding.btnYes.setEnabled(true);
+                }else {
+                    dialogAddUserBinding.btnYes.setEnabled(false);
+                }
+            }
+        });
+        dialogAddUserBinding.edtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isPassword = true;
+                }else {
+                    isPassword = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isUserName && isPhoneNumber && isPassword && gender != null && user.getFilePath() != null){
+                    dialogAddUserBinding.btnYes.setEnabled(true);
+                }else {
+                    dialogAddUserBinding.btnYes.setEnabled(false);
+                }
+            }
+        });
+
+//==============UPDATE=======================
+        dialogUpdateUserBinding.edtUserName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isUserName = true;
+                }else {
+                    isUserName = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isUserName && isPhoneNumber && isPassword && gender != null && user.getFilePath() != null){
+                    dialogUpdateUserBinding.btnYes.setEnabled(true);
+                }else {
+                    dialogUpdateUserBinding.btnYes.setEnabled(false);
+                }
+            }
+        });
+        dialogUpdateUserBinding.edtPhoneNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() == 10){
+                    isPhoneNumber = true;
+                }else {
+                    isPhoneNumber = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isUserName && isPhoneNumber && isPassword && gender != null && user.getFilePath() != null){
+                    dialogUpdateUserBinding.btnYes.setEnabled(true);
+                }else {
+                    dialogUpdateUserBinding.btnYes.setEnabled(false);
+                }
+            }
+        });
+        dialogUpdateUserBinding.edtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isPassword = true;
+                }else {
+                    isPassword = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isUserName && isPhoneNumber && isPassword && gender != null && user.getFilePath() != null){
+                    dialogUpdateUserBinding.btnYes.setEnabled(true);
+                }else {
+                    dialogUpdateUserBinding.btnYes.setEnabled(false);
+                }
+            }
         });
     }
     private void setAdapter(){
@@ -236,6 +427,14 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
             dialogUpdateUserBinding.imgProfile.setImageBitmap(bitmap);
             File file = saveToInternalStorage(bitmap);
             this.user.setFilePath(file.getPath());
+
+            if(isUserName && isPhoneNumber && isPassword && gender != null && user.getFilePath() != null){
+                dialogAddUserBinding.btnYes.setEnabled(true);
+                dialogUpdateUserBinding.btnYes.setEnabled(true);
+            }else {
+                dialogAddUserBinding.btnYes.setEnabled(false);
+                dialogUpdateUserBinding.btnYes.setEnabled(false);
+            }
         }
     }
     private File saveToInternalStorage(Bitmap image) {

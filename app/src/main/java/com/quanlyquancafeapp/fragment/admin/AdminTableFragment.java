@@ -2,10 +2,14 @@ package com.quanlyquancafeapp.fragment.admin;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +39,7 @@ public class AdminTableFragment extends Fragment implements IAdminTableView, Adm
     private AlertDialog alertDialogAdd;
     private AlertDialog alertDialogDelete;
     private AlertDialog alertDialogUpdate;
+    private boolean isNameTable, isCountTable;
 
     @Nullable
     @Override
@@ -48,16 +53,22 @@ public class AdminTableFragment extends Fragment implements IAdminTableView, Adm
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         init();
         initDialogAdd();
         initDialogDelete();
         initDialogUpdate();
         setAdapterTable();
+
         fragmentAdminTableBinding.imgAdd.setOnClickListener(v->{
             alertDialogAdd.show();
         });
+
         dialogAddTableBinding.btnCancel.setOnClickListener(v->{
             alertDialogAdd.dismiss();
+            dialogAddTableBinding.edtTableName.setText("");
+            dialogAddTableBinding.edtTableCountPeople.setText("");
+            dialogAddTableBinding.btnYes.setEnabled(false);
         });
         dialogAddTableBinding.btnYes.setOnClickListener(v->{
             Table table = new Table();
@@ -68,6 +79,106 @@ public class AdminTableFragment extends Fragment implements IAdminTableView, Adm
             alertDialogAdd.dismiss();
             dialogAddTableBinding.edtTableName.setText("");
             dialogAddTableBinding.edtTableCountPeople.setText("");
+        });
+        listenEdt();
+    }
+    private void listenEdt(){
+        dialogAddTableBinding.edtTableName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isNameTable = true;
+                }else {
+                    isNameTable = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isNameTable && isCountTable){
+                    dialogAddTableBinding.btnYes.setEnabled(true);
+                }else {
+                    dialogAddTableBinding.btnYes.setEnabled(false);
+                }
+            }
+        });
+        dialogAddTableBinding.edtTableCountPeople.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isCountTable = true;
+                }else {
+                    isCountTable = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isNameTable && isCountTable){
+                    dialogAddTableBinding.btnYes.setEnabled(true);
+                }else {
+                    dialogAddTableBinding.btnYes.setEnabled(false);
+                }
+            }
+        });
+
+        dialogUpdateTableBinding.edtTableName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isNameTable = true;
+                }else {
+                    isNameTable = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isNameTable && isCountTable){
+                    dialogUpdateTableBinding.btnYes.setEnabled(true);
+                }else {
+                    dialogUpdateTableBinding.btnYes.setEnabled(false);
+                }
+            }
+        });
+        dialogUpdateTableBinding.edtTableCountPeople.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isCountTable = true;
+                }else {
+                    isCountTable = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isNameTable && isCountTable){
+                    dialogUpdateTableBinding.btnYes.setEnabled(true);
+                }else {
+                    dialogUpdateTableBinding.btnYes.setEnabled(false);
+                }
+            }
         });
     }
     private void updateTableAdapter(){

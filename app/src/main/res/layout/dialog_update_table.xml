@@ -43,22 +43,23 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="10dp">
-            <Button
+            android:layout_marginVertical="10dp">
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_yes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
                 android:text="Đồng ý"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/teal_200"
+                android:textColor="@color/black"
+                android:background="@drawable/teal_200_state_btn"
+                android:enabled="true"
                 android:layout_marginRight="20dp"/>
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
                 android:text="Huỷ bỏ"
+                android:background="@drawable/brown_state_btn"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/brown"
                 android:layout_marginLeft="20dp"/>
         </LinearLayout>
     </LinearLayout>
