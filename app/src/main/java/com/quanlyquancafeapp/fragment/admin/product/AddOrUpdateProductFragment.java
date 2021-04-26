@@ -3,6 +3,8 @@ package com.quanlyquancafeapp.fragment.admin.product;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +27,9 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
     private FragmentAddOrUpdateProductBinding binding;
     private AddOrUpdateProductPresenter addOrUpdatePresenter;
     private byte[] bytes;
-    Product product;
+    private Product product;
+    private boolean isNameProduct, isUnit, isPrice, isSale, isAvailableQuantity, isBarcode;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,7 +52,156 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
             setTextEdt();
             setImgImageView();
             setTextBtn();
+            binding.btnAddOrUpdate.setEnabled(true);
         }
+
+        listenEdt();
+    }
+    private void listenEdt(){
+        binding.edtName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isNameProduct = true;
+                }else {
+                    isNameProduct = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isNameProduct && isUnit && isPrice && isSale && isAvailableQuantity && isBarcode && bytes != null){
+                    binding.btnAddOrUpdate.setEnabled(true);
+                }else {
+                    binding.btnAddOrUpdate.setEnabled(false);
+                }
+            }
+        });
+        binding.edtUnit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isUnit = true;
+                }else {
+                    isUnit = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isNameProduct && isUnit && isPrice && isSale && isAvailableQuantity && isBarcode && bytes  != null){
+                    binding.btnAddOrUpdate.setEnabled(true);
+                }else {
+                    binding.btnAddOrUpdate.setEnabled(false);
+                }
+            }
+        });
+        binding.edtPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isPrice = true;
+                }else {
+                    isPrice = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isNameProduct && isUnit && isPrice && isSale && isAvailableQuantity && isBarcode && bytes != null){
+                    binding.btnAddOrUpdate.setEnabled(true);
+                }else {
+                    binding.btnAddOrUpdate.setEnabled(false);
+                }
+            }
+        });
+        binding.edtSale.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isSale = true;
+                }else {
+                    isSale = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isNameProduct && isUnit && isPrice && isSale && isAvailableQuantity && isBarcode && bytes != null){
+                    binding.btnAddOrUpdate.setEnabled(true);
+                }else {
+                    binding.btnAddOrUpdate.setEnabled(false);
+                }
+            }
+        });
+        binding.edtAvailableQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isAvailableQuantity = true;
+                }else {
+                    isAvailableQuantity = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isNameProduct && isUnit && isPrice && isSale && isAvailableQuantity && isBarcode && bytes != null){
+                    binding.btnAddOrUpdate.setEnabled(true);
+                }else {
+                    binding.btnAddOrUpdate.setEnabled(false);
+                }
+            }
+        });
+        binding.edtBarcode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length() > 0){
+                    isBarcode = true;
+                }else {
+                    isBarcode = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(isNameProduct && isUnit && isPrice && isSale && isAvailableQuantity && isBarcode && bytes != null){
+                    binding.btnAddOrUpdate.setEnabled(true);
+                }else {
+                    binding.btnAddOrUpdate.setEnabled(false);
+                }
+            }
+        });
     }
     private void initAction() {
         binding.btnAddOrUpdate.setOnClickListener(this);
@@ -105,6 +258,12 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
                 binding.imgProduct.setImageURI(imageUri);
                 InputStream iStream = getActivity().getContentResolver().openInputStream(imageUri);
                 this.bytes = addOrUpdatePresenter.getBytes(iStream);
+
+                if(isNameProduct && isUnit && isPrice && isSale && isAvailableQuantity && isBarcode && bytes != null){
+                    binding.btnAddOrUpdate.setEnabled(true);
+                }else {
+                    binding.btnAddOrUpdate.setEnabled(false);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
