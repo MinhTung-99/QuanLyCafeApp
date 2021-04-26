@@ -112,7 +112,9 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
                 }
             }
         });
+
         listenEdt();
+
         listenRadioButton();
     }
     private void onClickDialogAdd(){
@@ -350,6 +352,8 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
         dialogUpdateUserBinding.edtPhoneNumber.setText(user.getPhoneNumber());
         dialogUpdateUserBinding.edtPassword.setText(user.getPassword());
         dialogUpdateUserBinding.imgProfile.setImageBitmap(BitmapFactory.decodeFile(user.getFilePath()));
+        this.user.setFilePath(user.getFilePath());
+        gender = "NULL";
     }
     @Override
     public void setRadioDialogUpdate(User user){
