@@ -28,7 +28,7 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
     private AddOrUpdateProductPresenter addOrUpdatePresenter;
     private byte[] bytes;
     private Product product;
-    private boolean isNameProduct, isUnit, isPrice, isSale, isAvailableQuantity, isBarcode;
+    private boolean isNameProduct = true, isUnit = true, isPrice = true, isSale = true, isAvailableQuantity = true, isBarcode = true;
 
     @Nullable
     @Override
@@ -39,6 +39,7 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         init();
         initAction();
 
@@ -53,6 +54,7 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
             setImgImageView();
             setTextBtn();
             binding.btnAddOrUpdate.setEnabled(true);
+            bytes = product.getImageByteArr();
         }
 
         listenEdt();
@@ -217,16 +219,19 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
         product.setSale(binding.edtSale.getText().toString());
         product.setAvailableQuantity(Integer.parseInt(binding.edtAvailableQuantity.getText().toString()));
         product.setBarcode(Integer.parseInt(binding.edtBarcode.getText().toString()));
+
         if(this.product.getSpecies().equals("CAFE")){
             product.setSpecies("CAFE");
         }else if(this.product.getSpecies().equals("DRINK")){
             product.setSpecies("DRINK");
         }
+
         if(this.product.getImageByteArr() != null){
             product.setImageByteArr(this.product.getImageByteArr());
         }else {
             product.setImageByteArr(bytes);
         }
+
         return product;
     }
     private void addOrUpdateProduct(){

@@ -220,6 +220,7 @@ public class ProductPresenter {
         invoiceDetail.setDescription(products.get(position).getDescription());
         invoiceDetail.getCustomer().setId(idCustomer);
         invoiceDetail.setIdTable(idTable);
+        invoiceDetail.setNameProduct(products.get(position).getName());
         return invoiceDetail;
     }
 }

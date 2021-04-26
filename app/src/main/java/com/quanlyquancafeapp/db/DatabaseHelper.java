@@ -454,6 +454,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(InvoiceDetailTable.KEY_SALE, invoiceDetail.getSale());
             values.put(InvoiceDetailTable.KEY_DESCRIPTION, invoiceDetail.getDescription());
             values.put(InvoiceDetailTable.KEY_ID_CUSTOMER,invoiceDetail.getCustomer().getId());
+            values.put(InvoiceDetailTable.KEY_NAME_PRODUCT, invoiceDetail.getNameProduct());
             values.put(InvoiceDetailTable.KEY_ID_TABLE, invoiceDetail.getIdTable());
 
             db.insert(InvoiceDetailTable.TABLE_NAME,"",values);
