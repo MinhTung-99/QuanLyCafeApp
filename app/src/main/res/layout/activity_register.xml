@@ -99,6 +99,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:text=" Đăng ký "
+            android:textColor="@color/black"
             android:layout_marginTop="30dp"
             app:backgroundTint="@null" />
     </LinearLayout>
