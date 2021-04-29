@@ -18,11 +18,14 @@ import java.util.ArrayList;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
 
     private ArrayList<Product> products;
+    private ArrayList<Product> productsSearch;
     private IRecyclerViewItemOnClick recyclerViewOnItemClick;
 
     public ProductAdapter(ArrayList<Product> products, IRecyclerViewItemOnClick recyclerViewOnItemClick) {
         this.products = products;
         this.recyclerViewOnItemClick = recyclerViewOnItemClick;
+        productsSearch = new ArrayList<>();
+        productsSearch.addAll(products);
     }
     public void updateProduct(ArrayList<Product> products){
         this.products = products;
@@ -91,5 +94,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         void onClick(int position);
         void reductionBtn(int position);
         void descriptionBtn(int position);
+    }
+    public void updateSearch(String search){
+        products.clear();
+        for(Product product: productsSearch){
+            if(product.getName().contains(search)){
+                products.add(product);
+                notifyDataSetChanged();
+            }
+        }
+        if(search.equals("")){
+            products.clear();
+            products.addAll(productsSearch);
+            notifyDataSetChanged();
+        }
     }
 }

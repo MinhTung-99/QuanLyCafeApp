@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,12 +76,28 @@ public class ProductFragment extends Fragment implements View.OnClickListener, P
         setAdapter();
 
         dialogDescriptionBinding.btnCancel.setOnClickListener(v->alertDialogDescription.cancel());
+
+        binding.edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.updateSearch(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
     private void initAction() {
         binding.btnCafe.setOnClickListener(this);
         binding.btnDrink.setOnClickListener(this);
         binding.btnStore.setOnClickListener(this);
-        binding.imgQrCode.setOnClickListener(this);
     }
     private void init() {
         productPresenter = new ProductPresenter(getContext(), this);
@@ -182,9 +200,9 @@ public class ProductFragment extends Fragment implements View.OnClickListener, P
                     Navigation.findNavController(getView()).popBackStack();
                 }
                 break;
-            case R.id.img_qr_code:
-                navigateToScanCodeActivity();
-                break;
+//            case R.id.img_qr_code:
+//                navigateToScanCodeActivity();
+//                break;
         }
     }
 }
