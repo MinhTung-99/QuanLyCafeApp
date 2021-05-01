@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.quanlyquancafeapp.adapter.AdminAdapter;
 import com.quanlyquancafeapp.databinding.ActivityHomeAdminBinding;
 import com.quanlyquancafeapp.model.Admin;
+import com.quanlyquancafeapp.presenter.admin.AdminHomePresenter;
 import com.quanlyquancafeapp.utils.IRecyclerViewOnItemClick;
 
 import java.util.ArrayList;
@@ -20,11 +21,16 @@ import java.util.ArrayList;
 public class HomeAdminActivity extends AppCompatActivity implements IRecyclerViewOnItemClick {
     private ActivityHomeAdminBinding binding;
     private AdminAdapter adapter;
+    private AdminHomePresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home_admin);
+        presenter = new AdminHomePresenter(this);
         setSupportActionBar(binding.toolbar);
+
+        binding.txtWelcome.setText(presenter.getNameAdmin());
 
         ArrayList<Admin> admins = new ArrayList<>();
         admins.add(new Admin(R.drawable.rounded_white,R.drawable.ic_speaker,""));
