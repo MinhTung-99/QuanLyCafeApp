@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.quanlyquancafeapp.db.DatabaseHelper;
+import com.quanlyquancafeapp.model.Customer;
 import com.quanlyquancafeapp.model.InvoiceDetail;
 import com.quanlyquancafeapp.model.User;
 
@@ -53,5 +54,16 @@ public class CustomerOrderPresenter {
             }
         }
         return user;
+    }
+
+    public Boolean isSameNamCustomer(String name){
+        ArrayList<Customer> customers = db.getCustomers();
+        for (Customer customer: customers){
+            if(customer.getName().equals(name)){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -6,6 +6,7 @@ import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.quanlyquancafeapp.databinding.ActivityHomeBinding;
@@ -26,7 +27,9 @@ public class HomeActivity extends AppCompatActivity implements IHomeView {
         homePresenter = new HomePresenter(this);
 
         userName = getIntent().getExtras().getString("user_name");
-        //Toast.makeText(this, getIntent().getExtras().getString("user_name"),Toast.LENGTH_SHORT).show();
+        if(userName.equals("NULL")){
+            binding.btnTimekeeping.setVisibility(View.GONE);
+        }
 
         binding.btnShell.setOnClickListener(v->homePresenter.sell());
 

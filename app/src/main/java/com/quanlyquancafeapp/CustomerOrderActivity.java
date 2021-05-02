@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quanlyquancafeapp.databinding.ActivityCustomerOrderBinding;
@@ -43,10 +45,14 @@ public class CustomerOrderActivity extends AppCompatActivity {
             customer.setCount(Integer.parseInt(binding.edtCount.getText().toString()));
             customer.setDone(0);
 
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("customer", customer);
-            intent.putExtra("TypeAdmin","SHELL");
-            startActivity(intent);
+            if(presenter.isSameNamCustomer(customer.getName())){
+                initToast();
+            }else {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("customer", customer);
+                intent.putExtra("TypeAdmin","SHELL");
+                startActivity(intent);
+            }
         });
 
         binding.btnLogin.setOnClickListener(v->{
@@ -122,5 +128,16 @@ public class CustomerOrderActivity extends AppCompatActivity {
             binding.btnRegister.setVisibility(View.GONE);
             binding.txtToolbar.setText("Chào mừng bạn đến với Cafe APP");
         }
+    }
+
+    private void initToast(){
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.TOP, 0 , 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        View view = getLayoutInflater().inflate(R.layout.custom_toast, null);
+        TextView txtToast = view.findViewById(R.id.txt_toast);
+        txtToast.setText("Vui lòng chọn tên khác");
+        toast.setView(view);
+        toast.show();
     }
 }

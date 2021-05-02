@@ -14,9 +14,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -119,19 +121,33 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
     }
     private void onClickDialogAdd(){
         dialogAddUserBinding.btnYes.setOnClickListener(v->{
-            gender = setGenderAdd();
-            user.setUserName(dialogAddUserBinding.edtUserName.getText().toString());
-            user.setPhoneNumber(dialogAddUserBinding.edtPhoneNumber.getText().toString());
-            user.setPassword(dialogAddUserBinding.edtPassword.getText().toString());
-            user.setGender(gender);
-            user.setTypeUser("USER");
-            adminUserPresenter.addUserDB(user);
-            alertDialogAdd.cancel();
-            adapter.updateUser(adminUserPresenter.getUsersDB());
+            if(adminUserPresenter.isSameNameUser(dialogAddUserBinding.edtUserName.getText().toString())){
+                initToast();
+            }else {
+                gender = setGenderAdd();
+                user.setUserName(dialogAddUserBinding.edtUserName.getText().toString());
+                user.setPhoneNumber(dialogAddUserBinding.edtPhoneNumber.getText().toString());
+                user.setPassword(dialogAddUserBinding.edtPassword.getText().toString());
+                user.setGender(gender);
+                user.setTypeUser("USER");
+                adminUserPresenter.addUserDB(user);
+                adapter.updateUser(adminUserPresenter.getUsersDB());
+                alertDialogAdd.cancel();
+            }
         });
         dialogAddUserBinding.btnCancel.setOnClickListener(v->{
             alertDialogAdd.cancel();
         });
+    }
+    private void initToast(){
+        Toast toast = new Toast(getContext());
+        toast.setGravity(Gravity.TOP, 0 , 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        View view = getLayoutInflater().inflate(R.layout.custom_toast, null);
+        TextView txtToast = view.findViewById(R.id.txt_toast);
+        txtToast.setText("Tên nhân viên đã tồn tại");
+        toast.setView(view);
+        toast.show();
     }
     private void listenRadioButton(){
         dialogAddUserBinding.radioMan.setOnClickListener(v -> {
@@ -380,27 +396,41 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
         dialogAddUserBinding.imgProfile.setImageResource(R.drawable.ic_profile);
     }
 
+    private Integer count;
+    private String userName;
     private void onClickDialogUpdate(User user){
+        count = 0;
+        if(count == 0){
+            userName = dialogUpdateUserBinding.edtUserName.getText().toString();
+            count++;
+        }
         dialogUpdateUserBinding.btnYes.setOnClickListener(v->{
-            String gender = setGenderUpdate();
-            user.setUserName(dialogAddUserBinding.edtUserName.getText().toString());
-            user.setPhoneNumber(dialogAddUserBinding.edtPhoneNumber.getText().toString());
-            user.setPassword(dialogAddUserBinding.edtPassword.getText().toString());
-            user.setGender(gender);
-            user.setTypeUser("USER");
+            if(adminUserPresenter.isSameNameUser(dialogUpdateUserBinding.edtUserName.getText().toString())
+                && !dialogUpdateUserBinding.edtUserName.getText().toString().equals(userName)){
 
-            this.user.setId(user.getId());
-            this.user.setUserName(dialogUpdateUserBinding.edtUserName.getText().toString());
-            this.user.setPhoneNumber(dialogUpdateUserBinding.edtPhoneNumber.getText().toString());
-            this.user.setPassword(dialogUpdateUserBinding.edtPassword.getText().toString());
-            this.user.setGender(gender);
-            this.user.setTypeUser("USER");
-            if(!isNewProfile){
-                this.user.setFilePath(user.getFilePath());
+                initToast();
+
+            }else {
+                String gender = setGenderUpdate();
+                user.setUserName(dialogAddUserBinding.edtUserName.getText().toString());
+                user.setPhoneNumber(dialogAddUserBinding.edtPhoneNumber.getText().toString());
+                user.setPassword(dialogAddUserBinding.edtPassword.getText().toString());
+                user.setGender(gender);
+                user.setTypeUser("USER");
+
+                this.user.setId(user.getId());
+                this.user.setUserName(dialogUpdateUserBinding.edtUserName.getText().toString());
+                this.user.setPhoneNumber(dialogUpdateUserBinding.edtPhoneNumber.getText().toString());
+                this.user.setPassword(dialogUpdateUserBinding.edtPassword.getText().toString());
+                this.user.setGender(gender);
+                this.user.setTypeUser("USER");
+                if(!isNewProfile){
+                    this.user.setFilePath(user.getFilePath());
+                }
+                adminUserPresenter.updateUserDB(this.user);
+                adapter.updateUser(adminUserPresenter.getUsersDB());
+                alertDialogUpdate.cancel();
             }
-            adminUserPresenter.updateUserDB(this.user);
-            adapter.updateUser(adminUserPresenter.getUsersDB());
-            alertDialogUpdate.cancel();
         });
         dialogUpdateUserBinding.btnCancel.setOnClickListener(v->{
             alertDialogUpdate.cancel();

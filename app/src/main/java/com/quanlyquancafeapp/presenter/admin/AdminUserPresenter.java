@@ -44,4 +44,15 @@ public class AdminUserPresenter {
     public void deleteUserTimeByIdUser(Long isUser){
         UserTimeTable.deleteUserTimeByIdUser(isUser);
     }
+
+    public Boolean isSameNameUser(String userName){
+        ArrayList<User> users = db.getUsers();
+        for (User user: users){
+            if(user.getUserName().equals(userName)){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
