@@ -9,6 +9,7 @@ import com.quanlyquancafeapp.view.admin.IAddOrUpdateView;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class AddOrUpdateProductPresenter {
     private IAddOrUpdateView addOrUpdateView;
@@ -37,5 +38,15 @@ public class AddOrUpdateProductPresenter {
             byteBuffer.write(buffer, 0, len);
         }
         return byteBuffer.toByteArray();
+    }
+
+    public Boolean isSameProduct(String nameProduct){
+        ArrayList<Product> products = db.getProducts();
+        for (Product product: products){
+            if(product.getName().equals(nameProduct)){
+                return true;
+            }
+        }
+        return false;
     }
 }

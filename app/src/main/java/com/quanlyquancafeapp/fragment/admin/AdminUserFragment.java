@@ -36,6 +36,7 @@ import com.quanlyquancafeapp.databinding.DialogUpdateUserBinding;
 import com.quanlyquancafeapp.databinding.FragmentAdminUserBinding;
 import com.quanlyquancafeapp.model.User;
 import com.quanlyquancafeapp.presenter.admin.AdminUserPresenter;
+import com.quanlyquancafeapp.utils.ToastUtils;
 import com.quanlyquancafeapp.view.admin.IAdminUserView;
 
 import java.io.ByteArrayOutputStream;
@@ -122,7 +123,7 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
     private void onClickDialogAdd(){
         dialogAddUserBinding.btnYes.setOnClickListener(v->{
             if(adminUserPresenter.isSameNameUser(dialogAddUserBinding.edtUserName.getText().toString())){
-                initToast();
+                ToastUtils.showToast(getActivity(), "Tên nhân viên đã tồn tại");
             }else {
                 gender = setGenderAdd();
                 user.setUserName(dialogAddUserBinding.edtUserName.getText().toString());
@@ -138,16 +139,6 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
         dialogAddUserBinding.btnCancel.setOnClickListener(v->{
             alertDialogAdd.cancel();
         });
-    }
-    private void initToast(){
-        Toast toast = new Toast(getContext());
-        toast.setGravity(Gravity.TOP, 0 , 0);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        View view = getLayoutInflater().inflate(R.layout.custom_toast, null);
-        TextView txtToast = view.findViewById(R.id.txt_toast);
-        txtToast.setText("Tên nhân viên đã tồn tại");
-        toast.setView(view);
-        toast.show();
     }
     private void listenRadioButton(){
         dialogAddUserBinding.radioMan.setOnClickListener(v -> {
@@ -408,7 +399,7 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
             if(adminUserPresenter.isSameNameUser(dialogUpdateUserBinding.edtUserName.getText().toString())
                 && !dialogUpdateUserBinding.edtUserName.getText().toString().equals(userName)){
 
-                initToast();
+                ToastUtils.showToast(getActivity(), "Tên nhân viên đã tồn tại");
 
             }else {
                 String gender = setGenderUpdate();

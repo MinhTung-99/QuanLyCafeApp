@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.quanlyquancafeapp.databinding.FragmentAddOrUpdateProductBinding;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.presenter.admin.product.AddOrUpdateProductPresenter;
 import com.quanlyquancafeapp.utils.KeyboardUtils;
+import com.quanlyquancafeapp.utils.ToastUtils;
 import com.quanlyquancafeapp.view.admin.IAddOrUpdateView;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,6 +31,8 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
     private byte[] bytes;
     private Product product;
     private boolean isNameProduct = true, isUnit = true, isPrice = true, isSale = true, isAvailableQuantity = true;
+    private Boolean isRemember;
+    private String nameProduct;
 
     @Nullable
     @Override
@@ -39,6 +43,8 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        isRemember = true;
 
         init();
         initAction();
@@ -55,6 +61,11 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
             setTextBtn();
             binding.btnAddOrUpdate.setEnabled(true);
             bytes = product.getImageByteArr();
+
+            if(isRemember){
+                nameProduct = product.getName();
+                isRemember = false;
+            }
         }
 
         listenEdt();
@@ -238,15 +249,35 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
         Product product = setProduct();
         if(this.product.getSpecies().equals("CAFE")){
             if(this.product.isAdd()){
-                addOrUpdatePresenter.addProductDB(product);
+                if(addOrUpdatePresenter.isSameProduct(product.getName())){
+                    ToastUtils.showToast(getActivity(), "Tên sản phẩm đã tồn tại");
+                }else {
+                    addOrUpdatePresenter.addProductDB(product);
+                    Navigation.findNavController(getView()).popBackStack();
+                }
             }else {
-                addOrUpdatePresenter.updateProductDB(product);
+                if(addOrUpdatePresenter.isSameProduct(product.getName()) && !product.getName().equals(nameProduct)){
+                    ToastUtils.showToast(getActivity(), "Tên sản phẩm đã tồn tại");
+                }else {
+                    addOrUpdatePresenter.updateProductDB(product);
+                    Navigation.findNavController(getView()).popBackStack();
+                }
             }
         }else if(this.product.getSpecies().equals("DRINK")){
             if(this.product.isAdd()){
-                addOrUpdatePresenter.addProductDB(product);
+                if(addOrUpdatePresenter.isSameProduct(product.getName())){
+                    ToastUtils.showToast(getActivity(), "Tên sản phẩm đã tồn tại");
+                }else {
+                    addOrUpdatePresenter.addProductDB(product);
+                    Navigation.findNavController(getView()).popBackStack();
+                }
             }else {
-                addOrUpdatePresenter.updateProductDB(product);
+                if(addOrUpdatePresenter.isSameProduct(product.getName()) && !product.getName().equals(nameProduct)){
+                    ToastUtils.showToast(getActivity(), "Tên sản phẩm đã tồn tại");
+                }else {
+                    addOrUpdatePresenter.updateProductDB(product);
+                    Navigation.findNavController(getView()).popBackStack();
+                }
             }
         }
     }
@@ -302,7 +333,6 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
         switch (v.getId()){
             case R.id.btn_add_or_update:
                 addOrUpdateProduct();
-                Navigation.findNavController(v).popBackStack();
                 KeyboardUtils.hideKeyboard(getActivity());
                 break;
             case R.id.img_product:

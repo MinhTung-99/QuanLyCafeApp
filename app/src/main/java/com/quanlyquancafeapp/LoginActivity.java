@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
 
         binding.btnRegisterLogin.setOnClickListener(v -> {
             if(loginPresenter.getSizeUser() > 0){
-                String typeUser = loginPresenter.handleLogin(this,
+                String typeUser = loginPresenter.handleLogin(this, LoginActivity.this,
                         binding.edtAccount.getText().toString(), binding.edtPassword.getText().toString());
                 if(typeUser.equals("ADMIN")){
                     loginPresenter.navigateToLogInToHomeAdminActivity();
@@ -58,17 +58,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     public void navigateToHomeAdminActivity() {
         Intent intent = new Intent(LoginActivity.this, HomeAdminActivity.class);
         startActivity(intent);
-    }
-    @Override
-    public void loginFail() {
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.TOP, 0 , 0);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        View view = getLayoutInflater().inflate(R.layout.custom_toast, null);
-        TextView txtToast = view.findViewById(R.id.txt_toast);
-        txtToast.setText("Tài khoản hoặc mật khẩu không đúng");
-        toast.setView(view);
-        toast.show();
     }
 
     @Override

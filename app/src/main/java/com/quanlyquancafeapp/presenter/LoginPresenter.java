@@ -1,9 +1,11 @@
 package com.quanlyquancafeapp.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.model.User;
+import com.quanlyquancafeapp.utils.ToastUtils;
 import com.quanlyquancafeapp.view.ILoginView;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class LoginPresenter {
         loginView.navigateToHomeAdminActivity();
     }
 
-    public String handleLogin(Context context,String userName, String password){
+    public String handleLogin(Context context, Activity activity, String userName, String password){
         DatabaseHelper db = new DatabaseHelper(context);
         ArrayList<User> users = db.getUsers();
         for(User user: users){
@@ -32,7 +34,7 @@ public class LoginPresenter {
                 return user.getTypeUser();
             }
         }
-        loginView.loginFail();
+        ToastUtils.showToast(activity, "Tài khoản hoặc mật khẩu không đúng");
         return "NULL";
     }
     public int getSizeUser(){
