@@ -256,7 +256,7 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
                     Navigation.findNavController(getView()).popBackStack();
                 }
             }else {
-                if(addOrUpdatePresenter.isSameProduct(product.getName()) && !product.getName().equals(nameProduct)){
+                if(addOrUpdatePresenter.isSameProduct(product.getName()) && !product.getName().toLowerCase().equals(nameProduct.toLowerCase())){
                     ToastUtils.showToast(getActivity(), "Tên sản phẩm đã tồn tại");
                 }else {
                     addOrUpdatePresenter.updateProductDB(product);
@@ -272,7 +272,7 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
                     Navigation.findNavController(getView()).popBackStack();
                 }
             }else {
-                if(addOrUpdatePresenter.isSameProduct(product.getName()) && !product.getName().equals(nameProduct)){
+                if(addOrUpdatePresenter.isSameProduct(product.getName()) && !product.getName().toLowerCase().equals(nameProduct.toLowerCase())){
                     ToastUtils.showToast(getActivity(), "Tên sản phẩm đã tồn tại");
                 }else {
                     addOrUpdatePresenter.updateProductDB(product);

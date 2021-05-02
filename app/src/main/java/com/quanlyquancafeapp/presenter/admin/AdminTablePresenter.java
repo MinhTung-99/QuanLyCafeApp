@@ -31,4 +31,15 @@ public class AdminTablePresenter {
     public void updateTable(Table table){
         db.updateTable(table);
     }
+
+    public Boolean isSameNameTable(String nameTable){
+        ArrayList<Table> tables = db.getTables();
+        for (Table table: tables){
+            if(table.getName().toLowerCase().equals(nameTable.toLowerCase())){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

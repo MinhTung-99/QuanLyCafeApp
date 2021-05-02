@@ -43,7 +43,7 @@ public class AddOrUpdateProductPresenter {
     public Boolean isSameProduct(String nameProduct){
         ArrayList<Product> products = db.getProducts();
         for (Product product: products){
-            if(product.getName().equals(nameProduct)){
+            if(product.getName().toLowerCase().equals(nameProduct.toLowerCase())){
                 return true;
             }
         }

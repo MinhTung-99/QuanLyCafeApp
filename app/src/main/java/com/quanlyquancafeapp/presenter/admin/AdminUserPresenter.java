@@ -48,7 +48,7 @@ public class AdminUserPresenter {
     public Boolean isSameNameUser(String userName){
         ArrayList<User> users = db.getUsers();
         for (User user: users){
-            if(user.getUserName().equals(userName)){
+            if(user.getUserName().toLowerCase().equals(userName.toLowerCase())){
                 return true;
             }
         }

@@ -24,6 +24,7 @@ import com.quanlyquancafeapp.databinding.DialogUpdateTableBinding;
 import com.quanlyquancafeapp.databinding.FragmentAdminTableBinding;
 import com.quanlyquancafeapp.model.Table;
 import com.quanlyquancafeapp.presenter.admin.AdminTablePresenter;
+import com.quanlyquancafeapp.utils.ToastUtils;
 import com.quanlyquancafeapp.view.admin.IAdminTableView;
 
 import java.util.ArrayList;
@@ -71,14 +72,22 @@ public class AdminTableFragment extends Fragment implements IAdminTableView, Adm
             dialogAddTableBinding.btnYes.setEnabled(false);
         });
         dialogAddTableBinding.btnYes.setOnClickListener(v->{
-            Table table = new Table();
-            table.setName(dialogAddTableBinding.edtTableName.getText().toString());
-            table.setCountPeople(Integer.parseInt(dialogAddTableBinding.edtTableCountPeople.getText().toString()));
-            adminTablePresenter.addTable(table);
-            updateTableAdapter();
-            alertDialogAdd.dismiss();
-            dialogAddTableBinding.edtTableName.setText("");
-            dialogAddTableBinding.edtTableCountPeople.setText("");
+            if(adminTablePresenter.isSameNameTable(dialogAddTableBinding.edtTableName.getText().toString())){
+                ToastUtils.showToast(getActivity(), "Tên bàn đã tồn tại");
+            }else {
+                if(Integer.parseInt(dialogAddTableBinding.edtTableCountPeople.getText().toString()) > 0){
+                    Table table = new Table();
+                    table.setName(dialogAddTableBinding.edtTableName.getText().toString());
+                    table.setCountPeople(Integer.parseInt(dialogAddTableBinding.edtTableCountPeople.getText().toString()));
+                    adminTablePresenter.addTable(table);
+                    updateTableAdapter();
+                    alertDialogAdd.dismiss();
+                    dialogAddTableBinding.edtTableName.setText("");
+                    dialogAddTableBinding.edtTableCountPeople.setText("");
+                }else {
+                    ToastUtils.showToast(getActivity(), "Số người phải lớn hơn không");
+                }
+            }
         });
         listenEdt();
     }
@@ -194,8 +203,12 @@ public class AdminTableFragment extends Fragment implements IAdminTableView, Adm
         adapter = new AdminTableAdapter(tables, this);
         fragmentAdminTableBinding.rvTable.setAdapter(adapter);
     }
+
+    private String nameTable;
     @Override
     public void onItemLongClick(Table table) {
+        nameTable = table.getName();
+
         dialogUpdateTableBinding.edtTableName.setText(table.getName());
         dialogUpdateTableBinding.edtTableCountPeople.setText(String.valueOf(table.getCountPeople()));
 
@@ -206,12 +219,23 @@ public class AdminTableFragment extends Fragment implements IAdminTableView, Adm
         });
 
         dialogUpdateTableBinding.btnYes.setOnClickListener(v->{
-            table.setName(dialogUpdateTableBinding.edtTableName.getText().toString());
-            table.setCountPeople(Integer.parseInt(dialogUpdateTableBinding.edtTableCountPeople.getText().toString()));
-            adminTablePresenter.updateTable(table);
-            updateTableAdapter();
-            dialogUpdateTableBinding.edtTableName.setText("");
-            alertDialogUpdate.dismiss();
+            if(adminTablePresenter.isSameNameTable(dialogUpdateTableBinding.edtTableName.getText().toString())
+                && !dialogUpdateTableBinding.edtTableName.getText().toString().toLowerCase().equals(nameTable.toLowerCase())){
+
+                ToastUtils.showToast(getActivity(), "Tên bàn đã tồn tại");
+
+            }else {
+                if(Integer.parseInt(dialogUpdateTableBinding.edtTableCountPeople.getText().toString()) > 0){
+                    table.setName(dialogUpdateTableBinding.edtTableName.getText().toString());
+                    table.setCountPeople(Integer.parseInt(dialogUpdateTableBinding.edtTableCountPeople.getText().toString()));
+                    adminTablePresenter.updateTable(table);
+                    updateTableAdapter();
+                    dialogUpdateTableBinding.edtTableName.setText("");
+                    alertDialogUpdate.dismiss();
+                }else {
+                    ToastUtils.showToast(getActivity(), "Số người phải lớn hơn không");
+                }
+            }
         });
     }
 

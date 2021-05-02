@@ -98,7 +98,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void updateSearch(String search){
         products.clear();
         for(Product product: productsSearch){
-            if(product.getName().contains(search)){
+            if(product.getName().toLowerCase().contains(search.toLowerCase())){
                 products.add(product);
                 notifyDataSetChanged();
             }

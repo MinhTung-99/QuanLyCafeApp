@@ -397,7 +397,7 @@ public class AdminUserFragment extends Fragment implements AdminUserAdapter.IRec
         }
         dialogUpdateUserBinding.btnYes.setOnClickListener(v->{
             if(adminUserPresenter.isSameNameUser(dialogUpdateUserBinding.edtUserName.getText().toString())
-                && !dialogUpdateUserBinding.edtUserName.getText().toString().equals(userName)){
+                && !dialogUpdateUserBinding.edtUserName.getText().toString().toLowerCase().equals(userName.toLowerCase())){
 
                 ToastUtils.showToast(getActivity(), "Tên nhân viên đã tồn tại");
 
