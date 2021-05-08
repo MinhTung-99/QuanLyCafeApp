@@ -4,4 +4,7 @@
     <item
         android:id="@+id/menu_shell"
         android:title="Bán hàng" />
+    <item
+        android:id="@+id/menu_change_password"
+        android:title="Đổi mật khẩu" />
 </menu>

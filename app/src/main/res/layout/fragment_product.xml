@@ -17,8 +17,7 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:layout_marginHorizontal="20dp"
-                android:hint="Tên, mã sản phẩm"
-                android:layout_toLeftOf="@+id/img_qr_code"
+                android:hint="Tên sản phẩm"
                 android:backgroundTint="@color/black"/>
             <RelativeLayout
                 android:id="@+id/rl_menu"

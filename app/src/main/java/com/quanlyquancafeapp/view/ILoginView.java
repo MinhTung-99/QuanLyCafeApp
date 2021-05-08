@@ -1,7 +1,7 @@
 package com.quanlyquancafeapp.view;
 
 public interface ILoginView {
-    void navigateToSendOTPActivity(String data);
+    void navigateToRegisterActivity();
     void navigateToHomeActivity();
     void navigateToHomeAdminActivity();
     void setTextBtn(String text);

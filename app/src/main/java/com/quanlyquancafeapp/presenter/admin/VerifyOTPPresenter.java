@@ -7,7 +7,6 @@ import android.content.Intent;
 import com.google.firebase.auth.AuthResult;
 import com.quanlyquancafeapp.NewPasswordActivity;
 import com.quanlyquancafeapp.RegisterActivity;
-import com.quanlyquancafeapp.VerifyOTPActivity;
 import com.quanlyquancafeapp.db.DatabaseHelper;
 import com.quanlyquancafeapp.utils.Constance;
 

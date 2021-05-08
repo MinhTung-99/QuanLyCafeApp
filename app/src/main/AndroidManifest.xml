@@ -15,8 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyQuanCafeApp">
         <activity android:name=".TimekeepingActivity"></activity>
-        <activity android:name=".VerifyOTPActivity" />
-        <activity android:name=".SendOTPActivity" />
         <activity android:name=".CustomerOrderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -78,12 +78,18 @@ public class HomeAdminActivity extends AppCompatActivity implements IRecyclerVie
     }
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Intent intent = null;
         switch (id) {
             case R.id.menu_shell:
-                Intent intent = new Intent(HomeAdminActivity.this, HomeActivity.class);
+                intent = new Intent(HomeAdminActivity.this, HomeActivity.class);
                 intent.putExtra("user_name", "NULL");
                 startActivity(intent);
             break;
+
+            case R.id.menu_change_password:
+                intent = new Intent(HomeAdminActivity.this, NewPasswordActivity.class);
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
