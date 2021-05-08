@@ -106,11 +106,16 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
             setTextBtn(dialogAddTimeWorkBinding.btnAddTime, ADD_TIME_END_STR);
             visibilityView(dialogAddTimeWorkBinding.imgBack, View.VISIBLE);
             if(clickBack == 2){
+                dialogAddTimeWorkBinding.txtTime.setText(hourOfDayStart+":"+minuteStart +"->"+hourOfDayEnd+":"+minuteEnd);
+                visibilityView(dialogAddTimeWorkBinding.txtTime, View.VISIBLE);
+                visibilityTimePicker(dialogAddTimeWorkBinding.timePicker, View.GONE);
                 visibilityView(dialogAddTimeWorkBinding.btnYes, View.VISIBLE);
                 visibilityView(dialogAddTimeWorkBinding.btnAddTime, View.GONE);
             }
         });
         dialogAddTimeWorkBinding.imgBack.setOnClickListener(v->{
+            visibilityTimePicker(dialogAddTimeWorkBinding.timePicker, View.VISIBLE);
+
             if(clickBack == 1){
                 isTimeStart = true;
                 clickBack--;
@@ -125,6 +130,7 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
                 visibilityView(dialogAddTimeWorkBinding.btnYes, View.GONE);
                 visibilityView(dialogAddTimeWorkBinding.btnAddTime, View.VISIBLE);
                 setTextBtn(dialogAddTimeWorkBinding.btnAddTime, ADD_TIME_END_STR);
+                visibilityView(dialogAddTimeWorkBinding.txtTime, View.GONE);
             }
         });
         dialogAddTimeWorkBinding.btnYes.setOnClickListener(v->{
