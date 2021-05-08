@@ -69,10 +69,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         super.onResume();
         if(loginPresenter.getSizeUser() > 0){
             setTextBtn("Đăng nhập");
-            binding.txtForgotPassword.setVisibility(View.VISIBLE);
         }else {
             setTextBtn("Đăng ký");
-            binding.txtForgotPassword.setVisibility(View.INVISIBLE);
         }
     }
 }

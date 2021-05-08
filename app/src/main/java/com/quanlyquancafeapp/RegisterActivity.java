@@ -27,7 +27,6 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterView
                     binding.edtAddress.getText().toString(), binding.edtUserName.getText().toString(),
                     binding.edtPassword.getText().toString(),binding.edtPasswordAgain.getText().toString());
             finish();
-            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
         });
     }
 
