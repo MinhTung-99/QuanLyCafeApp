@@ -106,7 +106,10 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
             setTextBtn(dialogAddTimeWorkBinding.btnAddTime, ADD_TIME_END_STR);
             visibilityView(dialogAddTimeWorkBinding.imgBack, View.VISIBLE);
             if(clickBack == 2){
-                dialogAddTimeWorkBinding.txtTime.setText(hourOfDayStart+":"+minuteStart +"->"+hourOfDayEnd+":"+minuteEnd);
+                UserTime userTime = new UserTime();
+                presenter.setUserTimeStart(hourOfDayStart, minuteStart, userTime);
+                presenter.setUserTimeEnd(hourOfDayEnd, minuteEnd, userTime);
+                dialogAddTimeWorkBinding.txtTime.setText(userTime.getTimeStart() + "->" + userTime.getTimeEnd());
                 visibilityView(dialogAddTimeWorkBinding.txtTime, View.VISIBLE);
                 visibilityTimePicker(dialogAddTimeWorkBinding.timePicker, View.GONE);
                 visibilityView(dialogAddTimeWorkBinding.btnYes, View.VISIBLE);
@@ -177,7 +180,10 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
             setTextBtn(dialogUpdateTimeWorkBinding.btnAddTime, UPDATE_TIME_END_STR);
             visibilityView(dialogUpdateTimeWorkBinding.imgBack, View.VISIBLE);
             if(clickBack == 2){
-                dialogUpdateTimeWorkBinding.txtTime.setText(hourOfDayStart+":"+minuteStart +"->"+hourOfDayEnd+":"+minuteEnd);
+                UserTime userTime = new UserTime();
+                presenter.setUserTimeStart(hourOfDayStart, minuteStart, userTime);
+                presenter.setUserTimeEnd(hourOfDayEnd, minuteEnd, userTime);
+                dialogUpdateTimeWorkBinding.txtTime.setText(userTime.getTimeStart() + "->" + userTime.getTimeEnd());
                 visibilityView(dialogUpdateTimeWorkBinding.btnYes, View.VISIBLE);
                 visibilityView(dialogUpdateTimeWorkBinding.btnAddTime, View.GONE);
                 visibilityView(dialogUpdateTimeWorkBinding.txtTime, View.VISIBLE);
