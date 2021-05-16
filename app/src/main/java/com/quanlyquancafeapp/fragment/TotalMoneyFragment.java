@@ -74,4 +74,11 @@ public class TotalMoneyFragment extends Fragment implements ITotalMoneyView {
         }
         Navigation.findNavController(getView()).navigate(R.id.payFragment, bundle);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        invoicesNotPay.clear();
+    }
 }

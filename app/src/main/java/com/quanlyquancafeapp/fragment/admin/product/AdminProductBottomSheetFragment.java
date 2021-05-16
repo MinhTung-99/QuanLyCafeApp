@@ -14,6 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.FragmentAdminProductBottomSheetBinding;
 import com.quanlyquancafeapp.model.Product;
+import com.quanlyquancafeapp.utils.PriceUtil;
 
 public class AdminProductBottomSheetFragment extends BottomSheetDialogFragment {
     private FragmentAdminProductBottomSheetBinding adminProductBottomSheetBinding;
@@ -34,7 +35,8 @@ public class AdminProductBottomSheetFragment extends BottomSheetDialogFragment {
         adminProductBottomSheetBinding.imgProduct.setImageBitmap(product.getImageBitmap());
         adminProductBottomSheetBinding.txtName.setText("Tên sản phẩm: " + product.getName());
         adminProductBottomSheetBinding.txtUnit.setText("Đơn vị: " + product.getUnit());
-        adminProductBottomSheetBinding.txtPrice.setText("Giá: " + product.getPrice() + "VND");
+        String setupMoney = PriceUtil.setupPrice(String.valueOf(product.getPrice()));
+        adminProductBottomSheetBinding.txtPrice.setText("Giá: " + setupMoney + " VND");
         adminProductBottomSheetBinding.txtSale.setText("Khuyến mãi: " + product.getSale() + "%");
         adminProductBottomSheetBinding.txtAvailableQuantity.setText("Số lượng: " + product.getAvailableQuantity() + " " + product.getUnit());
         adminProductBottomSheetBinding.txtBarcode.setText("Mã vạch: " + product.getBarcode());

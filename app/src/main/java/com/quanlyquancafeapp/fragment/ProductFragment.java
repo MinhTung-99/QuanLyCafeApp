@@ -205,4 +205,10 @@ public class ProductFragment extends Fragment implements View.OnClickListener, P
 //                break;
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        productPresenter.deleteInvoice();
+    }
 }

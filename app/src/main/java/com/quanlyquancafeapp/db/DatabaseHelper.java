@@ -236,6 +236,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 UserTable.KEY_ID+"=?",
                 new String[]{String.valueOf(id)});
     }
+    public int deleteInvoice(Long id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(InvoiceTable.TABLE_NAME,
+                InvoiceTable.KEY_ID+"=?",
+                new String[]{String.valueOf(id)});
+    }
     public int updateProduct(Product product){
         Log.d("KMFG123", product.getId()+" ========");
         SQLiteDatabase db = this.getWritableDatabase();

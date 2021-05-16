@@ -223,4 +223,13 @@ public class ProductPresenter {
         invoiceDetail.setNameProduct(products.get(position).getName());
         return invoiceDetail;
     }
+
+    public void deleteInvoice(){
+        ArrayList<Invoice> invoices = db.getInvoices();
+        for (Invoice invoice: invoices){
+            if((invoice.getIsPay() == 0 && invoice.getTypePay().equals(""))) {
+                db.deleteInvoice(invoice.getId());
+            }
+        }
+    }
 }

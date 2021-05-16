@@ -36,7 +36,6 @@ public class TotalMoneyPresenter {
             invoiceDetails = db.getDetailInvoices();
         }
         for(int i = 0; i < invoiceDetails.size(); i++){
-            Log.d("KMFG", invoiceDetails.get(i).getIsPay()+"==");
             if(invoiceDetails.get(i).getIsPay() == 0 && invoiceDetails.get(i).getTypePay().equals(Constance.TYPE_PAY)){
                 for (int j = 0; j < products.size(); j++){
                     intoMoney = 0;

@@ -17,7 +17,9 @@ import com.quanlyquancafeapp.R;
 import com.quanlyquancafeapp.databinding.FragmentPayBinding;
 import com.quanlyquancafeapp.model.Invoice;
 import com.quanlyquancafeapp.presenter.PayPresenter;
+import com.quanlyquancafeapp.utils.KeyboardUtils;
 import com.quanlyquancafeapp.utils.PriceUtil;
+import com.quanlyquancafeapp.utils.ToastUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -69,25 +71,31 @@ public class PayFragment extends Fragment {
             }
         });
         binding.btnPay.setOnClickListener(v->{
+            char s = binding.txtRefunds.getText().toString().charAt(0);
+            if(s == '-'){
+                ToastUtils.showToast(getActivity(), "Tiền khách đứa không đủ");
+            }else {
+                payPresenter.updateCountCurrentPeopleTable(idCustomer, idTable);
 
-            payPresenter.updateCountCurrentPeopleTable(idCustomer, idTable);
+                for(int i = 0; i < idInvoiceDetail.length; i++){
+                    invoice.setId(idInvoiceDetail[i]);
+                    invoice.setTotalMoney(totalMoney);
+                    //invoice.setInToMoney();
+                    SimpleDateFormat getDate = new SimpleDateFormat("d/M/yyyy");
+                    SimpleDateFormat getTime = new SimpleDateFormat("HH:mm:ss");
+                    Date date = new Date();
+                    invoice.setDateBuy(getDate.format(date));
+                    invoice.setTime(getTime.format(date));
+                    invoice.setIsPay(1);
+                    invoice.setIdTable(0L);
+                    payPresenter.updateInvoice(invoice);
+                }
+                for(int i = 0; i < 2; i++){
+                    Navigation.findNavController(v).popBackStack();
+                }
+            }
 
-            for(int i = 0; i < idInvoiceDetail.length; i++){
-                invoice.setId(idInvoiceDetail[i]);
-                invoice.setTotalMoney(totalMoney);
-                //invoice.setInToMoney();
-                SimpleDateFormat getDate = new SimpleDateFormat("d/M/yyyy");
-                SimpleDateFormat getTime = new SimpleDateFormat("HH:mm:ss");
-                Date date = new Date();
-                invoice.setDateBuy(getDate.format(date));
-                invoice.setTime(getTime.format(date));
-                invoice.setIsPay(1);
-                invoice.setIdTable(0L);
-                payPresenter.updateInvoice(invoice);
-            }
-            for(int i = 0; i < 2; i++){
-                Navigation.findNavController(v).popBackStack();
-            }
+            KeyboardUtils.hideKeyboard(getActivity());
         });
     }
 }
