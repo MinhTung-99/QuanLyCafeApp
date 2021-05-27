@@ -39,7 +39,6 @@ public class AdminProductBottomSheetFragment extends BottomSheetDialogFragment {
         adminProductBottomSheetBinding.txtPrice.setText("Giá: " + setupMoney + " VND");
         adminProductBottomSheetBinding.txtSale.setText("Khuyến mãi: " + product.getSale() + "%");
         adminProductBottomSheetBinding.txtAvailableQuantity.setText("Số lượng: " + product.getAvailableQuantity() + " " + product.getUnit());
-        adminProductBottomSheetBinding.txtBarcode.setText("Mã vạch: " + product.getBarcode());
     }
     @Override
     public void onStart() {

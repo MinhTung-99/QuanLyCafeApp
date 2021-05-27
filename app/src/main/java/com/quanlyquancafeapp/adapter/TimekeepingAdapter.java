@@ -1,5 +1,6 @@
 package com.quanlyquancafeapp.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,12 +30,14 @@ public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.
     private TimekeepingPresenter presenter;
     private String date;
     private AdminTimeWorkPresenter timeWorkPresenter;
+    private Activity activity;
 
-    public TimekeepingAdapter(ArrayList<UserTime> userTimes, String date,Context context, boolean isAdmin) {
+    public TimekeepingAdapter(ArrayList<UserTime> userTimes, String date,Context context, Activity activity) {
         this.userTimes = userTimes;
         this.date = date;
         presenter = new TimekeepingPresenter(context);
         timeWorkPresenter = new AdminTimeWorkPresenter();
+        this.activity = activity;
     }
 
     @NonNull
@@ -81,6 +84,8 @@ public class TimekeepingAdapter extends RecyclerView.Adapter<TimekeepingAdapter.
                     userWorking.setTimeStart(getTime.format(time));
                     userWorking.setTimeEnd(userTimes.get(position).getTimeEnd());
                     presenter.addUserTimeWorking(userWorking);
+
+                    activity.finish();
 
                 }else {
                     holder.binding.checkbox.setChecked(false);

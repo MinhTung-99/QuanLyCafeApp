@@ -37,6 +37,7 @@
                 android:src="@drawable/ic_cafe"/>
             <EditText
                 android:id="@+id/edt_name"
+                android:textCursorDrawable="@drawable/color_cursor_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tên sản phẩm"
@@ -46,6 +47,7 @@
                 android:textColorHint="@color/silver"/>
             <EditText
                 android:id="@+id/edt_unit"
+                android:textCursorDrawable="@drawable/color_cursor_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Đơn vị"
@@ -63,6 +65,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Giá"
                     android:inputType="number"
+                    android:textCursorDrawable="@drawable/color_cursor_edt"
                     android:backgroundTint="@color/black"
                     android:layout_marginLeft="30dp"
                     android:textColor="@color/black"
@@ -71,6 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="VND"
+                    android:textCursorDrawable="@drawable/color_cursor_edt"
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:layout_marginLeft="5dp"/>
@@ -85,6 +89,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Khuyến mãi"
                     android:inputType="number"
+                    android:textCursorDrawable="@drawable/color_cursor_edt"
                     android:backgroundTint="@color/black"
                     android:layout_marginLeft="30dp"
                     android:textColor="@color/black"
@@ -107,6 +112,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Số lượng"
                     android:inputType="number"
+                    android:textCursorDrawable="@drawable/color_cursor_edt"
                     android:backgroundTint="@color/black"
                     android:layout_marginLeft="30dp"
                     android:textColor="@color/black"

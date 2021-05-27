@@ -46,7 +46,7 @@ public class TimekeepingActivity extends AppCompatActivity {
             timeKeepingDoneAdapter = new TimeKeepingDoneAdapter(presenter.getUserWorkingByIdUser(userName), binding.txtDate.getText().toString(),this, isAdmin);
             binding.rvUsrWorking.setAdapter(timeKeepingDoneAdapter);
         }else {
-            adapter = new TimekeepingAdapter(presenter.getUserTime(userName), binding.txtDate.getText().toString(),this, isAdmin);
+            adapter = new TimekeepingAdapter(presenter.getUserTime(userName), binding.txtDate.getText().toString(),this, this);
             binding.rvUsrWorking.setAdapter(adapter);
         }
     }

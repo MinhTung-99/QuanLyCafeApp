@@ -19,6 +19,7 @@ import com.quanlyquancafeapp.databinding.FragmentAddOrUpdateProductBinding;
 import com.quanlyquancafeapp.model.Product;
 import com.quanlyquancafeapp.presenter.admin.product.AddOrUpdateProductPresenter;
 import com.quanlyquancafeapp.utils.KeyboardUtils;
+import com.quanlyquancafeapp.utils.PriceUtil;
 import com.quanlyquancafeapp.utils.ToastUtils;
 import com.quanlyquancafeapp.view.admin.IAddOrUpdateView;
 import java.io.ByteArrayOutputStream;
@@ -309,7 +310,7 @@ public class AddOrUpdateProductFragment extends Fragment implements View.OnClick
     public void setTextEdt() {
         binding.edtName.setText(product.getName());
         binding.edtUnit.setText(product.getUnit());
-        binding.edtPrice.setText(String.valueOf(product.getPrice()));
+        binding.edtPrice.setText(PriceUtil.setupPriceFloat(String.valueOf(product.getPrice())));
         binding.edtSale.setText(String.valueOf(product.getSale()));
         binding.edtAvailableQuantity.setText(String.valueOf(product.getAvailableQuantity()));
         binding.txtUnit.setText(product.getUnit());

@@ -70,6 +70,11 @@ public class AdminTimeWorkFragment extends Fragment implements IAdminTimeWorkVie
         initDialogDelete();
 
         binding.imgAdd.setOnClickListener(v->{
+            dialogAddTimeWorkBinding.btnAddTime.setEnabled(false);
+            isTimeStart = true;
+            clickBack = 0;
+            presenter.restartDialogAdd(dialogAddTimeWorkBinding, ADD_TIME_START_STR);
+            visibilityView(dialogAddTimeWorkBinding.imgBack, View.GONE);
             alertDialogAdd.show();
         });
 

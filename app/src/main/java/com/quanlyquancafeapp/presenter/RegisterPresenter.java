@@ -24,4 +24,10 @@ public class RegisterPresenter {
             e.printStackTrace();
         }
     }
+    public boolean isSamePassword(String newPassword, String newPasswordAgain){
+        if(newPassword.equals(newPasswordAgain)){
+            return true;
+        }
+        return false;
+    }
 }

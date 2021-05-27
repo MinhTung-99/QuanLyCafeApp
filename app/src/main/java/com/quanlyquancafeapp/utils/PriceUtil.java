@@ -34,4 +34,9 @@ public class PriceUtil {
         }
         return setupPrice;
     }
+
+    public static String setupPriceFloat(String takePrice) {
+        String setupPrice = takePrice.substring(0, takePrice.length() - 1);
+        return setupPrice.substring(0, setupPrice.length() - 1);
+    }
 }

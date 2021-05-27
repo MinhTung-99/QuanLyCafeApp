@@ -93,12 +93,14 @@
             android:textColorHint="@color/silver"
             android:layout_marginHorizontal="20sp"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_register"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:text=" Đăng ký "
+            android:enabled="false"
+            android:background="@drawable/rounded_white_state_enable_btn"
             android:textColor="@color/black"
             android:layout_marginTop="30dp"
             app:backgroundTint="@null" />

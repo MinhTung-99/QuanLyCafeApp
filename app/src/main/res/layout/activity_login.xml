@@ -51,7 +51,7 @@
                         android:hint="Tài khoản"
                         android:textCursorDrawable="@drawable/color_cursor_edt"
                         android:textColor="@color/black"
-                        android:textColorHint="@color/black"/>
+                        android:textColorHint="@color/silver"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/ll_password"
@@ -75,7 +75,7 @@
                         android:textCursorDrawable="@drawable/color_cursor_edt"
                         android:inputType="textPassword"
                         android:textColor="@color/black"
-                        android:textColorHint="@color/black"/>
+                        android:textColorHint="@color/silver"/>
                 </LinearLayout>
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_register_login"
